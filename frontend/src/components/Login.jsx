@@ -1,39 +1,51 @@
-import React from "react";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as yup from 'yup';
+import {
+  Row,
+  Col,
+  Card,
+  Image,
+  Anchor
+} from 'react-bootstrap'; 
+import {
+  useNavigate,
+} from "react-router-dom";
+import { useEffect, useContext } from 'react';
+
+import helloImage from '../assets/img/index.jpeg';
+import FormAuth from "./FormAuth";
+import router from '../routes';
+import AuthContext from '../contexts';
 
 const Login = (props) => {
-  const initUser = {
-    login: '',
-    password: ''
-  };
-  const validationSchema = yup.object().shape({
-    login: yup.string().required('required'),
-    password: yup.string().required('required')
-  });
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
+  const {pages: {home}} = router;
+
+  useEffect(() => {
+    if (auth.loggedIn) {
+      navigate(home);
+    }
+  }, []);
+  
   return (
-    <Formik
-    initialValues={initUser}
-    validationSchema={validationSchema}
-    onSubmit={values => {
-      // same shape as initial values
-      console.log(values);
-    }}
-    >
-      {({ errors, touched }) => (
-      <Form>
-        <label htmlTo='login'>login</label>
-        <Field name="login" />
-        {errors.login && touched.login ? (
-          <div>{errors.login}</div>
-        ) : null}
-        <label htmlTo='password'>password</label>
-        <Field name="password" type="password" />
-        {errors.password && touched.password ? <div>{errors.password}</div> : null}
-        <button type="submit">Submit</button>
-      </Form>
-      )}
-     </Formik>
+    <Row className='justify-content-center align-content-center h-100'>
+      <Col className='col-12' md={8} xxl={6}>
+        <Card className='shadow-sm'>
+          <Card.Body className='row p-5'>
+            <Col md={6} className='col-12 d-flex align-items-center justify-content-center'>
+              <Image src={helloImage} className='rounded-circle' alt='login'></Image>
+            </Col>
+            <FormAuth />
+
+          </Card.Body>
+          <Card.Footer className="p-4">
+            <div className="text-center">
+              <span className="px-1">Нет аккаунта?</span>
+              <Anchor href="/signup">Регистрация ›</Anchor>
+            </div>
+          </Card.Footer>
+      </Card>
+      </Col>
+     </Row>
   );
 }
 
