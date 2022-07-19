@@ -1,36 +1,20 @@
-//import './App.css';
 import {
   BrowserRouter as Router,
   Routes,
   Route, 
-  Navigate,
-  useLocation,
-  useNavigate,
-  Link,
 } from "react-router-dom";
-import {
-  Navbar,
-  Container,
-  NavbarBrand, 
-  Button,
-  
-} from 'react-bootstrap';
-import React, {useContext, useEffect, useState} from "react";
+import React, { useState} from "react";
+import { Provider as StoreProvider } from "react-redux";
 
-
-import Login from './components/Login.jsx';
-import NotFound from './components/NotFound.jsx';
-import Home from './components/Home.jsx';
+import Login from './pages/Login.jsx';
+import NotFound from './pages/NotFound.jsx';
+import Chats from './pages/Chats.jsx';
 import AuthContext from './contexts'
-
-import Main from "./components/Header.jsx";
+import store from './slices'
+import Header from "./components/Header.jsx";
 
 const AuthProvider = ({children}) => {
-//  const isToken = localStorage.getItem('token');
-//  const [isAuth, setAuth] = useState(isToken);
-
   const [loggedIn, setLoggedIn] = useState(false);
-
   const logIn = () => setLoggedIn(true);
   const logOut = () => {
     localStorage.removeItem('token');
@@ -45,18 +29,19 @@ const AuthProvider = ({children}) => {
 }
 
 function App() {
-//  const [token, setToken] = useState(localStorage.getItem('token'));
   return (
     <AuthProvider>
 
-      <Router>
-        <Main />
-          <Routes>
-          <Route path="/login" element={<Login/>} />
-          <Route path="/" element={<Home/>} />
-          <Route path="*" element={<NotFound/>} />
-        </Routes>
-      </Router>
+      <StoreProvider store={store}>
+        <Router>
+          <Header />
+            <Routes>
+            <Route path="/login" element={<Login/>} />
+            <Route path="/" element={<Chats/>} />
+            <Route path="*" element={<NotFound/>} />
+          </Routes>
+        </Router>
+      </StoreProvider>
     </AuthProvider>
   );
 }

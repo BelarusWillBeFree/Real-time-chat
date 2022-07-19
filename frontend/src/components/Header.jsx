@@ -6,15 +6,10 @@ import {
   
 } from 'react-bootstrap';
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route, 
-  Navigate,
-  useLocation,
   useNavigate,
   Link,
 } from "react-router-dom";
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect } from "react";
 
 import AuthContext from '../contexts';
 import useAuth from '../hooks';
