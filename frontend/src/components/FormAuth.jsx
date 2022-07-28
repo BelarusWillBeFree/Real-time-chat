@@ -6,16 +6,20 @@ import {
 import {
   useNavigate,
 } from "react-router-dom";
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useDispatch } from "react-redux";
 
-import getToken from '../api/getToken';
+//import getToken from '../api/getToken';
 
-import AuthContext from '../contexts';
+import { localStorSet } from '../hooks/useLocalStor';
+import useAuth from '../hooks/useAuth'
 import router from '../routes';
+import { setUsername, setToken } from '../slices/loginSlice';
 
 const FormAuth = (props) => {
+  const dispatch = useDispatch();
   const initialValues = {
     username: '',
     password: ''
@@ -24,19 +28,26 @@ const FormAuth = (props) => {
     username: yup.string().required('Login обязательное поле'),
     password: yup.string().required('password обязательное поле')
   });
-  const auth = useContext(AuthContext);
+  const auth = useAuth();
   const navigate = useNavigate();
   const {pages: {home}} = router;
 
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: async (values, props) => {
+    onSubmit: async(values, props) => {
       
-      const response = getToken(values);
+      //const response = getToken(values);
       try {
-        const {data} = await response;
-        localStorage.setItem('token', data.token);
+        const {username, token} = await localStorSet(values);
+          dispatch(setUsername(username));//values.username
+          dispatch(setToken(token));//values.username
+
+        
+        //const {data} = await response;
+        //localStorage.setItem('login', JSON.stringify(data));
+        //dispatch(setUsername(username));//values.username
+        //dispatch(setToken(token));//values.username
         auth.logIn();
         navigate(home);
       } catch ({response}) {

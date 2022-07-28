@@ -8,10 +8,12 @@ const Messages = () => {
   const channelName = '';
   const count = 0;
   return (
-    <Col className="d-flex flex-column h-100">
-    <MessagesHeader />
-    <MessagesBody />
-    <MessagesFooter />   
+    <Col className="h-100 p-0">
+      <div className="d-flex flex-column h-100">
+        <MessagesHeader />
+        <MessagesBody />
+        <MessagesFooter />  
+      </div> 
     </Col> 
   );
 }

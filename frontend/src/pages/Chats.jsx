@@ -1,8 +1,9 @@
 import React, {
-  useEffect
+  useEffect,
 } from "react";
 import {
   useDispatch,
+  useSelector,
 } from 'react-redux';
 import {
   Container,
@@ -11,29 +12,55 @@ import {
 
 import { addChannels } from '../slices/channelsSlice';
 import { addMessages } from '../slices/messagesSlice';
+import { setUsername, setToken } from '../slices/loginSlice';
 import fetchData from "../api/fetchData";
 import { Channels } from '../components/Channels'
 import Messages from "../components/Messages";
+import useAuth from '../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import router from '../routes';
+import { localStorGet } from '../hooks/useLocalStor';
 
 const Chats = (props) => {
   const dispatch = useDispatch();
-//  const channels = useSelector(selectors.selectAll); flex-column flex-md-row
+  const auth = useAuth();
+  const navigate = useNavigate();
+
+  const login = localStorGet();
+  useEffect(() => {
+    if (login) {
+      dispatch(setUsername(login.username));
+      dispatch(setToken(login.token));
+      auth.logIn();
+    }
+    if (!auth.loggedIn) {
+      const { pages: {login}} = router;
+      navigate(login);
+      return;
+    }
+  }, [login]);
+
+  const token = useSelector((store) => store.login.token);
+
   useEffect(
     () => {
-      fetchData().then(({data}) => {
-        console.log(data);
+
+      fetchData(token).then((response) => {
+        if (!response) {
+          return;
+        }
+        const {data} = response;
         dispatch(addChannels(data.channels));
         dispatch(addMessages(data.messages));
-      }
-
-      );
-      //dispatch(fetchChannels());
+      }).catch((err) =>{
+        console.log(err);
+      });
     }, []);
   return (
     <Container className="h-100 my-4 overflow-hidden rounded shadow">
-      <Row className="vh-100 bg-white flex-md-row">
-        <Channels />
-        <Messages />
+      <Row className="h-100 bg-white flex-md-row">
+          <Channels />
+          <Messages />
       </Row>
     </Container>
   );

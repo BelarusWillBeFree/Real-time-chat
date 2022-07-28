@@ -13,7 +13,7 @@ import { useEffect, useContext } from 'react';
 import helloImage from '../assets/img/index.jpeg';
 import FormAuth from "../components/FormAuth";
 import router from '../routes';
-import AuthContext from '../contexts';
+import AuthContext from '../contexts/AuthContext';
 
 const Login = () => {
   const auth = useContext(AuthContext);

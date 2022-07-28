@@ -8,7 +8,7 @@ import axios from 'axios';
 import routes from "../routes";
 
 const channelsAdapter = createEntityAdapter();
-
+/*
 export const fetchChannels = createAsyncThunk(
   'channels/fetchChannels',
   async () => {
@@ -27,7 +27,7 @@ export const fetchChannels = createAsyncThunk(
       throw err;
     }
   }
-);
+);*/
 
 const initialState = channelsAdapter.getInitialState({currentChannelId: 1});
 const channelsSlice = createSlice({
@@ -41,14 +41,15 @@ const channelsSlice = createSlice({
       channelsAdapter.addMany(state, payload);
     },
   },
-  extraReducers: (builder) => {
+
+});
+/*  extraReducers: (builder) => {
     builder.addCase(fetchChannels.fulfilled, (state, {payload}) => {
       //console.log('channels', payload);
       channelsAdapter.addMany(state, payload.channels);
     });
-  }
-});
-
+  }*/
+  
 export const selectors = channelsAdapter.getSelectors((state) => state.channels);
 
 export const { setCurrentChannelId, addChannels } = channelsSlice.actions;

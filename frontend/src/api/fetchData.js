@@ -1,8 +1,11 @@
 import axios from 'axios';
+
 import routes from "../routes";
 
-const fetchData = async() => {
-  const token = localStorage.getItem('token');
+const fetchData = async(token) => {
+  if (!token) {
+    return;
+  }
   const path = routes.dataPath();
   const headers = {
     headers: {

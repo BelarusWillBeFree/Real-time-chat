@@ -9,38 +9,30 @@ import { Provider as StoreProvider } from "react-redux";
 import Login from './pages/Login.jsx';
 import NotFound from './pages/NotFound.jsx';
 import Chats from './pages/Chats.jsx';
-import AuthContext from './contexts'
+import AuthProvider from './contexts/AuthProvider'
+import SocketProvider from './contexts/SocketProvider'
 import store from './slices'
 import Header from "./components/Header.jsx";
 
-const AuthProvider = ({children}) => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const logIn = () => setLoggedIn(true);
-  const logOut = () => {
-    localStorage.removeItem('token');
-    setLoggedIn(false);
-  };  
 
-  return (
-    <AuthContext.Provider value={{loggedIn, logIn, logOut}}> 
-      {children}
-    </AuthContext.Provider>
-  );
-}
 
 function App() {
   return (
     <AuthProvider>
 
       <StoreProvider store={store}>
-        <Router>
-          <Header />
-            <Routes>
-            <Route path="/login" element={<Login/>} />
-            <Route path="/" element={<Chats/>} />
-            <Route path="*" element={<NotFound/>} />
-          </Routes>
-        </Router>
+        <SocketProvider>
+          <Router>
+            <div className="d-flex flex-column h-100">
+              <Header />
+              <Routes>
+                <Route path="/login" element={<Login/>} />
+                <Route path="/" element={<Chats/>} />
+                <Route path="*" element={<NotFound/>} />
+              </Routes>
+            </div>
+          </Router>
+        </SocketProvider>
       </StoreProvider>
     </AuthProvider>
   );
