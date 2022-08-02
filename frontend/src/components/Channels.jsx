@@ -1,14 +1,31 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { Col, Button } from 'react-bootstrap';
 import { PlusSquare } from 'react-bootstrap-icons';
 
+import { useImmer } from 'use-immer';
+
+import getModal from './modals';
 import { ChannelsList } from './ChannelsList';
-import ModalWindow from './ModalWindow';
+import SocketContext from '../contexts/SocketContext';
 
-export const Channels = () => {
-  const handleShowModalWindow = () => {
-
+const renderModal = ({ modalInfo, hideModal, action }) => {
+  if (!modalInfo.type) {
+    return null;
   }
+
+  const Component = getModal(modalInfo.type);
+  return <Component modalInfo={modalInfo} action={action} onHide={hideModal} />;
+
+}
+export const Channels = () => {
+  const {addNewChannel, removeChannel} = useContext(SocketContext);
+  const action = {
+    adding: (props, cb) => addNewChannel(props, cb),
+    removing: (props, cb) => removeChannel(props, cb),
+  }
+  const [modalInfo, setModalInfo] = useState({ type: null, id: null });
+  const hideModal = () => setModalInfo({ type: null, id: null });
+  const showModal = (type, id = null) => setModalInfo({ type, id });
 
   return(
     <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
@@ -16,12 +33,13 @@ export const Channels = () => {
         <span>Каналы</span>
         <Button
           variant="link"
-          onClick={handleShowModalWindow}
+          onClick={() => showModal('adding')} 
           className="p-0 text-primary btn-group-vertical">
             <PlusSquare/>
         </Button>
       </div>  
-      <ChannelsList />
+      <ChannelsList showModal={showModal}/>
+      {renderModal({ modalInfo, hideModal, action })}
     </div>
   )
 }

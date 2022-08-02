@@ -20,8 +20,8 @@ const AuthButton = () => {
       : <Button as={Link} to="/login">Войти</Button>
   );
 };
-const Header = () => {
 
+const Header = () => {
   return (
     <Navbar className='shadow-sm bg-white'>
      <Container>

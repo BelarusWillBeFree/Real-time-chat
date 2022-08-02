@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { Channel } from './Channel';
 import { selectors } from '../slices/channelsSlice';
 
-export const ChannelsList = () => {
+export const ChannelsList = ({showModal}) => {
   const channels = useSelector(selectors.selectAll);
   const currentChannelId = useSelector((store) => store.channels.currentChannelId);
   
@@ -18,6 +18,7 @@ export const ChannelsList = () => {
               key={ channel.id }
               currentChannelId={ currentChannelId }
               channelData={ {...channel} }
+              showModal={showModal}
             />
         )
       }

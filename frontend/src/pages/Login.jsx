@@ -8,15 +8,15 @@ import {
 import {
   useNavigate,
 } from "react-router-dom";
-import { useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 
 import helloImage from '../assets/img/index.jpeg';
 import FormAuth from "../components/FormAuth";
 import router from '../routes';
-import AuthContext from '../contexts/AuthContext';
+import useAuth from '../hooks/useAuth';
 
 const Login = () => {
-  const auth = useContext(AuthContext);
+  const auth = useAuth();
   const navigate = useNavigate();
   const {pages: {home}} = router;
 
