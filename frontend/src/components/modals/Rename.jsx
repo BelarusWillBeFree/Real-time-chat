@@ -7,9 +7,11 @@ import * as yup from 'yup';
 import { selectors } from '../../slices/channelsSlice';
 
 const AddRename = (props) => {
+  const { onHide, modalInfo } = props;
   const channels = useSelector((state) => selectors.selectEntities(state));
   const namesChannels = Object.values(channels).map((channel) => channel.name);
-  
+  //const nameCurrentChannel = 
+  const currentChannel = useSelector((state) => selectors.selectById(state, modalInfo.id));
   const validationSchema = yup.object().shape({
     name: yup
           .string()
@@ -22,15 +24,15 @@ const AddRename = (props) => {
   const generateOnSubmit = ({ modalInfo, action, onHide }) => (values) => {
       setDisabledButton(true);
       validationSchema.validate(values)
-      .then(()=> action[modalInfo.type](values, onHide))
+      .then(()=> action[modalInfo.type]({name:values.name, id: modalInfo.id}, onHide))
       .catch((err) => {
         setErrorsDesc(err.message);
         setDisabledButton(false);
       });
   };
 
-  const { onHide } = props;
-  const formik = useFormik({ onSubmit: generateOnSubmit(props), initialValues: { name: '' } });
+
+  const formik = useFormik({ onSubmit: generateOnSubmit(props), initialValues: { name: currentChannel.name } });
   const [errorsDesc, setErrorsDesc] = useState('');
   const [disabledButton, setDisabledButton] = useState(false);
   const inputRef = useRef();
@@ -46,7 +48,7 @@ const AddRename = (props) => {
   return (
     <Modal show>
       <Modal.Header closeButton onHide={onHide}>
-        <Modal.Title>Добавить канал</Modal.Title>
+        <Modal.Title>Переименовать канал</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>

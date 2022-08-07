@@ -14,7 +14,7 @@ const ButtonChannelRemovable = ({ onclick, variant, name, id, showModal }) => {
       <Dropdown.Toggle split variant={variant} className="flex-grow-0 text-end" />
       <Dropdown.Menu>
         <Dropdown.Item onClick={() => showModal('removing', id)}>Удалить</Dropdown.Item>
-        <Dropdown.Item onClick={() => console.log('Переименовать')}>Переименовать</Dropdown.Item>
+        <Dropdown.Item onClick={() => showModal('renaming', id)}>Переименовать</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );

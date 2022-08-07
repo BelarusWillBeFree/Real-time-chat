@@ -22,16 +22,19 @@ const channelsSlice = createSlice({
       channelsAdapter.addOne(state, payload);
     },
     removeChannel: (state, { payload }) => {
-      console.log('remove channel id:', payload)
-     // channelsAdapter.removeOne(state, payload);
-  //    state.currentChannelId = defaultChannelId;
+      channelsAdapter.removeOne(state, payload);
+      if (payload===state.currentChannelId) {
+        state.currentChannelId = defaultChannelId; 
+      }
     },
-
+    renameChannel: (state, { payload }) => {
+      channelsAdapter.setOne(state, payload);
+    },
   },
 
 });
   
 export const selectors = channelsAdapter.getSelectors((state) => state.channels);
 
-export const { setCurrentChannelId, addChannels, addChannel, removeChannel } = channelsSlice.actions;
+export const { setCurrentChannelId, addChannels, addChannel, removeChannel, renameChannel } = channelsSlice.actions;
 export default channelsSlice.reducer;

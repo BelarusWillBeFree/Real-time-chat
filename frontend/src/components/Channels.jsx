@@ -18,10 +18,11 @@ const renderModal = ({ modalInfo, hideModal, action }) => {
 
 }
 export const Channels = () => {
-  const {addNewChannel, removeChannel} = useContext(SocketContext);
+  const { addNewChannel, sendRemoveChannel, sendRenameChannel } = useContext(SocketContext);
   const action = {
     adding: (props, cb) => addNewChannel(props, cb),
-    removing: (props, cb) => removeChannel(props, cb),
+    removing: (props, cb) => sendRemoveChannel(props, cb),
+    renaming: (props, cb) => sendRenameChannel(props, cb),
   }
   const [modalInfo, setModalInfo] = useState({ type: null, id: null });
   const hideModal = () => setModalInfo({ type: null, id: null });
