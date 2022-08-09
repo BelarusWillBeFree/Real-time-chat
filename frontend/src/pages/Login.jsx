@@ -11,7 +11,7 @@ import {
 import { useEffect } from 'react';
 
 import helloImage from '../assets/img/index.jpeg';
-import FormAuth from "../components/FormAuth";
+import FormAuth from "../components/forms/FormAuth";
 import router from '../routes';
 import useAuth from '../hooks/useAuth';
 

@@ -7,10 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 const MessagesHeader = () => {
   //const channels = useSelector(selectors.selectAll);
   const currentChannelId = useSelector((store) => store.channels.currentChannelId);
-  //console.log('channels', channels);
+  //const messages = useSelector((store) => store.messages.selectEntities());//.channelId === currentChannelId
+  //const messagesCurrentChannel = Object.values(messages).filter(message => message.channelId === currentChannelId);
+  //console.log('messagesCurrentChannel', messagesCurrentChannel);
   useEffect(() => {
     //console.log('channelCurrentId ', channelCurrentId);
-
+    //const countMessages = 
   }, []);
   const channelName = 'current channel';
   const count = 0;

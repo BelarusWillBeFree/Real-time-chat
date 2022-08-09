@@ -11,12 +11,10 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch } from "react-redux";
 
-//import getToken from '../api/getToken';
-
-import { localStorSet } from '../hooks/useLocalStor';
-import useAuth from '../hooks/useAuth'
-import router from '../routes';
-import { setUsername, setToken } from '../slices/loginSlice';
+import { localStorSet } from '../../hooks/useLocalStor';
+import useAuth from '../../hooks/useAuth'
+import router from '../../routes';
+import { setUsername, setToken } from '../../slices/loginSlice';
 
 const FormAuth = (props) => {
   const dispatch = useDispatch();
@@ -37,17 +35,10 @@ const FormAuth = (props) => {
     validationSchema,
     onSubmit: async(values, props) => {
       
-      //const response = getToken(values);
       try {
         const {username, token} = await localStorSet(values);
-          dispatch(setUsername(username));//values.username
-          dispatch(setToken(token));//values.username
-
-        
-        //const {data} = await response;
-        //localStorage.setItem('login', JSON.stringify(data));
-        //dispatch(setUsername(username));//values.username
-        //dispatch(setToken(token));//values.username
+          dispatch(setUsername(username));
+          dispatch(setToken(token));
         auth.logIn();
         navigate(home);
       } catch ({response}) {

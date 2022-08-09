@@ -1,22 +1,6 @@
-//import { useContext } from 'react';
 import axios from 'axios';
-//import { useDispatch } from "react-redux";
 
 import routes from "../routes";
-//import { setUsername, setToken } from '../slices/loginSlice';
-/*
-const getToken = async(authParams) => {
-  const path = routes.loginPath();
-  try {
-    return await axios.post(path, authParams);
-  } catch(err) {
-    throw err;
-  }
-}
-*/
-//export default getToken;
-
-//const dispatch = useDispatch();
 
 export const localStorSet = async(authParams) => {
   
