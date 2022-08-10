@@ -1,21 +1,15 @@
-import { useEffect, useContext } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 
-//import { selectors } from '../slices/channelsSlice';
-
+import { selectors as selectorMessages } from '../slices/messagesSlice';
+import { selectors as selectorChannels } from '../slices/channelsSlice';
 
 const MessagesHeader = () => {
-  //const channels = useSelector(selectors.selectAll);
-  const currentChannelId = useSelector((store) => store.channels.currentChannelId);
-  //const messages = useSelector((store) => store.messages.selectEntities());//.channelId === currentChannelId
-  //const messagesCurrentChannel = Object.values(messages).filter(message => message.channelId === currentChannelId);
-  //console.log('messagesCurrentChannel', messagesCurrentChannel);
-  useEffect(() => {
-    //console.log('channelCurrentId ', channelCurrentId);
-    //const countMessages = 
-  }, []);
-  const channelName = 'current channel';
-  const count = 0;
+  const curChannelId = useSelector((store) => store.channels.currentChannelId);
+  const currChannel = useSelector((state) => selectorChannels.selectById(state, curChannelId));
+  const messages = useSelector(selectorMessages.selectEntities);
+  const count = Object.values(messages).filter(message => message.channelId === curChannelId).length;
+
+  const channelName = currChannel.name;
   return (
     <div className="bg-light mb-4 p-3 shadow-sm small">
       <p className="m-0 fw-bold"># { channelName }</p>
