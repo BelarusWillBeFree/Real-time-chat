@@ -11,23 +11,55 @@ import {
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useRef, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
 import router from '../routes';
 
 import singupImage from '../assets/img/signup.jpeg';
 
 import signupApi from '../api/signupApi.js'
 
-import { useDispatch } from "react-redux";
 import { setUsername, setToken } from '../slices/loginSlice';
-import useAuth from '../hooks/useAuth'
+import useAuth from '../hooks/useAuth';
+
+const submitForm = (props) => {
+  const {
+    values,
+    setErrorServValid,
+    dispatch,
+    navigate,
+    errors,
+    auth
+  } = props;
+  const dataForSubmit = {
+    username: values.username,
+    password: values.password,
+  };
+  const {pages: {home}} = router;
+  signupApi(dataForSubmit)
+  .then((response) => {
+    const {username, token} = response.data;
+    setErrorServValid(false);
+    localStorage.setItem('login', JSON.stringify(response.data));
+    dispatch(setUsername(username));
+    dispatch(setToken(token));
+    auth.logIn();
+    navigate(home);
+  }).catch(({response})=>{
+    if (response.status === 409) {
+      setErrorServValid(true);
+      errors.confirmPassword='Такой пользователь уже существует'
+    }
+  });
+}
 
 const Signup = (props) => {
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {pages: {home}} = router;
   const auth = useAuth();
+
   useEffect(() => {
     inputRef.current.focus();
   }, []);
@@ -60,26 +92,16 @@ const Signup = (props) => {
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values, props) => {
-      const dataForSubmit = {
-        username: values.username,
-        password: values.password,
-      };
-      signupApi(dataForSubmit)
-      .then((response) => {
-        const {username, token} = response.data;
-        setErrorServValid(false);
-        localStorage.setItem('login', JSON.stringify(response.data));
-        dispatch(setUsername(username));
-        dispatch(setToken(token));
-        auth.logIn();
-        navigate(home);
-      }).catch(({response})=>{
-        if (response.status === 409) {
-          setErrorServValid(true);
-          errors.confirmPassword='Такой пользователь уже существует'
-        }
-      });
+    onSubmit: (values) => {
+      const propsSubmit = {
+          values,
+          setErrorServValid,
+          dispatch,
+          navigate,
+          errors,
+          auth
+        };
+      submitForm(propsSubmit)
     }
 
   });
