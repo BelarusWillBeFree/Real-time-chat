@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import router from '../routes';
 import { localStorGet } from '../hooks/useLocalStor';
 
-const Chats = (props) => {
+const Chats = () => {
   const dispatch = useDispatch();
   const auth = useAuth();
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const Chats = (props) => {
     }
   }, [login]);
 
-  const token = useSelector((store) => store.login.token);
+  const { token } = useSelector((store) => store.login);
 
   useEffect(
     () => {

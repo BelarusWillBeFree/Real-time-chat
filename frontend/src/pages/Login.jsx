@@ -9,14 +9,20 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import helloImage from '../assets/img/index.jpeg';
+
 import FormAuth from "../components/forms/FormAuth";
+
 import router from '../routes';
+
 import useAuth from '../hooks/useAuth';
 
 const Login = () => {
   const auth = useAuth();
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
   const {pages: {home}} = router;
 
@@ -39,13 +45,13 @@ const Login = () => {
           </Card.Body>
           <Card.Footer className="p-4">
             <div className="text-center">
-              <span className="px-1">Нет аккаунта?</span>
-              <Anchor href="/signup">Регистрация ›</Anchor>
+              <span className="px-1">{t('login.noAccount')}</span>
+              <Anchor href="/signup">{t('login.signup')}</Anchor>
             </div>
           </Card.Footer>
-      </Card>
+        </Card>
       </Col>
-     </Row>
+    </Row>
   );
 }
 

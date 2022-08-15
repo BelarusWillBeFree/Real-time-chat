@@ -3,8 +3,10 @@ import { useDispatch } from 'react-redux';
 import { Nav, Dropdown, Button, ButtonGroup } from 'react-bootstrap';
 
 import { setCurrentChannelId } from '../slices/channelsSlice';
+import { useTranslation } from 'react-i18next';
 
 const ButtonChannelRemovable = ({ onclick, variant, name, id, showModal }) => {
+  const { t } = useTranslation();
   return (
     <Dropdown as={ButtonGroup} className="w-100">
       <Button variant={variant} className="text-start w-100 text-truncate" onClick={onclick(id)}>
@@ -13,8 +15,8 @@ const ButtonChannelRemovable = ({ onclick, variant, name, id, showModal }) => {
       
       <Dropdown.Toggle split variant={variant} className="flex-grow-0 text-end" />
       <Dropdown.Menu>
-        <Dropdown.Item onClick={() => showModal('removing', id)}>Удалить</Dropdown.Item>
-        <Dropdown.Item onClick={() => showModal('renaming', id)}>Переименовать</Dropdown.Item>
+        <Dropdown.Item onClick={() => showModal('removing', id)}>{t('buttons.delete')}</Dropdown.Item>
+        <Dropdown.Item onClick={() => showModal('renaming', id)}>{t('buttons.rename')}</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );

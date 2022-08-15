@@ -1,11 +1,11 @@
-import {configureStore} from '@reduxjs/toolkit';
+import { combineReducers } from '@reduxjs/toolkit';
+//import {configureStore} from '@reduxjs/toolkit';
 import channelsReducer from './channelsSlice';
 import messagesReducer from './messagesSlice';
 import loginReducer from './loginSlice';
-export default configureStore({
-  reducer: {
+
+export default combineReducers({
     channels: channelsReducer,
     messages: messagesReducer,
     login: loginReducer,
-  }
 });

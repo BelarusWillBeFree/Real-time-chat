@@ -2,28 +2,49 @@ import { useFormik } from "formik";
 import { useRef, useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
 import { Modal, FormGroup, FormControl, Form, Container } from "react-bootstrap";
+import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
+import { toast } from 'react-toastify';
+import { useDispatch } from "react-redux";
 
 import { selectors } from '../../slices/channelsSlice';
+import { setCurrentChannelId } from '../../slices/channelsSlice';
 
 const AddRename = (props) => {
+  const { t } = useTranslation();
   const channels = useSelector((state) => selectors.selectEntities(state));
   const namesChannels = Object.values(channels).map((channel) => channel.name);
-  
+  const dispatch = useDispatch();
+
   const validationSchema = yup.object().shape({
     name: yup
           .string()
-          .required('Имя должно быть заполнено')
-          .min(2, 'От 3 до 20 символов')
-          .max(20, 'От 3 до 20 символов')
-          .notOneOf(namesChannels, 'Должно быть уникальным'),
+          .required(t('validation.required', {name: 'Имя'}))
+          .min(2, t('validation.sizeFromTo', {from: 3, to: 20}))
+          .max(20, t('validation.sizeFromTo', {from: 3, to: 20}))
+          .notOneOf(namesChannels, t('validation.unique')),
   });
-  
+  const notify = () => toast.success(t('channels.toast.add'));
+  const notifyError = () => toast.error(t('errors.unknown'));
+
+  const resultAddChannel = (props) => {
+    const { status } = props;
+    if (status === 'ok') {
+      const { data: { id } } = props;
+      dispatch(setCurrentChannelId(id));
+      notify();
+      onHide();
+    } else {
+      notifyError();
+      setDisabledButton(false); 
+    }
+  }
   const generateOnSubmit = ({ modalInfo, action, onHide }) => (values) => {
       setDisabledButton(true);
       validationSchema.validate(values)
-      .then(()=> action[modalInfo.type](values, onHide))
+      .then(()=> action[modalInfo.type](values, resultAddChannel))
       .catch((err) => {
+        toast.error(t('errors.unknown'));
         setErrorsDesc(err.message);
         setDisabledButton(false);
       });
@@ -44,9 +65,9 @@ const AddRename = (props) => {
 
   const {handleSubmit, handleChange, handleBlur, values} = formik;
   return (
-    <Modal show>
+    <Modal show centered>
       <Modal.Header closeButton onHide={onHide}>
-        <Modal.Title>Добавить канал</Modal.Title>
+        <Modal.Title>{t('modals.add.text')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -66,8 +87,8 @@ const AddRename = (props) => {
             {errorsDesc?<Form.Text className='text-danger'>{errorsDesc}</Form.Text> : null}
           </FormGroup>
           <Container className='d-flex justify-content-end'>
-            <input type="button" onClick={handleClose} className="btn btn-secondary me-2" value="Отменить" />
-            <input type="submit" disabled={disabledButton} className="btn btn-primary " value="Отправить" />
+            <input type="button" onClick={handleClose} className="btn btn-secondary me-2" value={t('buttons.cancel')} />
+            <input type="submit" disabled={disabledButton} className="btn btn-primary " value={t('buttons.submit')} />
           </Container>
         </form>
       </Modal.Body>
