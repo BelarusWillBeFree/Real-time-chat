@@ -7,11 +7,7 @@ const signupApi = async(data) => {
     return;
   }
   const path = routes.signupPath();
-  try {
-    return await axios.post(path, data);
-  } catch(err) {
-    throw err;
-  }
+  return await axios.post(path, data);
 }
 
 export default signupApi;

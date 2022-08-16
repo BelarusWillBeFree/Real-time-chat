@@ -4,7 +4,7 @@ import i18next from 'i18next';
 import { initReactI18next, I18nextProvider } from 'react-i18next';
 import { configureStore } from '@reduxjs/toolkit';
 import reducer from './slices/index.js'
-import resources from './locales/index.js';
+import ru from './locales/ru.js';
 import { Provider } from "react-redux";
 import { Provider as ProviderRollbar } from '@rollbar/react';
 
@@ -52,6 +52,7 @@ const apiFun = ( socket ) => {
     sendNewMessage,
   };
 }
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (socket) => {
   const i18n = i18next.createInstance();
@@ -63,7 +64,7 @@ export default async (socket) => {
     debug: false,
 
     resources: {
-      ru: resources.ru,
+      ru,
     },
 
   });

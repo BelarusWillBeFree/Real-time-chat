@@ -12,11 +12,7 @@ const fetchData = async(token) => {
       Authorization: `Bearer ${token}`
     }
   };
-  try {
-    return await axios.get(path, headers);
-  } catch(err) {
-    throw err;
-  }
+  return await axios.get(path, headers);
 }
 
 export default fetchData;
