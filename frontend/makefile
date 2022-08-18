@@ -1,13 +1,14 @@
+
 start:
-	npx react-scripts start
-start dev:
-	NODE_ENV=developer npx react-scripts start
+	npm start
+
+install:
+	npm install
+
+lint:
+	npm run lint --fix
 
 build:
-	react-scripts build
+	CI=false npm run build
 
-test:
-	react-scripts test
-
-eject:
-	react-scripts eject
+.PHONY: all build clean

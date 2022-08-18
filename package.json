@@ -1,13 +1,13 @@
 {
-  "name": "frontend-project-lvl4",
+  "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "[![Actions Status](https://github.com/BelarusWillBeFree/frontend-project-lvl4/workflows/hexlet-check/badge.svg)](https://github.com/BelarusWillBeFree/frontend-project-lvl4/actions) test",
   "main": "frontend/src/index.js",
   "scripts": {
     "build": "npm run build --prefix frontend",
-    "start": "start-server -s ./frontend/build",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "cd frontend && npm ci"
+    "start": "start-server -s frontend/build",
+    "server": "start-server -a localhost",
+    "postinstall": "cd frontend && npm install"
   },
   "repository": {
     "type": "git",
