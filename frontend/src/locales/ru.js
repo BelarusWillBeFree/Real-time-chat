@@ -11,7 +11,7 @@ export default {
     validation: {
       required: '{{name}} обязательное поле',
       sizeFromTo: 'От {{from}} до {{to}} символов',
-      minSym: 'Не менее {{min}}-ти символов',
+      minSym: 'Не менее {{min}} символов',
       confirmPassword: 'Пароли должны совпадать',
       unique: 'Должно быть уникальным',
     },
