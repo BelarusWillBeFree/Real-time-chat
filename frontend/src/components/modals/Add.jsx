@@ -6,12 +6,13 @@ import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { useDispatch } from "react-redux";
-
+import { useRollbar } from '@rollbar/react';
 import { selectors } from '../../slices/channelsSlice';
 import { setCurrentChannelId } from '../../slices/channelsSlice';
 
 const AddRename = (props) => {
   const { t } = useTranslation();
+  const rollbar = useRollbar();
   const channels = useSelector((state) => selectors.selectEntities(state));
   const namesChannels = Object.values(channels).map((channel) => channel.name);
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const AddRename = (props) => {
       notify();
       onHide();
     } else {
+      rollbar.error('error creat new channel');
       notifyError();
       setDisabledButton(false); 
     }

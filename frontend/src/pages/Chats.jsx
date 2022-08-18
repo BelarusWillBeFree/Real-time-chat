@@ -14,6 +14,7 @@ import { addChannels } from '../slices/channelsSlice';
 import { addMessages } from '../slices/messagesSlice';
 import { setUsername, setToken } from '../slices/loginSlice';
 import fetchData from "../api/fetchData";
+import { useRollbar } from '@rollbar/react';
 import { Channels } from '../components/Channels'
 import Messages from "../components/Messages";
 import useAuth from '../hooks/useAuth';
@@ -25,6 +26,7 @@ const Chats = () => {
   const dispatch = useDispatch();
   const auth = useAuth();
   const navigate = useNavigate();
+  const rollbar = useRollbar();
 
   const login = localStorGet();
   useEffect(() => {
@@ -53,7 +55,7 @@ const Chats = () => {
         dispatch(addChannels(data.channels));
         dispatch(addMessages(data.messages));
       }).catch((err) =>{
-        console.log(err);
+        rollbar.error('get data from server', err);
       });
     }, []);
   return (

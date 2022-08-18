@@ -6,7 +6,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import reducer from './slices/index.js'
 import ru from './locales/ru.js';
 import { Provider } from "react-redux";
-import { Provider as ProviderRollbar } from '@rollbar/react';
+import { Provider as ProviderRollbar, ErrorBoundary } from '@rollbar/react';
 
 import { ApiContext } from './contexts/Context';
 import { addMessage } from './slices/messagesSlice';
@@ -68,10 +68,13 @@ export default async (socket) => {
     },
 
   });
+
   const store = configureStore({reducer});
   const rollbarConfig = {
-    accessToken: 'dd010140f2de491793e4261ea3148d72',
+    accessToken: process.env.REACT_APP_ACCESS_TOKEN,
     environment: 'production',
+    captureUncaught: true,
+    captureUnhandledRejections: true,
   };
 
   socket.on('newMessage', (data)=> {
@@ -91,11 +94,13 @@ export default async (socket) => {
     <React.StrictMode>
       <Provider store={store}>
         <ProviderRollbar config={rollbarConfig}> 
-          <ApiContext.Provider value={api}>
-            <I18nextProvider i18n={i18n}>
-              <App />
-            </I18nextProvider> 
-          </ApiContext.Provider>
+          <ErrorBoundary>
+            <ApiContext.Provider value={api}>
+              <I18nextProvider i18n={i18n}>
+                <App />
+              </I18nextProvider> 
+            </ApiContext.Provider>
+          </ErrorBoundary>
         </ProviderRollbar>
       </Provider>    
   </React.StrictMode>

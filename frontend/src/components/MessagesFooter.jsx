@@ -23,6 +23,7 @@ const MessagesFooter = () => {
     if (status === 'ok') {
       formik.resetForm();
     } else {
+      console.log('err send message: timeout');
       notifyError();
     }
     setDisabledButton(false);

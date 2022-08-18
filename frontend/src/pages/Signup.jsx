@@ -167,7 +167,7 @@ const Signup = (props) => {
 
                 <FormControl.Feedback type='invalid' tooltip>{ errors.confirmPassword }</FormControl.Feedback>
               </FloatingLabel> 
-              <Button variant='outline-primary w-100' type='submit'>{t('button.singup')}</Button>
+              <Button variant='outline-primary w-100' type='submit'>{t('buttons.signup')}</Button>
             </Form>
           </Card.Body>
         </Card>

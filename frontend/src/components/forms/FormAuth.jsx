@@ -11,6 +11,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch } from "react-redux";
 import { useTranslation } from 'react-i18next';
+import { useRollbar } from '@rollbar/react';
 
 import { localStorSet } from '../../hooks/useLocalStor';
 import useAuth from '../../hooks/useAuth'
@@ -19,6 +20,7 @@ import { setUsername, setToken } from '../../slices/loginSlice';
 
 const FormAuth = () => {
   const dispatch = useDispatch();
+  const rollbar = useRollbar();
   const { t } = useTranslation();
   const initialValues = {
     username: '',
@@ -48,8 +50,9 @@ const FormAuth = () => {
           dispatch(setToken(token));
         auth.logIn();
         navigate(home);
-      } catch ({response}) {
-          setErrAuth(true);
+      } catch (error) {
+        rollbar.error('error login', error)
+        setErrAuth(true);
       }
     },
   });
