@@ -13,7 +13,9 @@ const ButtonChannelRemovable = ({ onclick, variant, name, id, showModal }) => {
         <span>#</span> {name}
       </Button>
       
-      <Dropdown.Toggle split variant={variant} className="flex-grow-0 text-end" />
+      <Dropdown.Toggle split variant={variant} className="flex-grow-0 text-end">
+        <span className='visually-hidden'>{t('channels.control')}</span>
+      </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item onClick={() => showModal('removing', id)}>{t('buttons.delete')}</Dropdown.Item>
         <Dropdown.Item onClick={() => showModal('renaming', id)}>{t('buttons.rename')}</Dropdown.Item>

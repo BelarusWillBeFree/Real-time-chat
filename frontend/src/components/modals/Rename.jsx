@@ -79,6 +79,7 @@ const AddRename = (props) => {
               className='mb-2'
               isInvalid ={errorsDesc}
             />
+            <Form.Label className='visually-hidden'>{t('modals.label')}</Form.Label>
             {errorsDesc?<Form.Text className='text-danger'>{errorsDesc}</Form.Text> : null}
           </FormGroup>
           <Container className='d-flex justify-content-end'>

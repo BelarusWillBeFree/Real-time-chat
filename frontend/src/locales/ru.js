@@ -32,7 +32,8 @@ export default {
         add: 'Канал создан',
         rename: 'Канал переименован',
         remove: 'Канал удален',
-      }
+      },
+      control: 'Управление каналом',
     },
     messages: {
       textInput: 'Введите сообщение...',
@@ -41,6 +42,7 @@ export default {
       message_many: '{{count}} сообщений',
     },
     modals: {
+      label: 'Имя канала',
       add: {
         text: 'Добавить канал',
       },
