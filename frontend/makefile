@@ -1,5 +1,7 @@
 start:
-	npx react-scripts start
+	NODE_ENV=production npx react-scripts start
+start dev:
+	NODE_ENV=developer npx react-scripts start
 
 build:
 	react-scripts build

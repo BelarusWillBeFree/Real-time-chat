@@ -72,7 +72,7 @@ export default async (socket) => {
   const store = configureStore({reducer});
   const rollbarConfig = {
     accessToken: process.env.REACT_APP_ACCESS_TOKEN,
-    //environment: 'production',
+    environment: process.env.NODE_ENV,
     captureUncaught: true,
     captureUnhandledRejections: true,
   };

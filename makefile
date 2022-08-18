@@ -1,5 +1,5 @@
 start-frontend:
-	make -C frontend start
+	make -C frontend NODE_ENV=production start
 
 start-backend:
 	npx start-server
