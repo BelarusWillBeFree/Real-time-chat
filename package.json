@@ -2,7 +2,7 @@
   "name": "frontend-project-lvl4",
   "version": "1.0.0",
   "description": "[![Actions Status](https://github.com/BelarusWillBeFree/frontend-project-lvl4/workflows/hexlet-check/badge.svg)](https://github.com/BelarusWillBeFree/frontend-project-lvl4/actions) test",
-  "main": "index.js",
+  "main": "frontend/src/index.js",
   "scripts": {
     "build": "npm run build --prefix frontend",
     "start": "start-server -s ./frontend/build",
