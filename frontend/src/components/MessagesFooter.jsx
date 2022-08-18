@@ -49,6 +49,7 @@ const MessagesFooter = () => {
           <Form.Control
             placeholder={t('messages.textInput')}
             name='message'
+            aria-label='Новое сообщение'
             className='border-0'
             value={values.message}
             onChange={handleChange}
