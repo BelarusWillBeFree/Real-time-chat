@@ -59,7 +59,7 @@ const FormAuth = () => {
   const [errAuth, setErrAuth] = useState(false);
   const { values, errors, touched } = formik;
   return (
-    <Form validated={!errAuth} className='col-12 col-md-6 mt-3 mt-mb-0' onSubmit={formik.handleSubmit}>
+    <Form  className='col-12 col-md-6 mt-3 mt-mb-0' onSubmit={formik.handleSubmit}>
     <h1 className='text-center mb-4'>
       {t('login.text')}
     </h1>
@@ -72,7 +72,7 @@ const FormAuth = () => {
         value={values.username}
         ref={null}
         onChange={formik.handleChange}
-        isInvalid={(errors.username && touched.username)||errAuth}
+        isInvalid={(errors.username && touched.username)|errAuth}
       />
     </FloatingLabel>
     <FloatingLabel label={t('login.password')} controlId='password' className='mb-4' type='password'>
