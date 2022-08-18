@@ -1,5 +1,5 @@
 start:
-	NODE_ENV=production npx react-scripts start
+	npx react-scripts start
 start dev:
 	NODE_ENV=developer npx react-scripts start
 
