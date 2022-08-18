@@ -39,6 +39,7 @@ export const Channels = () => {
           onClick={() => showModal('adding')} 
           className="p-0 text-primary btn-group-vertical">
             <PlusSquare/>
+            <span className='visually-hidden'>+</span>
         </Button>
       </div>  
       <ChannelsList showModal={showModal}/>
