@@ -14,7 +14,7 @@ const MessagesHeader = () => {
   const channelName = currChannel ? currChannel.name : '';
   return (
     <div className="bg-light mb-4 p-3 shadow-sm small">
-      <p className="m-0 fw-bold"># { channelName }</p>
+      <p className="m-0 fw-bold"><b>{`# ${channelName}`}</b></p>
       <span className="text-muted">
         {t('messages.message', {count})}</span>
     </div> 
