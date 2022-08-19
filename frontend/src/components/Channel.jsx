@@ -10,7 +10,7 @@ const ButtonChannelRemovable = ({ onclick, variant, name, id, showModal }) => {
   return (
     <Dropdown as={ButtonGroup} className="w-100">
       <Button variant={variant} className="text-start w-100 text-truncate" onClick={onclick(id)}>
-      {`# ${name}`}
+      <span>{`# ${name}`}</span>
       </Button>
       
       <Dropdown.Toggle split variant={variant} className="flex-grow-0 text-end">
