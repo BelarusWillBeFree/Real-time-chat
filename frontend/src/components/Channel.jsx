@@ -27,7 +27,7 @@ const ButtonChannelRemovable = ({ onclick, variant, name, id, showModal }) => {
 const ButtonChannel = ({ onclick, variant, name, id }) => {
   return (
     <Button variant={variant} className="text-start w-100 text-truncate" onClick={onclick(id)}>
-      {`# ${name}`}
+      <span>{`# ${name}`}</span>
     </Button>
   );
 };

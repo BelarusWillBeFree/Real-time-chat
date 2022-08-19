@@ -45,8 +45,7 @@ const AddRename = (props) => {
       setDisabledButton(true);
       validationSchema.validate(values)
       .then(()=> action[modalInfo.type](values, resultAddChannel))
-      .catch((err) => {
-        toast.error(t('errors.unknown'));
+      .catch((err) => {    
         setErrorsDesc(err.message);
         setDisabledButton(false);
       });

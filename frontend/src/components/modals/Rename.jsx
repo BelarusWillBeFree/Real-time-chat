@@ -39,7 +39,6 @@ const AddRename = (props) => {
       validationSchema.validate(values)
       .then(()=> action[modalInfo.type]({name:values.name, id: modalInfo.id}, successSubmit))
       .catch((err) => {
-        notifyError();
         setErrorsDesc(err.message);
         setDisabledButton(false);
       });
