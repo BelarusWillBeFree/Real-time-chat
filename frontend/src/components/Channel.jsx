@@ -10,8 +10,7 @@ const ButtonChannelRemovable = ({ onclick, variant, name, id, showModal }) => {
   return (
     <Dropdown as={ButtonGroup} className="w-100">
       <Button variant={variant} className="text-start w-100 text-truncate" onClick={onclick(id)}>
-        #
-        {' '}
+        <span className="me-1">#</span>
         {name}
       </Button>
       
@@ -29,9 +28,7 @@ const ButtonChannelRemovable = ({ onclick, variant, name, id, showModal }) => {
 const ButtonChannel = ({ onclick, variant, name, id }) => {
   return (
     <Button variant={variant} className="text-start w-100 text-truncate" onClick={onclick(id)}>
-        #
-        {' '}
-        {name}
+        {`# ${name}`}
     </Button>
   );
 };
@@ -49,8 +46,8 @@ export const Channel = ({channelData, currentChannelId, showModal}) => {
     <Nav.Item className="w-100" as="li">
       {
         removable
-        ? <ButtonChannelRemovable onclick={onClick} id={id} variant={variant} name={name} showModal={showModal}/>
-        : <ButtonChannel onclick={onClick} id={id} variant={variant} name={name}/>
+        ? <ButtonChannelRemovable onclick={onClick} key={id} id={id} variant={variant} name={name} showModal={showModal}/>
+        : <ButtonChannel onclick={onClick} key={id} id={id} variant={variant} name={name}/>
       }
     </Nav.Item>
   )
