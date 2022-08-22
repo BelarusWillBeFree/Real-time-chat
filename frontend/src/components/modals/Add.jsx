@@ -33,7 +33,7 @@ const AddRename = (props) => {
     if (status === 'ok') {
       const { data: { id } } = props;
       dispatch(setCurrentChannelId(id));
-      notify();
+//      notify();
       onHide();
     } else {
       rollbar.error('error creat new channel');
@@ -44,7 +44,10 @@ const AddRename = (props) => {
   const generateOnSubmit = ({ modalInfo, action, onHide }) => (values) => {
       setDisabledButton(true);
       validationSchema.validate(values)
-      .then(()=> action[modalInfo.type](values, resultAddChannel))
+      .then(()=> {
+        notify();
+        action[modalInfo.type](values, resultAddChannel)
+      })
       .catch((err) => {    
         setErrorsDesc(err.message);
         setDisabledButton(false);

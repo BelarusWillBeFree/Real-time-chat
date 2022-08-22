@@ -1,26 +1,30 @@
-import { Modal, Container } from "react-bootstrap";
-import { useState } from "react";
+import { Modal, Container, Button } from "react-bootstrap";
+import { useState, useRef, useEffect } from "react";
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 const Remove = ({ modalInfo, action, onHide }) => {
   const [disabled, setDisabled] = useState(false);
   const { t } = useTranslation();
+  const buttonRef = useRef();
   const notify = () => toast.success(t('channels.toast.remove'));
   const notifyError = () => toast.error(t('errors.unknown'));
   const resultDeleteChannel = ({status}) => {
     if (status === 'ok') {
-      notify();
+      //notify();
       onHide();
     } else {
       notifyError();
       setDisabled(false); 
     }
   }
-
-  const handleSubmit = (event) => {
+  useEffect(() => {
+    buttonRef.current.focus();
+  }, []);
+  const handleDelete = (event) => {
     event.preventDefault();
     setDisabled(true);
+    notify();
     action[modalInfo.type](modalInfo.id, resultDeleteChannel);
   }
 
@@ -35,7 +39,7 @@ const Remove = ({ modalInfo, action, onHide }) => {
       </Modal.Header>
 
       <Modal.Body>
-        <form onSubmit={handleSubmit}>
+        <form>
           <Container className='d-flex justify-content-end'>
             <input 
               type="button"
@@ -44,12 +48,15 @@ const Remove = ({ modalInfo, action, onHide }) => {
               className="btn btn-secondary me-2"
               value={t('buttons.cancel')}
             />
-            <input
+            <Button
               type="submit"
+              variant="danger"
+              onClick={handleDelete}
               disabled={disabled}
-              className="btn btn-danger"
-              value={t('buttons.delete')}
-            />
+              ref={buttonRef}
+            >
+              {t('buttons.delete')}
+            </Button>
           </Container>
         </form>
       </Modal.Body>

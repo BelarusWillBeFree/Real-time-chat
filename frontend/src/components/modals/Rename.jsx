@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import { useRef, useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
-import { Modal, FormGroup, FormControl, Form, Container } from "react-bootstrap";
+import { Modal, FormGroup, FormControl, Form, Container, FormLabel } from "react-bootstrap";
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
@@ -66,21 +66,21 @@ const AddRename = (props) => {
 
       <Modal.Body>
         <form onSubmit={handleSubmit}>
-          <FormGroup>
-            <FormControl
-              required
-              ref={inputRef}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.name}
-              data-testid="input-body"
-              name="name"
-              className='mb-2'
-              isInvalid ={errorsDesc}
-            />
-            <Form.Label className='visually-hidden' htmlFor='name'>{t('modals.label')}</Form.Label>
-            {errorsDesc?<Form.Text className='text-danger'>{errorsDesc}</Form.Text> : null}
-          </FormGroup>
+          <FormLabel className="visually-hidden" htmlFor="name">{t('modals.label')}</FormLabel>
+          <FormControl
+            required
+            ref={inputRef}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.name}
+            data-testid="input-body"
+            name="name"
+            id='name'
+            placeholder={t('modals.label')}
+            className='mb-2'
+            isInvalid ={errorsDesc}
+          />
+          {errorsDesc?<Form.Text className='text-danger'>{errorsDesc}</Form.Text> : null}
           <Container className='d-flex justify-content-end'>
             <input type="button" onClick={handleClose} className="btn btn-secondary me-2" value={t('buttons.cancel')} />
             <input type="submit" disabled={disabledButton} className="btn btn-primary " value={t('buttons.submit')} />

@@ -75,7 +75,7 @@ const FormAuth = () => {
         isInvalid={(errors.username && touched.username)|errAuth}
       />
     </FloatingLabel>
-    <FloatingLabel label={t('login.password')} controlId='password' className='mb-4' type='password'>
+    <FloatingLabel label={t('login.password')} controlId='password' htmlFor='username' className='mb-4' type='password'>
       <Form.Control 
         required
         name='password' 
