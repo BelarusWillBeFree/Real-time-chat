@@ -33,7 +33,7 @@ const AddRename = (props) => {
     if (status === 'ok') {
       const { data: { id } } = props;
       dispatch(setCurrentChannelId(id));
-//      notify();
+      notify();
       onHide();
     } else {
       rollbar.error('error creat new channel');
@@ -45,7 +45,7 @@ const AddRename = (props) => {
       setDisabledButton(true);
       validationSchema.validate(values)
       .then(()=> {
-        notify();
+       // notify();
         action[modalInfo.type](values, resultAddChannel)
       })
       .catch((err) => {    
@@ -76,7 +76,7 @@ const AddRename = (props) => {
 
       <Modal.Body>
         <form onSubmit={handleSubmit}>
-          <FormGroup>
+
             <FormControl
               required
               ref={inputRef}
@@ -84,13 +84,14 @@ const AddRename = (props) => {
               onBlur={handleBlur}
               value={values.name}
               data-testid="input-body"
+              placeholder={t('modals.label')}
+              id='name'
               name="name"
               className='mb-2'
               isInvalid ={errorsDesc}
             />
             <Form.Label className='visually-hidden' htmlFor='name'>{t('modals.label')}</Form.Label>
             {errorsDesc?<Form.Text className='text-danger'>{errorsDesc}</Form.Text> : null}
-          </FormGroup>
           <Container className='d-flex justify-content-end'>
             <input type="button" onClick={handleClose} className="btn btn-secondary me-2" value={t('buttons.cancel')} />
             <input type="submit" disabled={disabledButton} className="btn btn-primary " value={t('buttons.submit')} />
