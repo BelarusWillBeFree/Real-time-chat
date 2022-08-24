@@ -18,20 +18,18 @@ import Header from './components/Header.jsx';
 function App() {
   return (
     <AuthProvider>
-
-        <Router>
-          <div className="d-flex flex-column h-100">
-            <Header />
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/" element={<Chats />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </div>
-          <ToastContainer />
-        </Router>
-
+      <Router>
+        <div className="d-flex flex-column h-100">
+          <Header />
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/" element={<Chats />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+        <ToastContainer />
+      </Router>
     </AuthProvider>
   );
 }
