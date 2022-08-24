@@ -1,26 +1,24 @@
 import {
   BrowserRouter as Router,
   Routes,
-  Route, 
-} from "react-router-dom";
-import React from "react";
-//import { Provider as StoreProvider } from "react-redux";
+  Route,
+} from 'react-router-dom';
+import React from 'react';
 
+import { ToastContainer } from 'react-toastify';
 import Login from './pages/Login.jsx';
 import NotFound from './pages/NotFound.jsx';
 import Chats from './pages/Chats.jsx';
 import Signup from './pages/Signup.jsx';
 
-import AuthProvider from './contexts/AuthProvider';
+import AuthProvider from './contexts/AuthProvider.jsx';
 
-import { ToastContainer } from 'react-toastify';
-
-import Header from "./components/Header.jsx";
+import Header from './components/Header.jsx';
 
 function App() {
   return (
     <AuthProvider>
-      
+
         <Router>
           <div className="d-flex flex-column h-100">
             <Header />
@@ -33,7 +31,7 @@ function App() {
           </div>
           <ToastContainer />
         </Router>
-      
+
     </AuthProvider>
   );
 }

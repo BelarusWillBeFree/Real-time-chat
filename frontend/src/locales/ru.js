@@ -55,7 +55,7 @@ export default {
     },
     buttons: {
       submit: 'Отправить',
-      cancel: 'Отменить', 
+      cancel: 'Отменить',
       delete: 'Удалить',
       input: 'Войти',
       output: 'Выйти',

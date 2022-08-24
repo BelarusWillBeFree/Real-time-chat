@@ -1,6 +1,6 @@
 import React, {
   useEffect,
-} from "react";
+} from 'react';
 import {
   useDispatch,
   useSelector,
@@ -10,17 +10,17 @@ import {
   Row,
 } from 'react-bootstrap';
 
+import { useRollbar } from '@rollbar/react';
+import { useNavigate } from 'react-router-dom';
 import { addChannels } from '../slices/channelsSlice';
 import { addMessages } from '../slices/messagesSlice';
 import { setUsername, setToken } from '../slices/loginSlice';
-import fetchData from "../api/fetchData";
-import { useRollbar } from '@rollbar/react';
-import { Channels } from '../components/Channels'
-import Messages from "../components/Messages";
-import useAuth from '../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
+import fetchData from '../api/fetchData';
+import Channels from '../components/Channels.jsx';
+import Messages from '../components/Messages.jsx';
+import useAuth from '../hooks/useAuth.jsx';
 import router from '../routes';
-import { localStorGet } from '../hooks/useLocalStor';
+import { localStorGet } from '../hooks/useLocalStor.jsx';
 
 const Chats = () => {
   const dispatch = useDispatch();
@@ -28,36 +28,33 @@ const Chats = () => {
   const navigate = useNavigate();
   const rollbar = useRollbar();
 
-  const login = localStorGet();
+  const loginData = localStorGet();
   useEffect(() => {
-    if (login) {
-      dispatch(setUsername(login.username));
-      dispatch(setToken(login.token));
+    if (loginData) {
+      dispatch(setUsername(loginData.username));
+      dispatch(setToken(loginData.token));
       auth.logIn();
     }
     if (!auth.loggedIn) {
-      const { pages: {login}} = router;
+      const { pages: { login } } = router;
       navigate(login);
-      return;
     }
-  }, [login]);
+  }, [loginData]);
 
   const { token } = useSelector((store) => store.login);
 
-  useEffect(
-    () => {
-
-      fetchData(token).then((response) => {
-        if (!response) {
-          return;
-        }
-        const {data} = response;
-        dispatch(addChannels(data.channels));
-        dispatch(addMessages(data.messages));
-      }).catch((err) =>{
-        rollbar.error('get data from server', err);
-      });
-    }, []);
+  useEffect(() => {
+    fetchData(token).then((response) => {
+      if (!response) {
+        return;
+      }
+      const { data } = response;
+      dispatch(addChannels(data.channels));
+      dispatch(addMessages(data.messages));
+    }).catch((err) => {
+      rollbar.error('get data from server', err);
+    });
+  }, []);
   return (
     <Container className="h-100 my-4 overflow-hidden rounded shadow">
       <Row className="h-100 bg-white flex-md-row">
@@ -66,6 +63,6 @@ const Chats = () => {
       </Row>
     </Container>
   );
-}
+};
 
 export default Chats;

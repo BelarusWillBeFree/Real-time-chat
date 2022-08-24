@@ -1,11 +1,15 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Nav, Dropdown, Button, ButtonGroup } from 'react-bootstrap';
+import {
+  Nav, Dropdown, Button, ButtonGroup,
+} from 'react-bootstrap';
 
-import { setCurrentChannelId } from '../slices/channelsSlice';
 import { useTranslation } from 'react-i18next';
+import { setCurrentChannelId } from '../slices/channelsSlice';
 
-const ButtonChannelRemovable = ({ onclick, variant, name, id, showModal }) => {
+const ButtonChannelRemovable = ({
+  onclick, variant, name, id, showModal,
+}) => {
   const { t } = useTranslation();
   return (
     <Dropdown as={ButtonGroup} className="w-100">
@@ -13,7 +17,7 @@ const ButtonChannelRemovable = ({ onclick, variant, name, id, showModal }) => {
         <span className="me-1">#</span>
         {name}
       </Button>
-      
+
       <Dropdown.Toggle split variant={variant} className="flex-grow-0 text-end">
         <span className='visually-hidden'>{t('channels.control')}</span>
       </Dropdown.Toggle>
@@ -25,30 +29,46 @@ const ButtonChannelRemovable = ({ onclick, variant, name, id, showModal }) => {
   );
 };
 
-const ButtonChannel = ({ onclick, variant, name, id }) => {
-  return (
+const ButtonChannel = ({
+  onclick, variant, name, id,
+}) => (
     <Button variant={variant} className="text-start w-100 text-truncate" onClick={onclick(id)}>
         {`# ${name}`}
     </Button>
-  );
-};
+);
 
-export const Channel = ({channelData, currentChannelId, showModal}) => {
+const Channel = (props) => {
+  const { channelData, currentChannelId, showModal } = props;
   const dispatch = useDispatch();
-  const { id, name, removable } = channelData;
-  const variant = id === currentChannelId ? 'secondary' : 'light';
-  
+  const { name, removable } = channelData;
+  const variant = channelData.id === currentChannelId ? 'secondary' : 'light';
+
   const onClick = (id) => () => {
     dispatch(setCurrentChannelId(id));
-  }
-  
+  };
+
   return (
     <Nav.Item className="w-100" as="li">
       {
         removable
-        ? <ButtonChannelRemovable onclick={onClick} key={id} id={id} variant={variant} name={name} showModal={showModal}/>
-        : <ButtonChannel onclick={onClick} key={id} id={id} variant={variant} name={name}/>
+          ? <ButtonChannelRemovable
+              onclick={onClick}
+              key={channelData.id}
+              id={channelData.id}
+              variant={variant}
+              name={name}
+              showModal={showModal}
+            />
+          : <ButtonChannel
+              onclick={onClick}
+              key={channelData.id}
+              id={channelData.id}
+              variant={variant}
+              name={name}
+            />
       }
     </Nav.Item>
-  )
+  );
 };
+
+export default Channel;

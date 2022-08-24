@@ -7,8 +7,8 @@ const path = {
   pages: {
     login: '/login',
     home: '/',
-    
-  }
+
+  },
 };
 
 export default path;

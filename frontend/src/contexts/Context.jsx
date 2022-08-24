@@ -5,7 +5,7 @@ const I18nContext = createContext({});
 const SocketContext = createContext({});
 const ApiContext = createContext({});
 
-export { 
+export {
   AuthContext,
   I18nContext,
   SocketContext,

@@ -6,11 +6,11 @@ import {
   Card,
   Image,
   Button,
-  FloatingLabel
+  FloatingLabel,
 } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -19,12 +19,11 @@ import router from '../routes';
 
 import singupImage from '../assets/img/signup.jpeg';
 
-import signupApi from '../api/signupApi.js'
+import signupApi from '../api/signupApi.js';
 
 import { setUsername, setToken } from '../slices/loginSlice';
 
-import useAuth from '../hooks/useAuth';
-
+import useAuth from '../hooks/useAuth.jsx';
 
 const submitForm = (props) => {
   const {
@@ -34,31 +33,31 @@ const submitForm = (props) => {
     navigate,
     errors,
     auth,
-    t
+    t,
   } = props;
   const dataForSubmit = {
     username: values.username,
     password: values.password,
   };
-  const {pages: {home}} = router;
+  const { pages: { home } } = router;
   signupApi(dataForSubmit)
-  .then((response) => {
-    const {username, token} = response.data;
-    setErrorServValid(false);
-    localStorage.setItem('login', JSON.stringify(response.data));
-    dispatch(setUsername(username));
-    dispatch(setToken(token));
-    auth.logIn();
-    navigate(home);
-  }).catch(({response})=>{
-    if (response.status === 409) {
-      setErrorServValid(true);
-      errors.confirmPassword = t('errors.userAlredyExist');
-    }
-  });
-}
+    .then((response) => {
+      const { username, token } = response.data;
+      setErrorServValid(false);
+      localStorage.setItem('login', JSON.stringify(response.data));
+      dispatch(setUsername(username));
+      dispatch(setToken(token));
+      auth.logIn();
+      navigate(home);
+    }).catch(({ response }) => {
+      if (response.status === 409) {
+        setErrorServValid(true);
+        errors.confirmPassword = t('errors.userAlredyExist');
+      }
+    });
+};
 
-const Signup = (props) => {
+const Signup = () => {
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -77,42 +76,45 @@ const Signup = (props) => {
   };
   const validationSchema = yup.object().shape({
     username: yup
-              .string()
-              .required(t('validation.required', {name: 'Имя пользователя'}))
-              .min(2, t('validation.sizeFromTo', {from: 3, to: 20}))
-              .max(20, t('validation.sizeFromTo', {from: 3, to: 20})),
+      .string()
+      .required(t('validation.required', { name: 'Имя пользователя' }))
+      .min(2, t('validation.sizeFromTo', { from: 3, to: 20 }))
+      .max(20, t('validation.sizeFromTo', { from: 3, to: 20 })),
     password: yup
-              .string()
-              .required(t('validation.required', {name: 'password'}))
-              .min(5, t('validation.minSym', {min: 6})),
+      .string()
+      .required(t('validation.required', { name: 'password' }))
+      .min(5, t('validation.minSym', { min: 6 })),
     confirmPassword: yup
-              .string()
-              .when('password', {
-                is: val => (val && val.length > 0 ? true : false),
-                then: yup.string().oneOf(
-                  [yup.ref('password')],
-                  t('validation.confirmPassword')
-                )
-              })
+      .string()
+      .when('password', {
+        is: (val) => (!!(val && val.length > 0)),
+        then: yup.string().oneOf(
+          [yup.ref('password')],
+          t('validation.confirmPassword'),
+        ),
+      }),
   });
+
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: (values) => {
       const propsSubmit = {
-          values,
-          setErrorServValid,
-          dispatch,
-          navigate,
-          errors,
-          auth,
-          t
-        };
-      submitForm(propsSubmit)
-    }
+        values,
+        setErrorServValid,
+        dispatch,
+        navigate,
+        errors,
+        auth,
+        t,
+      };
+      submitForm(propsSubmit);
+    },
 
   });
-  const { values, errors, touched, handleChange, handleBlur, handleSubmit } = formik;
+  const {
+    values, errors, touched, handleChange, handleBlur, handleSubmit,
+  } = formik;
   return (
     <Row className='justify-content-center align-content-center h-100'>
       <Col className='col-12' md={8} xxl={6}>
@@ -134,7 +136,7 @@ const Signup = (props) => {
                   value={values.username}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isInvalid={(touched.username && errors.username)||errServValid}
+                  isInvalid={(touched.username && errors.username) || errServValid}
                 />
 
                 <FormControl.Feedback type='invalid' tooltip>{ errors.username }</FormControl.Feedback>
@@ -148,11 +150,11 @@ const Signup = (props) => {
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isInvalid={(touched.password && errors.password)||errServValid}
+                  isInvalid={(touched.password && errors.password) || errServValid}
                 />
 
                 <FormControl.Feedback type='invalid' tooltip>{ errors.password }</FormControl.Feedback>
-              </FloatingLabel>              
+              </FloatingLabel>
               <FloatingLabel label={t('singup.confirmPassword')} controlId='confirmPassword' className='mb-3'>
                 <Form.Control
                   name='confirmPassword'
@@ -162,11 +164,11 @@ const Signup = (props) => {
                   value={values.confirmPassword}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isInvalid={(touched.confirmPassword && errors.confirmPassword)||errServValid}
+                  isInvalid={(touched.confirmPassword && errors.confirmPassword) || errServValid}
                 />
 
                 <FormControl.Feedback type='invalid' tooltip>{ errors.confirmPassword }</FormControl.Feedback>
-              </FloatingLabel> 
+              </FloatingLabel>
               <Button variant='outline-primary w-100' type='submit'>{t('buttons.signup')}</Button>
             </Form>
           </Card.Body>
@@ -174,6 +176,6 @@ const Signup = (props) => {
       </Col>
     </Row>
   );
-}
+};
 
 export default Signup;

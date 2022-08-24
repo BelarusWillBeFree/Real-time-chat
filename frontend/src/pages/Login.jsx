@@ -3,35 +3,35 @@ import {
   Col,
   Card,
   Image,
-  Anchor
-} from 'react-bootstrap'; 
+  Anchor,
+} from 'react-bootstrap';
 import {
   useNavigate,
-} from "react-router-dom";
-import { useEffect } from 'react';
+} from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import helloImage from '../assets/img/index.jpeg';
 
-import FormAuth from "../components/forms/FormAuth";
+import FormAuth from '../components/forms/FormAuth.jsx';
 
 import router from '../routes';
 
-import useAuth from '../hooks/useAuth';
+import useAuth from '../hooks/useAuth.jsx';
 
 const Login = () => {
   const auth = useAuth();
   const { t } = useTranslation();
 
   const navigate = useNavigate();
-  const {pages: {home}} = router;
+  const { pages: { home } } = router;
 
   useEffect(() => {
     if (auth.loggedIn) {
       navigate(home);
     }
   }, []);
-  
+
   return (
     <Row className='justify-content-center align-content-center h-100'>
       <Col className='col-12' md={8} xxl={6}>
@@ -53,6 +53,6 @@ const Login = () => {
       </Col>
     </Row>
   );
-}
+};
 
 export default Login;

@@ -1,5 +1,5 @@
-import { Modal, Container, Button } from "react-bootstrap";
-import { useState, useRef, useEffect } from "react";
+import { Modal, Container, Button } from 'react-bootstrap';
+import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
@@ -9,28 +9,27 @@ const Remove = ({ modalInfo, action, onHide }) => {
   const buttonRef = useRef();
   const notify = () => toast.success(t('channels.toast.remove'));
   const notifyError = () => toast.error(t('errors.unknown'));
-  const resultDeleteChannel = ({status}) => {
+  const resultDeleteChannel = ({ status }) => {
     if (status === 'ok') {
-      //notify();
+      notify();
       onHide();
     } else {
       notifyError();
-      setDisabled(false); 
+      setDisabled(false);
     }
-  }
+  };
   useEffect(() => {
     buttonRef.current.focus();
   }, []);
   const handleDelete = (event) => {
     event.preventDefault();
     setDisabled(true);
-    notify();
     action[modalInfo.type](modalInfo.id, resultDeleteChannel);
-  }
+  };
 
   const handleClose = () => {
     onHide();
-  }
+  };
 
   return (
     <Modal show centered>
@@ -41,7 +40,7 @@ const Remove = ({ modalInfo, action, onHide }) => {
       <Modal.Body>
         <form>
           <Container className='d-flex justify-content-end'>
-            <input 
+            <input
               type="button"
               disabled={disabled}
               onClick={handleClose}
@@ -62,6 +61,6 @@ const Remove = ({ modalInfo, action, onHide }) => {
       </Modal.Body>
     </Modal>
   );
-}
+};
 
 export default Remove;

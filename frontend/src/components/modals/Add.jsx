@@ -1,14 +1,14 @@
-import { useFormik } from "formik";
-import { useRef, useEffect, useState } from 'react';
-import { useSelector } from "react-redux";
-import { Modal, FormGroup, FormControl, Form, Container } from "react-bootstrap";
+import { useFormik } from 'formik';
+import React, { useRef, useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  Modal, FormControl, Form, Container,
+} from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
-import { useDispatch } from "react-redux";
 import { useRollbar } from '@rollbar/react';
-import { selectors } from '../../slices/channelsSlice';
-import { setCurrentChannelId } from '../../slices/channelsSlice';
+import { selectors, setCurrentChannelId } from '../../slices/channelsSlice';
 
 const AddRename = (props) => {
   const { t } = useTranslation();
@@ -19,11 +19,11 @@ const AddRename = (props) => {
 
   const validationSchema = yup.object().shape({
     name: yup
-          .string()
-          .required(t('validation.required', {name: 'Имя'}))
-          .min(2, t('validation.sizeFromTo', {from: 3, to: 20}))
-          .max(20, t('validation.sizeFromTo', {from: 3, to: 20}))
-          .notOneOf(namesChannels, t('validation.unique')),
+      .string()
+      .required(t('validation.required', { name: 'Имя' }))
+      .min(2, t('validation.sizeFromTo', { from: 3, to: 20 }))
+      .max(20, t('validation.sizeFromTo', { from: 3, to: 20 }))
+      .notOneOf(namesChannels, t('validation.unique')),
   });
   const notify = () => toast.success(t('channels.toast.add'));
   const notifyError = () => toast.error(t('errors.unknown'));
@@ -38,17 +38,17 @@ const AddRename = (props) => {
     } else {
       rollbar.error('error creat new channel');
       notifyError();
-      setDisabledButton(false); 
+      setDisabledButton(false);
     }
-  }
+  };
   const generateOnSubmit = ({ modalInfo, action, onHide }) => (values) => {
-      setDisabledButton(true);
-      validationSchema.validate(values)
-      .then(()=> {
-       // notify();
-        action[modalInfo.type](values, resultAddChannel)
+    setDisabledButton(true);
+    validationSchema.validate(values)
+      .then(() => {
+        // notify();
+        action[modalInfo.type](values, resultAddChannel);
       })
-      .catch((err) => {    
+      .catch((err) => {
         setErrorsDesc(err.message);
         setDisabledButton(false);
       });
@@ -65,9 +65,11 @@ const AddRename = (props) => {
 
   const handleClose = () => {
     onHide();
-  }
+  };
 
-  const {handleSubmit, handleChange, handleBlur, values} = formik;
+  const {
+    handleSubmit, handleChange, handleBlur, values,
+  } = formik;
   return (
     <Modal show centered>
       <Modal.Header closeButton onHide={onHide}>
@@ -91,7 +93,7 @@ const AddRename = (props) => {
               isInvalid ={errorsDesc}
             />
             <Form.Label className='visually-hidden' htmlFor='name'>{t('modals.label')}</Form.Label>
-            {errorsDesc?<Form.Text className='text-danger'>{errorsDesc}</Form.Text> : null}
+            {errorsDesc ? <Form.Text className='text-danger'>{errorsDesc}</Form.Text> : null}
           <Container className='d-flex justify-content-end'>
             <input type="button" onClick={handleClose} className="btn btn-secondary me-2" value={t('buttons.cancel')} />
             <input type="submit" disabled={disabledButton} className="btn btn-primary " value={t('buttons.submit')} />
@@ -100,6 +102,6 @@ const AddRename = (props) => {
       </Modal.Body>
     </Modal>
   );
-}
+};
 
 export default AddRename;
