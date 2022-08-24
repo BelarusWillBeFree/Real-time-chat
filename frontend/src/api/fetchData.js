@@ -12,7 +12,7 @@ const fetchData = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  await axios.get(path, headers);
+  return await axios.get(path, headers);
 };
 
 export default fetchData;

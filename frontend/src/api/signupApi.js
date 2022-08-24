@@ -7,7 +7,7 @@ const signupApi = async (data) => {
     return;
   }
   const path = routes.signupPath();
-  await axios.post(path, data);
+  return await axios.post(path, data);
 };
 
 export default signupApi;

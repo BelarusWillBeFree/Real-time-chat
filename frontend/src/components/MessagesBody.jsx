@@ -9,7 +9,7 @@ const Message = ({ username, body }) => (
     >
       <b>
         {username}
-      </b> : {body}
+      </b>:{' '}{body}
     </div>
 );
 
