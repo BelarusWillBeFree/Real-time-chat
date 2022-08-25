@@ -1,19 +1,15 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from 'react-router-dom';
-import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React from "react";
 
-import { ToastContainer } from 'react-toastify';
-import Login from './pages/Login.jsx';
-import NotFound from './pages/NotFound.jsx';
-import Chats from './pages/Chats.jsx';
-import Signup from './pages/Signup.jsx';
+import { ToastContainer } from "react-toastify";
+import Login from "./pages/Login.jsx";
+import NotFound from "./pages/NotFound.jsx";
+import Chats from "./pages/Chats.jsx";
+import Signup from "./pages/Signup.jsx";
 
-import AuthProvider from './contexts/AuthProvider.jsx';
+import AuthProvider from "./contexts/AuthProvider.jsx";
 
-import Header from './components/Header.jsx';
+import Header from "./components/Header.jsx";
 
 function App() {
   return (

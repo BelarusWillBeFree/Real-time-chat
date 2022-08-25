@@ -5,6 +5,7 @@ extends:
   - plugin:react/recommended
   - eslint:recommended
   - react-app
+  - plugin:prettier/recommended
 parserOptions:
   ecmaFeatures:
     jsx: true

@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-import routes from '../routes';
+import routes from "../routes";
 
 const signupApi = async (data) => {
   if (!data) {
