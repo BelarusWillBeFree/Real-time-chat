@@ -1,16 +1,20 @@
-import React from 'react';
-import i18next from 'i18next';
-import { initReactI18next, I18nextProvider } from 'react-i18next';
-import { configureStore } from '@reduxjs/toolkit';
-import { Provider } from 'react-redux';
-import { Provider as ProviderRollbar, ErrorBoundary } from '@rollbar/react';
-import reducer from './slices/index.js';
-import ru from './locales/ru.js';
-import App from './App';
+import React from "react";
+import i18next from "i18next";
+import { initReactI18next, I18nextProvider } from "react-i18next";
+import { configureStore } from "@reduxjs/toolkit";
+import { Provider } from "react-redux";
+import { Provider as ProviderRollbar, ErrorBoundary } from "@rollbar/react";
+import reducer from "./slices/index.js";
+import ru from "./locales/ru.js";
+import App from "./App";
 
-import { ApiContext } from './contexts/Context.jsx';
-import { addMessage } from './slices/messagesSlice';
-import { addChannel, removeChannel, renameChannel } from './slices/channelsSlice';
+import { ApiContext } from "./contexts/Context.jsx";
+import { addMessage } from "./slices/messagesSlice";
+import {
+  addChannel,
+  removeChannel,
+  renameChannel,
+} from "./slices/channelsSlice";
 
 const apiFun = (socket) => {
   const withTimeout = (cb) => {
@@ -19,7 +23,7 @@ const apiFun = (socket) => {
     const timer = setTimeout(() => {
       if (called) return;
       called = true;
-      cb({ status: 'timeout' });
+      cb({ status: "timeout" });
     }, 3000);
 
     return (...args) => {
@@ -30,19 +34,19 @@ const apiFun = (socket) => {
     };
   };
   const sendNewMessage = (bodyMessage, cb) => {
-    socket.emit('newMessage', bodyMessage, withTimeout(cb));
+    socket.emit("newMessage", bodyMessage, withTimeout(cb));
   };
 
   const addNewChannel = (name, cb) => {
-    socket.emit('newChannel', name, withTimeout(cb));
+    socket.emit("newChannel", name, withTimeout(cb));
   };
 
   const sendRemoveChannel = (id, cb) => {
-    socket.emit('removeChannel', { id }, withTimeout(cb));
+    socket.emit("removeChannel", { id }, withTimeout(cb));
   };
 
   const sendRenameChannel = (newProps, cb) => {
-    socket.emit('renameChannel', newProps, withTimeout(cb));
+    socket.emit("renameChannel", newProps, withTimeout(cb));
   };
   return {
     addNewChannel,
@@ -55,18 +59,15 @@ const apiFun = (socket) => {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (socket) => {
   const i18n = i18next.createInstance();
-  const defaultLng = 'ru';
-  await i18n
-    .use(initReactI18next)
-    .init({
-      fallbackLng: defaultLng,
-      debug: false,
+  const defaultLng = "ru";
+  await i18n.use(initReactI18next).init({
+    fallbackLng: defaultLng,
+    debug: false,
 
-      resources: {
-        ru,
-      },
-
-    });
+    resources: {
+      ru,
+    },
+  });
 
   const store = configureStore({ reducer });
   const rollbarConfig = {
@@ -76,16 +77,16 @@ export default async (socket) => {
     captureUnhandledRejections: true,
   };
 
-  socket.on('newMessage', (data) => {
+  socket.on("newMessage", (data) => {
     store.dispatch(addMessage(data));
   });
-  socket.on('newChannel', (data) => {
+  socket.on("newChannel", (data) => {
     store.dispatch(addChannel(data));
   });
-  socket.on('removeChannel', (data) => {
+  socket.on("removeChannel", (data) => {
     store.dispatch(removeChannel(data.id));
   });
-  socket.on('renameChannel', (data) => {
+  socket.on("renameChannel", (data) => {
     store.dispatch(renameChannel(data));
   });
   const api = apiFun(socket);
@@ -102,6 +103,6 @@ export default async (socket) => {
           </ErrorBoundary>
         </ProviderRollbar>
       </Provider>
-  </React.StrictMode>
+    </React.StrictMode>
   );
 };

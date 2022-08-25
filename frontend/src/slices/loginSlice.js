@@ -1,13 +1,10 @@
-import {
-  createSlice,
-  createEntityAdapter,
-} from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
 /* eslint  no-param-reassign: 0 */
 const loginAdapter = createEntityAdapter();
 
-const initialState = loginAdapter.getInitialState({ username: '', token: '' });
+const initialState = loginAdapter.getInitialState({ username: "", token: "" });
 const loginSlice = createSlice({
-  name: 'login',
+  name: "login",
   initialState,
   reducers: {
     setUsername: (state, { payload }) => {

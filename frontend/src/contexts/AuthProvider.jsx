@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { AuthContext } from './Context';
+import React, { useState } from "react";
+import { AuthContext } from "./Context";
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -8,7 +8,7 @@ const AuthProvider = ({ children }) => {
     setLoggedIn(true);
   };
   const logOut = () => {
-    localStorage.removeItem('login');
+    localStorage.removeItem("login");
     setLoggedIn(false);
   };
 

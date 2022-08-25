@@ -1,14 +1,11 @@
-import {
-  createSlice,
-  createEntityAdapter,
-} from '@reduxjs/toolkit';
-import { removeChannel } from './channelsSlice';
+import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
+import { removeChannel } from "./channelsSlice";
 
 const messagesAdapter = createEntityAdapter();
 
 const initialState = messagesAdapter.getInitialState();
 const messagesSlice = createSlice({
-  name: 'messages',
+  name: "messages",
   initialState,
   reducers: {
     addMessages: (state, { payload }) => {
@@ -20,13 +17,17 @@ const messagesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(removeChannel, (state, { payload }) => {
-      const restEntities = Object.values(state.entities).filter((e) => e.channelId !== payload);
+      const restEntities = Object.values(state.entities).filter(
+        (e) => e.channelId !== payload
+      );
       messagesAdapter.setAll(state, restEntities);
     });
   },
 });
 
-export const selectors = messagesAdapter.getSelectors((state) => state.messages);
+export const selectors = messagesAdapter.getSelectors(
+  (state) => state.messages
+);
 
 export const { addMessages, addMessage } = messagesSlice.actions;
 export default messagesSlice.reducer;
