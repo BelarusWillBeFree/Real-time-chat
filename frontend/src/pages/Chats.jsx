@@ -1,18 +1,18 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Container, Row } from "react-bootstrap";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Container, Row } from 'react-bootstrap';
 
-import { useRollbar } from "@rollbar/react";
-import { useNavigate } from "react-router-dom";
-import { addChannels } from "../slices/channelsSlice";
-import { addMessages } from "../slices/messagesSlice";
-import { setUsername, setToken } from "../slices/loginSlice";
-import fetchData from "../api/fetchData";
-import Channels from "../components/Channels.jsx";
-import Messages from "../components/Messages.jsx";
-import useAuth from "../hooks/useAuth.jsx";
-import router from "../routes";
-import { localStorGet } from "../hooks/useLocalStor.jsx";
+import { useRollbar } from '@rollbar/react';
+import { useNavigate } from 'react-router-dom';
+import { addChannels } from '../slices/channelsSlice';
+import { addMessages } from '../slices/messagesSlice';
+import { setUsername, setToken } from '../slices/loginSlice';
+import fetchData from '../api/fetchData';
+import Channels from '../components/Channels.jsx';
+import Messages from '../components/Messages.jsx';
+import useAuth from '../hooks/useAuth.jsx';
+import router from '../routes';
+import { localStorGet } from '../hooks/useLocalStor.jsx';
 
 const Chats = () => {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const Chats = () => {
     }
     if (!auth.loggedIn) {
       const {
-        pages: { login },
+        pages: { login }
       } = router;
       navigate(login);
     }
@@ -48,7 +48,7 @@ const Chats = () => {
         dispatch(addMessages(data.messages));
       })
       .catch((err) => {
-        rollbar.error("get data from server", err);
+        rollbar.error('get data from server', err);
       });
   }, []);
   return (

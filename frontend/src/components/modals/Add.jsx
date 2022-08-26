@@ -1,12 +1,12 @@
-import { useFormik } from "formik";
-import React, { useRef, useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Modal, FormControl, Form, Container } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
-import * as yup from "yup";
-import { toast } from "react-toastify";
-import { useRollbar } from "@rollbar/react";
-import { selectors, setCurrentChannelId } from "../../slices/channelsSlice";
+import { useFormik } from 'formik';
+import React, { useRef, useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Modal, FormControl, Form, Container } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
+import * as yup from 'yup';
+import { toast } from 'react-toastify';
+import { useRollbar } from '@rollbar/react';
+import { selectors, setCurrentChannelId } from '../../slices/channelsSlice';
 
 const AddRename = (props) => {
   const { t } = useTranslation();
@@ -18,25 +18,25 @@ const AddRename = (props) => {
   const validationSchema = yup.object().shape({
     name: yup
       .string()
-      .required(t("validation.required", { name: "Имя" }))
-      .min(2, t("validation.sizeFromTo", { from: 3, to: 20 }))
-      .max(20, t("validation.sizeFromTo", { from: 3, to: 20 }))
-      .notOneOf(namesChannels, t("validation.unique")),
+      .required(t('validation.required', { name: 'Имя' }))
+      .min(2, t('validation.sizeFromTo', { from: 3, to: 20 }))
+      .max(20, t('validation.sizeFromTo', { from: 3, to: 20 }))
+      .notOneOf(namesChannels, t('validation.unique'))
   });
-  const notify = () => toast.success(t("channels.toast.add"));
-  const notifyError = () => toast.error(t("errors.unknown"));
+  const notify = () => toast.success(t('channels.toast.add'));
+  const notifyError = () => toast.error(t('errors.unknown'));
 
   const resultAddChannel = (props) => {
     const { status } = props;
-    if (status === "ok") {
+    if (status === 'ok') {
       const {
-        data: { id },
+        data: { id }
       } = props;
       dispatch(setCurrentChannelId(id));
       notify();
       onHide();
     } else {
-      rollbar.error("error creat new channel");
+      rollbar.error('error creat new channel');
       notifyError();
       setDisabledButton(false);
     }
@@ -60,9 +60,9 @@ const AddRename = (props) => {
   const { onHide } = props;
   const formik = useFormik({
     onSubmit: generateOnSubmit(props),
-    initialValues: { name: "" },
+    initialValues: { name: '' }
   });
-  const [errorsDesc, setErrorsDesc] = useState("");
+  const [errorsDesc, setErrorsDesc] = useState('');
   const [disabledButton, setDisabledButton] = useState(false);
   const inputRef = useRef();
   useEffect(() => {
@@ -77,7 +77,7 @@ const AddRename = (props) => {
   return (
     <Modal show centered>
       <Modal.Header closeButton onHide={onHide}>
-        <Modal.Title>{t("modals.add.text")}</Modal.Title>
+        <Modal.Title>{t('modals.add.text')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -89,30 +89,28 @@ const AddRename = (props) => {
             onBlur={handleBlur}
             value={values.name}
             data-testid="input-body"
-            placeholder={t("modals.label")}
+            placeholder={t('modals.label')}
             id="name"
             name="name"
             className="mb-2"
             isInvalid={errorsDesc}
           />
           <Form.Label className="visually-hidden" htmlFor="name">
-            {t("modals.label")}
+            {t('modals.label')}
           </Form.Label>
-          {errorsDesc ? (
-            <Form.Text className="text-danger">{errorsDesc}</Form.Text>
-          ) : null}
+          {errorsDesc ? <Form.Text className="text-danger">{errorsDesc}</Form.Text> : null}
           <Container className="d-flex justify-content-end">
             <input
               type="button"
               onClick={handleClose}
               className="btn btn-secondary me-2"
-              value={t("buttons.cancel")}
+              value={t('buttons.cancel')}
             />
             <input
               type="submit"
               disabled={disabledButton}
               className="btn btn-primary "
-              value={t("buttons.submit")}
+              value={t('buttons.submit')}
             />
           </Container>
         </form>

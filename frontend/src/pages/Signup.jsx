@@ -1,45 +1,35 @@
-import {
-  Row,
-  Form,
-  FormControl,
-  Col,
-  Card,
-  Image,
-  Button,
-  FloatingLabel,
-} from "react-bootstrap";
-import * as yup from "yup";
-import { useFormik } from "formik";
-import React, { useRef, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { Row, Form, FormControl, Col, Card, Image, Button, FloatingLabel } from 'react-bootstrap';
+import * as yup from 'yup';
+import { useFormik } from 'formik';
+import React, { useRef, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
-import router from "../routes";
+import router from '../routes';
 
-import singupImage from "../assets/img/signup.jpeg";
+import singupImage from '../assets/img/signup.jpeg';
 
-import signupApi from "../api/signupApi.js";
+import signupApi from '../api/signupApi.js';
 
-import { setUsername, setToken } from "../slices/loginSlice";
+import { setUsername, setToken } from '../slices/loginSlice';
 
-import useAuth from "../hooks/useAuth.jsx";
+import useAuth from '../hooks/useAuth.jsx';
 
 const submitForm = (props) => {
-  const { values, setErrorServValid, dispatch, navigate, errors, auth, t } =
-    props;
+  const { values, setErrorServValid, dispatch, navigate, errors, auth, t } = props;
   const dataForSubmit = {
     username: values.username,
-    password: values.password,
+    password: values.password
   };
   const {
-    pages: { home },
+    pages: { home }
   } = router;
   signupApi(dataForSubmit)
     .then((response) => {
       const { username, token } = response.data;
       setErrorServValid(false);
-      localStorage.setItem("login", JSON.stringify(response.data));
+      localStorage.setItem('login', JSON.stringify(response.data));
       dispatch(setUsername(username));
       dispatch(setToken(token));
       auth.logIn();
@@ -48,7 +38,7 @@ const submitForm = (props) => {
     .catch(({ response }) => {
       if (response.status === 409) {
         setErrorServValid(true);
-        errors.confirmPassword = t("errors.userAlredyExist");
+        errors.confirmPassword = t('errors.userAlredyExist');
       }
     });
 };
@@ -66,26 +56,24 @@ const Signup = () => {
   }, []);
   const [errServValid, setErrorServValid] = useState(false);
   const initialValues = {
-    username: "",
-    password: "",
-    confirmPassword: "",
+    username: '',
+    password: '',
+    confirmPassword: ''
   };
   const validationSchema = yup.object().shape({
     username: yup
       .string()
-      .required(t("validation.required", { name: "Имя пользователя" }))
-      .min(2, t("validation.sizeFromTo", { from: 3, to: 20 }))
-      .max(20, t("validation.sizeFromTo", { from: 3, to: 20 })),
+      .required(t('validation.required', { name: 'Имя пользователя' }))
+      .min(2, t('validation.sizeFromTo', { from: 3, to: 20 }))
+      .max(20, t('validation.sizeFromTo', { from: 3, to: 20 })),
     password: yup
       .string()
-      .required(t("validation.required", { name: "password" }))
-      .min(5, t("validation.minSym", { min: 6 })),
-    confirmPassword: yup.string().when("password", {
+      .required(t('validation.required', { name: 'password' }))
+      .min(5, t('validation.minSym', { min: 6 })),
+    confirmPassword: yup.string().when('password', {
       is: (val) => !!(val && val.length > 0),
-      then: yup
-        .string()
-        .oneOf([yup.ref("password")], t("validation.confirmPassword")),
-    }),
+      then: yup.string().oneOf([yup.ref('password')], t('validation.confirmPassword'))
+    })
   });
 
   const formik = useFormik({
@@ -99,68 +87,48 @@ const Signup = () => {
         navigate,
         errors,
         auth,
-        t,
+        t
       };
       submitForm(propsSubmit);
-    },
+    }
   });
-  const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
-    formik;
+  const { values, errors, touched, handleChange, handleBlur, handleSubmit } = formik;
   return (
     <Row className="justify-content-center align-content-center h-100">
       <Col className="col-12" md={8} xxl={6}>
         <Card className="shadow-sm">
           <Card.Body className="row p-5">
-            <Col
-              md={6}
-              className="col-12 d-flex align-items-center justify-content-center"
-            >
-              <Image
-                src={singupImage}
-                className="rounded-circle"
-                alt="singup"
-              ></Image>
+            <Col md={6} className="col-12 d-flex align-items-center justify-content-center">
+              <Image src={singupImage} className="rounded-circle" alt="singup"></Image>
             </Col>
             <Form className="w-50" onSubmit={handleSubmit}>
-              <h1 className="text-center mb-4">{t("singup.text")}</h1>
-              <FloatingLabel
-                label={t("singup.username")}
-                controlId="username"
-                className="mb-3"
-              >
+              <h1 className="text-center mb-4">{t('singup.text')}</h1>
+              <FloatingLabel label={t('singup.username')} controlId="username" className="mb-3">
                 <Form.Control
                   name="username"
                   autoComplete="username"
-                  placeholder={t("singup.username")}
+                  placeholder={t('singup.username')}
                   ref={inputRef}
                   value={values.username}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isInvalid={
-                    (touched.username && errors.username) || errServValid
-                  }
+                  isInvalid={(touched.username && errors.username) || errServValid}
                 />
 
                 <FormControl.Feedback type="invalid" tooltip>
                   {errors.username}
                 </FormControl.Feedback>
               </FloatingLabel>
-              <FloatingLabel
-                label={t("singup.password")}
-                controlId="password"
-                className="mb-3"
-              >
+              <FloatingLabel label={t('singup.password')} controlId="password" className="mb-3">
                 <Form.Control
                   name="password"
                   type="password"
                   autoComplete="password"
-                  placeholder={t("singup.password")}
+                  placeholder={t('singup.password')}
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isInvalid={
-                    (touched.password && errors.password) || errServValid
-                  }
+                  isInvalid={(touched.password && errors.password) || errServValid}
                 />
 
                 <FormControl.Feedback type="invalid" tooltip>
@@ -168,22 +136,18 @@ const Signup = () => {
                 </FormControl.Feedback>
               </FloatingLabel>
               <FloatingLabel
-                label={t("singup.confirmPassword")}
+                label={t('singup.confirmPassword')}
                 controlId="confirmPassword"
-                className="mb-3"
-              >
+                className="mb-3">
                 <Form.Control
                   name="confirmPassword"
                   type="password"
                   autoComplete="confirmPassword"
-                  placeholder={t("singup.confirmPassword")}
+                  placeholder={t('singup.confirmPassword')}
                   value={values.confirmPassword}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isInvalid={
-                    (touched.confirmPassword && errors.confirmPassword) ||
-                    errServValid
-                  }
+                  isInvalid={(touched.confirmPassword && errors.confirmPassword) || errServValid}
                 />
 
                 <FormControl.Feedback type="invalid" tooltip>
@@ -191,7 +155,7 @@ const Signup = () => {
                 </FormControl.Feedback>
               </FloatingLabel>
               <Button variant="outline-primary w-100" type="submit">
-                {t("buttons.signup")}
+                {t('buttons.signup')}
               </Button>
             </Form>
           </Card.Body>

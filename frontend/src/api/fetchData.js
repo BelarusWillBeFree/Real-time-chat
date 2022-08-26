@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-import routes from "../routes";
+import routes from '../routes';
 
 const fetchData = async (token) => {
   if (!token) {
@@ -9,8 +9,8 @@ const fetchData = async (token) => {
   const path = routes.dataPath();
   const headers = {
     headers: {
-      Authorization: `Bearer ${token}`,
-    },
+      Authorization: `Bearer ${token}`
+    }
   };
   const result = await axios.get(path, headers);
   return result;

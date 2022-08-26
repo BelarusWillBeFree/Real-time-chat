@@ -1,16 +1,14 @@
-import React from "react";
-import { Nav } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import React from 'react';
+import { Nav } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 
-import Channel from "./Channel.jsx";
-import { selectors } from "../slices/channelsSlice";
+import Channel from './Channel.jsx';
+import { selectors } from '../slices/channelsSlice';
 
 const ChannelsList = (props) => {
   const { showModal } = props;
   const channels = useSelector(selectors.selectAll);
-  const currentChannelId = useSelector(
-    (store) => store.channels.currentChannelId
-  );
+  const currentChannelId = useSelector((store) => store.channels.currentChannelId);
 
   return (
     <Nav fill variant="pills" className="d-flex flex-column px-2" as="ul">

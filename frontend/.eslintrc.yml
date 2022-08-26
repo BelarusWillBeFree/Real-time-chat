@@ -6,6 +6,7 @@ extends:
   - eslint:recommended
   - react-app
   - plugin:prettier/recommended
+  
 parserOptions:
   ecmaFeatures:
     jsx: true
@@ -15,6 +16,8 @@ plugins:
   - react
 rules: {
   react/jsx-filename-extension: [0, { "extensions": [".js", ".jsx"] }],
+  quotes: [1, 'single'],
+ # 'prettier/prettier': ['error', { singleQuote: true }],
   react/prop-types: 0,
   import/extensions: 0,
   import/no-unresolved: 0,
