@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 
 import { ApiContext } from '../contexts/Context.jsx';
 
-const MessagesFooter = () => {
+function MessagesFooter() {
   const { t } = useTranslation();
   const [disabledButton, setDisabledButton] = useState(false);
   const notifyError = () => toast.error(t('errors.unknown'));
@@ -18,27 +18,25 @@ const MessagesFooter = () => {
   const { sendNewMessage } = useContext(ApiContext);
   const username = useSelector((store) => store.login.username);
 
-  const resultAddNewMessage = (props) => {
-    const { status } = props;
-    if (status === 'ok') {
-      formik.resetForm();
-    } else {
-      console.log('err send message: timeout');
-      notifyError();
-    }
-    setDisabledButton(false);
-  };
   const formik = useFormik({
     initialValues,
-    onSubmit: ({ message }) => {
+    onSubmit: ({ message }, { resetForm }) => {
       setDisabledButton(true);
       const bodyMessage = {
         username,
         body: filter.clean(message),
-        channelId: currentChannelId
+        channelId: currentChannelId,
       };
-      sendNewMessage(bodyMessage, resultAddNewMessage);
-    }
+      sendNewMessage(bodyMessage, (props) => {
+        const { status } = props;
+        if (status === 'ok') {
+          resetForm();
+        } else {
+          notifyError();
+        }
+        setDisabledButton(false);
+      });
+    },
   });
   const { values, handleSubmit, handleChange } = formik;
   return (
@@ -56,13 +54,14 @@ const MessagesFooter = () => {
           <Button
             type="submit"
             variant="link"
-            disabled={values.message.length === 0 || disabledButton}>
+            disabled={values.message.length === 0 || disabledButton}
+          >
             <ArrowRightSquare size={20} />
           </Button>
         </InputGroup>
       </Form>
     </div>
   );
-};
+}
 
 export default MessagesFooter;

@@ -1,18 +1,22 @@
 import { useFormik } from 'formik';
 import React, { useRef, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Modal, FormControl, Form, Container, FormLabel } from 'react-bootstrap';
+import {
+  Modal, FormControl, Form, Container, FormLabel,
+} from 'react-bootstrap';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { selectors } from '../../slices/channelsSlice';
 
-const AddRename = (props) => {
+function AddRename(props) {
   const { onHide, modalInfo } = props;
   const channels = useSelector((state) => selectors.selectEntities(state));
   const namesChannels = Object.values(channels).map((channel) => channel.name);
   const { t } = useTranslation();
+  const [errorsDesc, setErrorsDesc] = useState('');
+  const [disabledButton, setDisabledButton] = useState(false);
   const notify = () => toast.success(t('channels.toast.rename'));
   const notifyError = () => toast.error(t('errors.unknown'));
 
@@ -23,7 +27,7 @@ const AddRename = (props) => {
       .required(t('validation.required', { name: 'Имя' }))
       .min(2, t('validation.sizeFromTo', { from: 3, to: 20 }))
       .max(20, t('validation.sizeFromTo', { from: 3, to: 20 }))
-      .notOneOf(namesChannels, t('validation.unique'))
+      .notOneOf(namesChannels, t('validation.unique')),
   });
   const successSubmit = ({ status }) => {
     if (status === 'ok') {
@@ -34,25 +38,21 @@ const AddRename = (props) => {
       setDisabledButton(false);
     }
   };
-  const generateOnSubmit =
-    ({ modalInfo, action, onHide }) =>
-    (values) => {
-      setDisabledButton(true);
-      validationSchema
-        .validate(values)
-        .then(() => action[modalInfo.type]({ name: values.name, id: modalInfo.id }, successSubmit))
-        .catch((err) => {
-          setErrorsDesc(err.message);
-          setDisabledButton(false);
-        });
-    };
+  const generateOnSubmit = ({ action }) => (values) => {
+    setDisabledButton(true);
+    validationSchema
+      .validate(values)
+      .then(() => action[modalInfo.type]({ name: values.name, id: modalInfo.id }, successSubmit))
+      .catch((err) => {
+        setErrorsDesc(err.message);
+        setDisabledButton(false);
+      });
+  };
 
   const formik = useFormik({
     onSubmit: generateOnSubmit(props),
-    initialValues: { name: currentChannel.name }
+    initialValues: { name: currentChannel.name },
   });
-  const [errorsDesc, setErrorsDesc] = useState('');
-  const [disabledButton, setDisabledButton] = useState(false);
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
@@ -62,7 +62,9 @@ const AddRename = (props) => {
     onHide();
   };
 
-  const { handleSubmit, handleChange, handleBlur, values } = formik;
+  const {
+    handleSubmit, handleChange, handleBlur, values,
+  } = formik;
   return (
     <Modal show centered>
       <Modal.Header closeButton onHide={onHide}>
@@ -106,6 +108,6 @@ const AddRename = (props) => {
       </Modal.Body>
     </Modal>
   );
-};
+}
 
 export default AddRename;

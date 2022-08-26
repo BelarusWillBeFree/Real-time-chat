@@ -14,7 +14,7 @@ import useAuth from '../hooks/useAuth.jsx';
 import router from '../routes';
 import { localStorGet } from '../hooks/useLocalStor.jsx';
 
-const Chats = () => {
+function Chats() {
   const dispatch = useDispatch();
   const auth = useAuth();
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const Chats = () => {
     }
     if (!auth.loggedIn) {
       const {
-        pages: { login }
+        pages: { login },
       } = router;
       navigate(login);
     }
@@ -59,6 +59,6 @@ const Chats = () => {
       </Row>
     </Container>
   );
-};
+}
 
 export default Chats;

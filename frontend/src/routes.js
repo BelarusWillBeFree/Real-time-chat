@@ -6,8 +6,8 @@ const path = {
   dataPath: () => [apiPath, 'data'].join('/'),
   pages: {
     login: '/login',
-    home: '/'
-  }
+    home: '/',
+  },
 };
 
 export default path;

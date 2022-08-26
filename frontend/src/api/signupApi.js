@@ -4,7 +4,7 @@ import routes from '../routes';
 
 const signupApi = async (data) => {
   if (!data) {
-    return;
+    return {};
   }
   const path = routes.signupPath();
   const resultPost = await axios.post(path, data);

@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { Provider as ProviderRollbar, ErrorBoundary } from '@rollbar/react';
 import reducer from './slices/index.js';
 import ru from './locales/ru.js';
-import App from './App';
+import App from './App.jsx';
 
 import { ApiContext } from './contexts/Context.jsx';
 import { addMessage } from './slices/messagesSlice';
@@ -48,7 +48,7 @@ const apiFun = (socket) => {
     addNewChannel,
     sendRemoveChannel,
     sendRenameChannel,
-    sendNewMessage
+    sendNewMessage,
   };
 };
 
@@ -61,8 +61,8 @@ export default async (socket) => {
     debug: false,
 
     resources: {
-      ru
-    }
+      ru,
+    },
   });
 
   const store = configureStore({ reducer });
@@ -70,7 +70,7 @@ export default async (socket) => {
     accessToken: process.env.REACT_APP_ACCESS_TOKEN,
     environment: process.env.NODE_ENV,
     captureUncaught: true,
-    captureUnhandledRejections: true
+    captureUnhandledRejections: true,
   };
 
   socket.on('newMessage', (data) => {

@@ -1,15 +1,23 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Nav, Dropdown, Button, ButtonGroup } from 'react-bootstrap';
+import {
+  Nav, Dropdown, Button, ButtonGroup,
+} from 'react-bootstrap';
 
 import { useTranslation } from 'react-i18next';
 import { setCurrentChannelId } from '../slices/channelsSlice';
 
-const ButtonChannelRemovable = ({ onclick, variant, name, id, showModal }) => {
+function ButtonChannelRemovable({
+  onclick, variant, name, id, showModal,
+}) {
   const { t } = useTranslation();
   return (
     <Dropdown as={ButtonGroup} className="w-100">
-      <Button variant={variant} className="text-start w-100 text-truncate" onClick={onclick(id)}>
+      <Button
+        variant={variant}
+        className="text-start w-100 text-truncate"
+        onClick={onclick(id)}
+      >
         <span className="me-1">#</span>
         {name}
       </Button>
@@ -27,15 +35,23 @@ const ButtonChannelRemovable = ({ onclick, variant, name, id, showModal }) => {
       </Dropdown.Menu>
     </Dropdown>
   );
-};
+}
 
-const ButtonChannel = ({ onclick, variant, name, id }) => (
-  <Button variant={variant} className="text-start w-100 text-truncate" onClick={onclick(id)}>
-    {`# ${name}`}
-  </Button>
-);
+function ButtonChannel({
+  onclick, variant, name, id,
+}) {
+  return (
+    <Button
+      variant={variant}
+      className="text-start w-100 text-truncate"
+      onClick={onclick(id)}
+    >
+      {`# ${name}`}
+    </Button>
+  );
+}
 
-const Channel = (props) => {
+function Channel(props) {
   const { channelData, currentChannelId, showModal } = props;
   const dispatch = useDispatch();
   const { name, removable } = channelData;
@@ -67,6 +83,6 @@ const Channel = (props) => {
       )}
     </Nav.Item>
   );
-};
+}
 
 export default Channel;

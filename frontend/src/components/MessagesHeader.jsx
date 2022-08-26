@@ -5,12 +5,12 @@ import React from 'react';
 import { selectors as selectorMessages } from '../slices/messagesSlice';
 import { selectors as selectorChannels } from '../slices/channelsSlice';
 
-const MessagesHeader = () => {
+function MessagesHeader() {
   const curChannelId = useSelector((store) => store.channels.currentChannelId);
   const currChannel = useSelector((state) => selectorChannels.selectById(state, curChannelId));
   const messages = useSelector(selectorMessages.selectEntities);
   const count = Object.values(messages).filter(
-    (message) => message.channelId === curChannelId
+    (message) => message.channelId === curChannelId,
   ).length;
   const { t } = useTranslation();
 
@@ -23,6 +23,6 @@ const MessagesHeader = () => {
       <span className="text-muted">{t('messages.message', { count })}</span>
     </div>
   );
-};
+}
 
 export default MessagesHeader;

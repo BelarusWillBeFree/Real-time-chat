@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-const Remove = ({ modalInfo, action, onHide }) => {
+function Remove({ modalInfo, action, onHide }) {
   const [disabled, setDisabled] = useState(false);
   const { t } = useTranslation();
   const buttonRef = useRef();
@@ -52,7 +52,8 @@ const Remove = ({ modalInfo, action, onHide }) => {
               variant="danger"
               onClick={handleDelete}
               disabled={disabled}
-              ref={buttonRef}>
+              ref={buttonRef}
+            >
               {t('buttons.delete')}
             </Button>
           </Container>
@@ -60,6 +61,6 @@ const Remove = ({ modalInfo, action, onHide }) => {
       </Modal.Body>
     </Modal>
   );
-};
+}
 
 export default Remove;

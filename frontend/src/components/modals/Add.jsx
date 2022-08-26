@@ -1,16 +1,21 @@
 import { useFormik } from 'formik';
 import React, { useRef, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Modal, FormControl, Form, Container } from 'react-bootstrap';
+import {
+  Modal, FormControl, Form, Container,
+} from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
 import { selectors, setCurrentChannelId } from '../../slices/channelsSlice';
 
-const AddRename = (props) => {
+function AddRename(props) {
   const { t } = useTranslation();
+  const { onHide } = props;
   const rollbar = useRollbar();
+  const [disabledButton, setDisabledButton] = useState(false);
+  const [errorsDesc, setErrorsDesc] = useState('');
   const channels = useSelector((state) => selectors.selectEntities(state));
   const namesChannels = Object.values(channels).map((channel) => channel.name);
   const dispatch = useDispatch();
@@ -21,17 +26,17 @@ const AddRename = (props) => {
       .required(t('validation.required', { name: 'Имя' }))
       .min(2, t('validation.sizeFromTo', { from: 3, to: 20 }))
       .max(20, t('validation.sizeFromTo', { from: 3, to: 20 }))
-      .notOneOf(namesChannels, t('validation.unique'))
+      .notOneOf(namesChannels, t('validation.unique')),
   });
   const notify = () => toast.success(t('channels.toast.add'));
   const notifyError = () => toast.error(t('errors.unknown'));
 
-  const resultAddChannel = (props) => {
-    const { status } = props;
+  const resultAddChannel = (propsAddChannel) => {
+    const { status } = propsAddChannel;
     if (status === 'ok') {
       const {
-        data: { id }
-      } = props;
+        data: { id },
+      } = propsAddChannel;
       dispatch(setCurrentChannelId(id));
       notify();
       onHide();
@@ -41,29 +46,23 @@ const AddRename = (props) => {
       setDisabledButton(false);
     }
   };
-  const generateOnSubmit =
-    ({ modalInfo, action, onHide }) =>
-    (values) => {
-      setDisabledButton(true);
-      validationSchema
-        .validate(values)
-        .then(() => {
-          // notify();
-          action[modalInfo.type](values, resultAddChannel);
-        })
-        .catch((err) => {
-          setErrorsDesc(err.message);
-          setDisabledButton(false);
-        });
-    };
+  const generateOnSubmit = ({ modalInfo, action }) => (values) => {
+    setDisabledButton(true);
+    validationSchema
+      .validate(values)
+      .then(() => {
+        action[modalInfo.type](values, resultAddChannel);
+      })
+      .catch((err) => {
+        setErrorsDesc(err.message);
+        setDisabledButton(false);
+      });
+  };
 
-  const { onHide } = props;
   const formik = useFormik({
     onSubmit: generateOnSubmit(props),
-    initialValues: { name: '' }
+    initialValues: { name: '' },
   });
-  const [errorsDesc, setErrorsDesc] = useState('');
-  const [disabledButton, setDisabledButton] = useState(false);
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
@@ -73,7 +72,9 @@ const AddRename = (props) => {
     onHide();
   };
 
-  const { handleSubmit, handleChange, handleBlur, values } = formik;
+  const {
+    handleSubmit, handleChange, handleBlur, values,
+  } = formik;
   return (
     <Modal show centered>
       <Modal.Header closeButton onHide={onHide}>
@@ -98,7 +99,9 @@ const AddRename = (props) => {
           <Form.Label className="visually-hidden" htmlFor="name">
             {t('modals.label')}
           </Form.Label>
-          {errorsDesc ? <Form.Text className="text-danger">{errorsDesc}</Form.Text> : null}
+          {errorsDesc ? (
+            <Form.Text className="text-danger">{errorsDesc}</Form.Text>
+          ) : null}
           <Container className="d-flex justify-content-end">
             <input
               type="button"
@@ -117,6 +120,6 @@ const AddRename = (props) => {
       </Modal.Body>
     </Modal>
   );
-};
+}
 
 export default AddRename;

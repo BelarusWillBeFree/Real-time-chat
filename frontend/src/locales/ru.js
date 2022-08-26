@@ -6,52 +6,52 @@ export default {
       signup: 'Регистрация',
       text: 'Войти',
       username: 'Ваш ник',
-      password: 'Пароль'
+      password: 'Пароль',
     },
     validation: {
       required: '{{name}} обязательное поле',
       sizeFromTo: 'От {{from}} до {{to}} символов',
       minSym: 'Не менее {{min}} символов',
       confirmPassword: 'Пароли должны совпадать',
-      unique: 'Должно быть уникальным'
+      unique: 'Должно быть уникальным',
     },
     singup: {
       text: 'Регистрация',
       username: 'Имя пользователя',
       password: 'Пароль',
-      confirmPassword: 'Подтвердите пароль'
+      confirmPassword: 'Подтвердите пароль',
     },
     errors: {
       unknown: 'неизвестная ошибка',
       userAlredyExist: 'Такой пользователь уже существует',
-      loginOrPassword: 'Неверные имя пользователя или пароль'
+      loginOrPassword: 'Неверные имя пользователя или пароль',
     },
     channels: {
       text: 'Каналы',
       toast: {
         add: 'Канал создан',
         rename: 'Канал переименован',
-        remove: 'Канал удалён'
+        remove: 'Канал удалён',
       },
-      control: 'Управление каналом'
+      control: 'Управление каналом',
     },
     messages: {
       textInput: 'Введите сообщение...',
       message_one: '{{count}} сообщение',
       message_few: '{{count}} сообщения',
-      message_many: '{{count}} сообщений'
+      message_many: '{{count}} сообщений',
     },
     modals: {
       label: 'Имя канала',
       add: {
-        text: 'Добавить канал'
+        text: 'Добавить канал',
       },
       delete: {
-        text: 'Удалить канал'
+        text: 'Удалить канал',
       },
       rename: {
-        text: 'Переименовать канал'
-      }
+        text: 'Переименовать канал',
+      },
     },
     buttons: {
       submit: 'Отправить',
@@ -60,7 +60,7 @@ export default {
       input: 'Войти',
       output: 'Выйти',
       rename: 'Переименовать',
-      signup: 'Зарегистрироваться'
-    }
-  }
+      signup: 'Зарегистрироваться',
+    },
+  },
 };

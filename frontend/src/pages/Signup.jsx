@@ -1,4 +1,6 @@
-import { Row, Form, FormControl, Col, Card, Image, Button, FloatingLabel } from 'react-bootstrap';
+import {
+  Row, Form, FormControl, Col, Card, Image, Button, FloatingLabel,
+} from 'react-bootstrap';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import React, { useRef, useEffect, useState } from 'react';
@@ -17,13 +19,15 @@ import { setUsername, setToken } from '../slices/loginSlice';
 import useAuth from '../hooks/useAuth.jsx';
 
 const submitForm = (props) => {
-  const { values, setErrorServValid, dispatch, navigate, errors, auth, t } = props;
+  const {
+    values, setErrorServValid, dispatch, navigate, errors, auth, t,
+  } = props;
   const dataForSubmit = {
     username: values.username,
-    password: values.password
+    password: values.password,
   };
   const {
-    pages: { home }
+    pages: { home },
   } = router;
   signupApi(dataForSubmit)
     .then((response) => {
@@ -43,7 +47,7 @@ const submitForm = (props) => {
     });
 };
 
-const Signup = () => {
+function Signup() {
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -58,7 +62,7 @@ const Signup = () => {
   const initialValues = {
     username: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
   };
   const validationSchema = yup.object().shape({
     username: yup
@@ -72,8 +76,8 @@ const Signup = () => {
       .min(5, t('validation.minSym', { min: 6 })),
     confirmPassword: yup.string().when('password', {
       is: (val) => !!(val && val.length > 0),
-      then: yup.string().oneOf([yup.ref('password')], t('validation.confirmPassword'))
-    })
+      then: yup.string().oneOf([yup.ref('password')], t('validation.confirmPassword')),
+    }),
   });
 
   const formik = useFormik({
@@ -87,19 +91,21 @@ const Signup = () => {
         navigate,
         errors,
         auth,
-        t
+        t,
       };
       submitForm(propsSubmit);
-    }
+    },
   });
-  const { values, errors, touched, handleChange, handleBlur, handleSubmit } = formik;
+  const {
+    values, errors, touched, handleChange, handleBlur, handleSubmit,
+  } = formik;
   return (
     <Row className="justify-content-center align-content-center h-100">
       <Col className="col-12" md={8} xxl={6}>
         <Card className="shadow-sm">
           <Card.Body className="row p-5">
             <Col md={6} className="col-12 d-flex align-items-center justify-content-center">
-              <Image src={singupImage} className="rounded-circle" alt="singup"></Image>
+              <Image src={singupImage} className="rounded-circle" alt="singup" />
             </Col>
             <Form className="w-50" onSubmit={handleSubmit}>
               <h1 className="text-center mb-4">{t('singup.text')}</h1>
@@ -138,7 +144,8 @@ const Signup = () => {
               <FloatingLabel
                 label={t('singup.confirmPassword')}
                 controlId="confirmPassword"
-                className="mb-3">
+                className="mb-3"
+              >
                 <Form.Control
                   name="confirmPassword"
                   type="password"
@@ -163,6 +170,6 @@ const Signup = () => {
       </Col>
     </Row>
   );
-};
+}
 
 export default Signup;

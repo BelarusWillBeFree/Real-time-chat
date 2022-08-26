@@ -12,8 +12,8 @@ const loginSlice = createSlice({
     },
     setToken: (state, { payload }) => {
       state.token = payload;
-    }
-  }
+    },
+  },
 });
 
 export const selectors = loginAdapter.getSelectors((state) => state.login);

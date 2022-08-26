@@ -1,4 +1,6 @@
-import { Row, Col, Card, Image, Anchor } from 'react-bootstrap';
+import {
+  Row, Col, Card, Image, Anchor,
+} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,20 +13,20 @@ import router from '../routes';
 
 import useAuth from '../hooks/useAuth.jsx';
 
-const Login = () => {
+function Login() {
   const auth = useAuth();
   const { t } = useTranslation();
 
   const navigate = useNavigate();
   const {
-    pages: { home }
+    pages: { home },
   } = router;
 
   useEffect(() => {
     if (auth.loggedIn) {
       navigate(home);
     }
-  }, []);
+  }, [auth.loggedIn]);
 
   return (
     <Row className="justify-content-center align-content-center h-100">
@@ -32,7 +34,7 @@ const Login = () => {
         <Card className="shadow-sm">
           <Card.Body className="row p-5">
             <Col md={6} className="col-12 d-flex align-items-center justify-content-center">
-              <Image src={helloImage} className="rounded-circle" alt="login"></Image>
+              <Image src={helloImage} className="rounded-circle" alt="login" />
             </Col>
             <FormAuth />
           </Card.Body>
@@ -46,6 +48,6 @@ const Login = () => {
       </Col>
     </Row>
   );
-};
+}
 
 export default Login;

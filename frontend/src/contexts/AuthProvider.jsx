@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { AuthContext } from './Context';
+import React, { useState, useMemo } from 'react';
+import { AuthContext } from './Context.jsx';
 
-const AuthProvider = ({ children }) => {
+function AuthProvider({ children }) {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const logIn = () => {
@@ -11,10 +11,10 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem('login');
     setLoggedIn(false);
   };
-
+  // const foo = useMemo(() => ({ loggedIn, logIn, logOut }), []);
   return (
     <AuthContext.Provider value={{ loggedIn, logIn, logOut }}>{children}</AuthContext.Provider>
   );
-};
+}
 
 export default AuthProvider;

@@ -7,5 +7,5 @@ import loginReducer from './loginSlice';
 export default combineReducers({
   channels: channelsReducer,
   messages: messagesReducer,
-  login: loginReducer
+  login: loginReducer,
 });

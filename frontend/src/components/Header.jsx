@@ -1,11 +1,13 @@
-import { Navbar, Container, NavbarBrand, Button } from 'react-bootstrap';
+import {
+  Navbar, Container, NavbarBrand, Button,
+} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import useAuth from '../hooks/useAuth.jsx';
 
-const AuthButton = () => {
+function AuthButton() {
   const auth = useAuth();
   const { t } = useTranslation();
 
@@ -16,15 +18,17 @@ const AuthButton = () => {
       {t('buttons.input')}
     </Button>
   );
-};
+}
 
-const Header = () => (
-  <Navbar className="shadow-sm bg-white">
-    <Container>
-      <NavbarBrand href="/">Hexlet Chat</NavbarBrand>
-    </Container>
-    <AuthButton />
-  </Navbar>
-);
+function Header() {
+  return (
+    <Navbar className="shadow-sm bg-white">
+      <Container>
+        <NavbarBrand href="/">Hexlet Chat</NavbarBrand>
+      </Container>
+      <AuthButton />
+    </Navbar>
+  );
+}
 
 export default Header;

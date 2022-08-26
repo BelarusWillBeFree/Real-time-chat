@@ -15,13 +15,13 @@ const renderModal = ({ modalInfo, hideModal, action }) => {
   const Component = getModal(modalInfo.type);
   return <Component modalInfo={modalInfo} action={action} onHide={hideModal} />;
 };
-const Channels = () => {
+function Channels() {
   const { addNewChannel, sendRemoveChannel, sendRenameChannel } = useContext(ApiContext);
 
   const action = {
     adding: (props, cb) => addNewChannel(props, cb),
     removing: (props, cb) => sendRemoveChannel(props, cb),
-    renaming: (props, cb) => sendRenameChannel(props, cb)
+    renaming: (props, cb) => sendRenameChannel(props, cb),
   };
   const [modalInfo, setModalInfo] = useState({ type: null, id: null });
   const hideModal = () => setModalInfo({ type: null, id: null });
@@ -35,7 +35,8 @@ const Channels = () => {
         <Button
           variant="link"
           onClick={() => showModal('adding')}
-          className="p-0 text-primary btn-group-vertical">
+          className="p-0 text-primary btn-group-vertical"
+        >
           <PlusSquare />
           <span className="visually-hidden">+</span>
         </Button>
@@ -44,6 +45,6 @@ const Channels = () => {
       {renderModal({ modalInfo, hideModal, action })}
     </div>
   );
-};
+}
 
 export default Channels;

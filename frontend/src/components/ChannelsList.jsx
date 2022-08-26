@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import Channel from './Channel.jsx';
 import { selectors } from '../slices/channelsSlice';
 
-const ChannelsList = (props) => {
+function ChannelsList(props) {
   const { showModal } = props;
   const channels = useSelector(selectors.selectAll);
   const currentChannelId = useSelector((store) => store.channels.currentChannelId);
@@ -22,6 +22,6 @@ const ChannelsList = (props) => {
       ))}
     </Nav>
   );
-};
+}
 
 export default ChannelsList;

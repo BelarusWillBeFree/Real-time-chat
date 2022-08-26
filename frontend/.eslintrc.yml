@@ -1,34 +1,35 @@
+---
+root: true
+
+plugins:
+  - functional
+
+extends:
+  - airbnb
+  - 'plugin:react-hooks/recommended'
+
+
+parserOptions:
+  ecmaVersion: latest
+
 env:
   browser: true
-  es2021: true
-extends:
-  - plugin:react/recommended
-  - eslint:recommended
-  - react-app
-  - plugin:prettier/recommended
-  
-parserOptions:
-  ecmaFeatures:
-    jsx: true
-  ecmaVersion: latest
-  sourceType: module
-plugins:
-  - react
-rules: {
-  react/jsx-filename-extension: [0, { "extensions": [".js", ".jsx"] }],
-  quotes: [1, 'single'],
- # 'prettier/prettier': ['error', { singleQuote: true }],
-  react/prop-types: 0,
-  import/extensions: 0,
-  import/no-unresolved: 0,
-  # https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/function-component-definition.md
-  react/function-component-definition: 0,
-  no-param-reassign: 0,
-  import/prefer-default-export: 1,
-  consistent-return: 0,
-  react/jsx-no-useless-fragment: 0,
-  react/jsx-props-no-spreading: 1,
-  react-hooks/exhaustive-deps: 0,
-  no-trailing-spaces: 1,
-  object-curly-newline: 1
-}
+  node: true
+  jest: true
+
+settings:
+  import/resolver:
+    - node
+
+rules:
+  react/jsx-filename-extension: [1, { "extensions": [".js", ".jsx"] }]
+  no-console: ['error', { allow: ['warn', 'error'] }]
+  import/extensions: 'off'
+  react/prop-types: 'off'
+  functional/no-conditional-statement: 'off'
+  functional/no-expression-statement: 'off'
+  functional/immutable-data: 'off'
+  functional/functional-parameters: 'off'
+  functional/no-try-statement: 'off'
+  functional/no-throw-statement: 'off'
+  jsx-a11y/label-has-associated-control: 'off'

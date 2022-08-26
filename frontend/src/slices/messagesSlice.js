@@ -13,14 +13,14 @@ const messagesSlice = createSlice({
     },
     addMessage: (state, { payload }) => {
       messagesAdapter.addOne(state, payload);
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(removeChannel, (state, { payload }) => {
       const restEntities = Object.values(state.entities).filter((e) => e.channelId !== payload);
       messagesAdapter.setAll(state, restEntities);
     });
-  }
+  },
 });
 
 export const selectors = messagesAdapter.getSelectors((state) => state.messages);

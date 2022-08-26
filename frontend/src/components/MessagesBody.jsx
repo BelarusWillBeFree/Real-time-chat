@@ -3,13 +3,17 @@ import React from 'react';
 
 import { selectors } from '../slices/messagesSlice';
 
-const Message = ({ username, body }) => (
-  <div className="text-break mb-2">
-    <b>{username}</b>: {body}
-  </div>
-);
+function Message({ username, body }) {
+  return (
+    <div className="text-break mb-2">
+      <b>{username}</b>
+      :
+      {body}
+    </div>
+  );
+}
 
-const MessagesBody = () => {
+function MessagesBody() {
   const messages = useSelector(selectors.selectAll);
   const currentChannelId = useSelector((store) => store.channels.currentChannelId);
   return (
@@ -21,6 +25,6 @@ const MessagesBody = () => {
         ))}
     </div>
   );
-};
+}
 
 export default MessagesBody;
