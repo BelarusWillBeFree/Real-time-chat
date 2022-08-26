@@ -14,7 +14,7 @@ import { addChannel, removeChannel, renameChannel } from './slices/channelsSlice
 
 const apiFun = (socket) => {
   const withTimeout = (cb) => {
-    let called = false;
+    let called = false;// eslint-disable-line
 
     const timer = setTimeout(() => {
       if (called) return;
@@ -26,7 +26,7 @@ const apiFun = (socket) => {
       if (called) return;
       called = true;
       clearTimeout(timer);
-      cb.apply(this, args);
+      cb.apply(this, args);// eslint-disable-line
     };
   };
   const sendNewMessage = (bodyMessage, cb) => {

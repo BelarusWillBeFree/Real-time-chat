@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { AuthContext } from './Context.jsx';
 
 function AuthProvider({ children }) {
@@ -11,7 +11,6 @@ function AuthProvider({ children }) {
     localStorage.removeItem('login');
     setLoggedIn(false);
   };
-  // const foo = useMemo(() => ({ loggedIn, logIn, logOut }), []);
   return (
     <AuthContext.Provider value={{ loggedIn, logIn, logOut }}>{children}</AuthContext.Provider>
   );
