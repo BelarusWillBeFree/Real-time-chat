@@ -20,11 +20,11 @@ import useAuth from '../hooks/useAuth.jsx';
 
 const submitForm = (props) => {
   const {
-    values, setErrorServValid, dispatch, navigate, errors, auth, t,
+    valuesForSend, setErrorServValid, dispatch, navigate, errors, auth, t,
   } = props;
   const dataForSubmit = {
-    username: values.username,
-    password: values.password,
+    username: valuesForSend.username,
+    password: valuesForSend.password,
   };
   const {
     pages: { home },
@@ -85,9 +85,9 @@ function Signup() {
   } = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values) => {
+    onSubmit: (valuesForSend) => {
       const propsSubmit = {
-        values,
+        valuesForSend,
         setErrorServValid,
         dispatch,
         navigate,
