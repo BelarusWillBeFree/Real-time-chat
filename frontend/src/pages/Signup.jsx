@@ -40,8 +40,8 @@ const submitForm = (props) => {
       navigate(home);
     })
     .catch(({ response }) => {
+      setErrorServValid(true);
       if (response.status === 409) {
-        setErrorServValid(true);
         errors.confirmPassword = t('errors.userAlredyExist');
       }
     });
@@ -80,7 +80,9 @@ function Signup() {
     }),
   });
 
-  const formik = useFormik({
+  const {
+    values, errors, touched, handleChange, handleBlur, handleSubmit,
+  } = useFormik({
     initialValues,
     validationSchema,
     onSubmit: (values) => {
@@ -96,9 +98,7 @@ function Signup() {
       submitForm(propsSubmit);
     },
   });
-  const {
-    values, errors, touched, handleChange, handleBlur, handleSubmit,
-  } = formik;
+
   return (
     <Row className="justify-content-center align-content-center h-100">
       <Col className="col-12" md={8} xxl={6}>
