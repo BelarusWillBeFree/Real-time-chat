@@ -7,13 +7,13 @@ import { useTranslation } from 'react-i18next';
 
 import helloImage from '../assets/img/index.jpeg';
 
-import FormAuth from '../components/forms/FormAuth.jsx';
+import FormAuth from '../components/FormAuth.jsx';
 
 import router from '../routes';
 
 import useAuth from '../hooks/useAuth.jsx';
 
-function Login() {
+const Login = () => {
   const auth = useAuth();
   const { t } = useTranslation();
 
@@ -26,7 +26,7 @@ function Login() {
     if (auth.loggedIn) {
       navigate(home);
     }
-  }, [auth.loggedIn]);
+  }, []);
 
   return (
     <Row className="justify-content-center align-content-center h-100">

@@ -8,26 +8,25 @@ import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-import { selectors } from '../../slices/channelsSlice';
+import { getChannelById, getChannelsNames } from '../../selectors.js'
 
-function AddRename(props) {
+const AddRename = (props) => {
   const { onHide, modalInfo } = props;
-  const channels = useSelector((state) => selectors.selectEntities(state));
-  const namesChannels = Object.values(channels).map((channel) => channel.name);
+  const namesChannels = useSelector(getChannelsNames);
   const { t } = useTranslation();
   const [errorsDesc, setErrorsDesc] = useState('');
   const [disabledButton, setDisabledButton] = useState(false);
   const notify = () => toast.success(t('channels.toast.rename'));
   const notifyError = () => toast.error(t('errors.unknown'));
 
-  const currentChannel = useSelector((state) => selectors.selectById(state, modalInfo.id));
+  const currentChannel = useSelector(getChannelById(modalInfo.id));
   const validationSchema = yup.object().shape({
     name: yup
       .string()
-      .required(t('validation.required', { name: 'Имя' }))
-      .min(2, t('validation.sizeFromTo', { from: 3, to: 20 }))
-      .max(20, t('validation.sizeFromTo', { from: 3, to: 20 }))
-      .notOneOf(namesChannels, t('validation.unique')),
+      .required('validation.requiredName')
+      .min(2, 'validation.sizeFrom3To20')
+      .max(20, 'validation.sizeFrom3To20')
+      .notOneOf(namesChannels, 'validation.unique'),
   });
   const successSubmit = ({ status }) => {
     if (status === 'ok') {
@@ -44,7 +43,7 @@ function AddRename(props) {
       .validate(values)
       .then(() => action[modalInfo.type]({ name: values.name, id: modalInfo.id }, successSubmit))
       .catch((err) => {
-        setErrorsDesc(err.message);
+        setErrorsDesc(t(err.message));
         setDisabledButton(false);
       });
   };

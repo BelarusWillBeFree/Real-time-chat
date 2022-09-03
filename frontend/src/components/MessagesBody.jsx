@@ -1,9 +1,8 @@
 import { useSelector } from 'react-redux';
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
+import { getMessagesForCurrentChannel } from '../selectors.js';
 
-import { selectors } from '../slices/messagesSlice';
-
-function Message({ username, body }) {
+const Message = ({ username, body }) => {
   return (
     <div className="text-break mb-2">
       <b>{username}</b>
@@ -13,13 +12,17 @@ function Message({ username, body }) {
   );
 }
 
-function MessagesBody() {
-  const messages = useSelector(selectors.selectAll);
-  const currentChannelId = useSelector((store) => store.channels.currentChannelId);
+const MessagesBody = () => {
+  const divRef = useRef();
+
+  const messagesCurrentChannel = useSelector(getMessagesForCurrentChannel);
+
+  useEffect(()=>{
+    divRef.current.scrollTop = divRef.current.scrollHeight;
+  }, [messagesCurrentChannel.length]);
   return (
-    <div className="chat-messages overflow-auto px-5 ">
-      {messages
-        .filter((el) => el.channelId === currentChannelId)
+    <div className="chat-messages overflow-auto px-5" ref={divRef}>
+      {messagesCurrentChannel
         .map((message) => (
           <Message key={message.id} username={message.username} body={message.body} />
         ))}

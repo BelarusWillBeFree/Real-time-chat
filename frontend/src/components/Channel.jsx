@@ -7,9 +7,9 @@ import {
 import { useTranslation } from 'react-i18next';
 import { setCurrentChannelId } from '../slices/channelsSlice';
 
-function ButtonChannelRemovable({
+const ButtonChannelRemovable = ({
   onclick, variant, name, id, showModal,
-}) {
+}) => {
   const { t } = useTranslation();
   return (
     <Dropdown as={ButtonGroup} className="w-100">
@@ -37,9 +37,9 @@ function ButtonChannelRemovable({
   );
 }
 
-function ButtonChannel({
+const ButtonChannel = ({
   onclick, variant, name, id,
-}) {
+}) => {
   return (
     <Button
       variant={variant}
@@ -51,7 +51,7 @@ function ButtonChannel({
   );
 }
 
-function Channel(props) {
+const Channel = (props) => {
   const { channelData, currentChannelId, showModal } = props;
   const dispatch = useDispatch();
   const { name, removable } = channelData;

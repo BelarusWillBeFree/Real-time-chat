@@ -2,16 +2,11 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
 
-import { selectors as selectorMessages } from '../slices/messagesSlice';
-import { selectors as selectorChannels } from '../slices/channelsSlice';
+import { getCurrentChannel, getMessagesForCurrentChannel } from '../selectors.js';
 
-function MessagesHeader() {
-  const curChannelId = useSelector((store) => store.channels.currentChannelId);
-  const currChannel = useSelector((state) => selectorChannels.selectById(state, curChannelId));
-  const messages = useSelector(selectorMessages.selectEntities);
-  const count = Object.values(messages).filter(
-    (message) => message.channelId === curChannelId,
-  ).length;
+const MessagesHeader = () => {
+  const currChannel = useSelector(getCurrentChannel);
+  const count = useSelector(getMessagesForCurrentChannel).length;
   const { t } = useTranslation();
 
   const channelName = currChannel ? currChannel.name : '';

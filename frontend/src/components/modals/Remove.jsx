@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-function Remove({ modalInfo, action, onHide }) {
+const Remove = ({ modalInfo, action, onHide }) => {
   const [disabled, setDisabled] = useState(false);
   const { t } = useTranslation();
   const buttonRef = useRef();

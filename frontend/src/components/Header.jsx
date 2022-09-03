@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import useAuth from '../hooks/useAuth.jsx';
 
-function AuthButton() {
+const AuthButton = () => {
   const auth = useAuth();
   const { t } = useTranslation();
 
@@ -20,7 +20,7 @@ function AuthButton() {
   );
 }
 
-function Header() {
+const Header = () => {
   return (
     <Navbar className="shadow-sm bg-white">
       <Container>

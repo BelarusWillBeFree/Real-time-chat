@@ -10,16 +10,27 @@ export default {
     },
     validation: {
       required: '{{name}} обязательное поле',
+      requiredName: 'Имя обязательное поле',
+      requiredLogin: 'login обязательное поле',
+      requiredPassword: 'password обязательное поле',
       sizeFromTo: 'От {{from}} до {{to}} символов',
-      minSym: 'Не менее {{min}} символов',
+      sizeFrom3To20: 'От 3 до 20 символов',
+      minSym6: 'Не менее 6 символов',
       confirmPassword: 'Пароли должны совпадать',
       unique: 'Должно быть уникальным',
+    },
+    notFound: {
+      header: 'Страница не найдена',
+      message: 'Но вы можете перейти ',
+      linkText: 'на главную страницу',
     },
     singup: {
       text: 'Регистрация',
       username: 'Имя пользователя',
       password: 'Пароль',
       confirmPassword: 'Подтвердите пароль',
+      toPage: 'На страницу',
+      login: 'Login',
     },
     errors: {
       unknown: 'неизвестная ошибка',

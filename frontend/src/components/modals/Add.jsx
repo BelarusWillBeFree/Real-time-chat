@@ -8,25 +8,30 @@ import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
-import { selectors, setCurrentChannelId } from '../../slices/channelsSlice';
+import { setCurrentChannelId } from '../../slices/channelsSlice';
+import { getChannelsNames } from '../../selectors.js'
 
-function AddRename(props) {
+const AddRename = (props) => {
   const { t } = useTranslation();
   const { onHide } = props;
   const rollbar = useRollbar();
   const [disabledButton, setDisabledButton] = useState(false);
   const [errorsDesc, setErrorsDesc] = useState('');
-  const channels = useSelector((state) => selectors.selectEntities(state));
-  const namesChannels = Object.values(channels).map((channel) => channel.name);
+  //const channels = useSelector((state) => selectors.selectEntities(state));
+  //useSelector(selectorEntities);
+   
+  //const channels = allChannels;
+  //const namesChannels = Object.values(channels).map((channel) => channel.name);
+  const namesChannels = useSelector(getChannelsNames);
   const dispatch = useDispatch();
 
   const validationSchema = yup.object().shape({
     name: yup
       .string()
-      .required(t('validation.required', { name: 'Имя' }))
-      .min(2, t('validation.sizeFromTo', { from: 3, to: 20 }))
-      .max(20, t('validation.sizeFromTo', { from: 3, to: 20 }))
-      .notOneOf(namesChannels, t('validation.unique')),
+      .required('validation.requiredName')
+      .min(2, 'validation.sizeFrom3To20')
+      .max(20, 'validation.sizeFrom3To20')
+      .notOneOf(namesChannels, 'validation.unique'),
   });
   const notify = () => toast.success(t('channels.toast.add'));
   const notifyError = () => toast.error(t('errors.unknown'));
@@ -54,7 +59,7 @@ function AddRename(props) {
         action[modalInfo.type](values, resultAddChannel);
       })
       .catch((err) => {
-        setErrorsDesc(err.message);
+        setErrorsDesc(t(err.message));
         setDisabledButton(false);
       });
   };

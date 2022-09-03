@@ -15,7 +15,7 @@ const renderModal = ({ modalInfo, hideModal, action }) => {
   const Component = getModal(modalInfo.type);
   return <Component modalInfo={modalInfo} action={action} onHide={hideModal} />;
 };
-function Channels() {
+const Channels = () => {
   const { addNewChannel, sendRemoveChannel, sendRenameChannel } = useContext(ApiContext);
 
   const action = {

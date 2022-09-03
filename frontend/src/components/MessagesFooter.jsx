@@ -2,14 +2,14 @@ import { Form, Button, InputGroup } from 'react-bootstrap';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
 
 import { ApiContext } from '../contexts/Context.jsx';
 
-function MessagesFooter() {
+const MessagesFooter = () => {
   const { t } = useTranslation();
   const [disabledButton, setDisabledButton] = useState(false);
   const notifyError = () => toast.error(t('errors.unknown'));
@@ -17,6 +17,10 @@ function MessagesFooter() {
   const currentChannelId = useSelector((store) => store.channels.currentChannelId);
   const { sendNewMessage } = useContext(ApiContext);
   const username = useSelector((store) => store.login.username);
+  const inputRef = useRef();
+  if (inputRef.current) {
+    inputRef.current.focus();
+  }
 
   const formik = useFormik({
     initialValues,
@@ -50,6 +54,7 @@ function MessagesFooter() {
             className="border-0"
             value={values.message}
             onChange={handleChange}
+            ref={inputRef}
           />
           <Button
             type="submit"

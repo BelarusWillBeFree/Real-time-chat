@@ -7,12 +7,13 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 
-import { localStorSet } from '../../hooks/useLocalStor.jsx';
-import useAuth from '../../hooks/useAuth.jsx';
-import router from '../../routes';
-import { setUsername, setToken } from '../../slices/loginSlice';
+import { getToken } from '../api/dataExchange.js';
+import { saveToken } from '../hooks/useLocalStor.js';
+import useAuth from '../hooks/useAuth.jsx';
+import router from '../routes';
+import { setUsername, setToken } from '../slices/loginSlice';
 
-function FormAuth() {
+const FormAuth = () => {
   const dispatch = useDispatch();
   const rollbar = useRollbar();
   const { t } = useTranslation();
@@ -23,10 +24,10 @@ function FormAuth() {
   const validationSchema = yup.object().shape({
     username: yup
       .string()
-      .required(t('validation.required', { name: 'Login' })),
+      .required('validation.requiredLogin'),
     password: yup
       .string()
-      .required(t('validation.required', { name: 'password' })),
+      .required('validation.requiredPassword'),
   });
   const auth = useAuth();
 
@@ -41,9 +42,11 @@ function FormAuth() {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        const { username, token } = await localStorSet(values);
-        dispatch(setUsername(username));
-        dispatch(setToken(token));
+        const data = await getToken(values);
+        saveToken(data);
+        //const { username, token } = await localStorSet(values);
+        dispatch(setUsername(data.username));
+        dispatch(setToken(data.token));
         auth.logIn();
         navigate(home);
       } catch (error) {
@@ -73,7 +76,7 @@ function FormAuth() {
           value={values.username}
           ref={null}
           onChange={formik.handleChange}
-          isInvalid={(errors.username && touched.username) || errAuth}
+          isInvalid={(t(errors.username) && touched.username) || errAuth}
         />
       </FloatingLabel>
       <FloatingLabel
@@ -91,7 +94,7 @@ function FormAuth() {
           placeholder={t('login.password')}
           value={values.password}
           onChange={formik.handleChange}
-          isInvalid={(errors.password && touched.password) || errAuth}
+          isInvalid={(t(errors.password) && touched.password) || errAuth}
         />
       </FloatingLabel>
       {errAuth ? (

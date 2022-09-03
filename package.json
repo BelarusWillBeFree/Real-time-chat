@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "[![Actions Status](https://github.com/BelarusWillBeFree/frontend-project-lvl4/workflows/hexlet-check/badge.svg)](https://github.com/BelarusWillBeFree/frontend-project-lvl4/actions) test",
+  "description": "This is a simple chat application made during learning on https://hexlet.io/ Frontend-developer course.",
   "main": "frontend/src/index.js",
   "scripts": {
     "build": "npm run build --prefix frontend",
@@ -23,5 +23,12 @@
     "@hexlet/chat-server": "^1.1.6",
     "immer": "^9.0.15",
     "use-immer": "^0.7.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.22.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-functional": "^4.2.2",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.0"
   }
 }

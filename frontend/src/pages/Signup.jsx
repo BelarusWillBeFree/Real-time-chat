@@ -1,5 +1,5 @@
 import {
-  Row, Form, FormControl, Col, Card, Image, Button, FloatingLabel,
+  Row, Form, FormControl, Col, Card, Image, Button, FloatingLabel, Anchor
 } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
@@ -17,6 +17,7 @@ import signupApi from '../api/signupApi.js';
 import { setUsername, setToken } from '../slices/loginSlice';
 
 import useAuth from '../hooks/useAuth.jsx';
+import { saveToken } from '../hooks/useLocalStor.js';
 
 const submitForm = (props) => {
   const {
@@ -33,7 +34,7 @@ const submitForm = (props) => {
     .then((response) => {
       const { username, token } = response.data;
       setErrorServValid(false);
-      localStorage.setItem('login', JSON.stringify(response.data));
+      saveToken(response.data);
       dispatch(setUsername(username));
       dispatch(setToken(token));
       auth.logIn();
@@ -47,16 +48,21 @@ const submitForm = (props) => {
     });
 };
 
-function Signup() {
+const Signup = () => {
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = useAuth();
 
   const { t } = useTranslation();
-
+  const {
+    pages: { home },
+  } = router;
   useEffect(() => {
     inputRef.current.focus();
+    if (auth.loggedIn) {
+      navigate(home);
+    }
   }, []);
   const [errServValid, setErrorServValid] = useState(false);
   const initialValues = {
@@ -67,16 +73,16 @@ function Signup() {
   const validationSchema = yup.object().shape({
     username: yup
       .string()
-      .required(t('validation.required', { name: 'Имя пользователя' }))
-      .min(2, t('validation.sizeFromTo', { from: 3, to: 20 }))
-      .max(20, t('validation.sizeFromTo', { from: 3, to: 20 })),
+      .required('validation.requiredName')
+      .min(2, 'validation.sizeFrom3To20')
+      .max(20, 'validation.sizeFrom3To20'),
     password: yup
       .string()
-      .required(t('validation.required', { name: 'password' }))
-      .min(5, t('validation.minSym', { min: 6 })),
+      .required('validation.requiredPassword')
+      .min(5, 'validation.minSym5'),
     confirmPassword: yup.string().when('password', {
       is: (val) => !!(val && val.length > 0),
-      then: yup.string().oneOf([yup.ref('password')], t('validation.confirmPassword')),
+      then: yup.string().oneOf([yup.ref('password')], 'validation.confirmPassword'),
     }),
   });
 
@@ -118,7 +124,7 @@ function Signup() {
                   value={values.username}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isInvalid={(touched.username && errors.username) || errServValid}
+                  isInvalid={(touched.username && t(errors.username)) || errServValid}
                 />
 
                 <FormControl.Feedback type="invalid" tooltip>
@@ -134,7 +140,7 @@ function Signup() {
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isInvalid={(touched.password && errors.password) || errServValid}
+                  isInvalid={(touched.password && t(errors.password)) || errServValid}
                 />
 
                 <FormControl.Feedback type="invalid" tooltip>
@@ -154,7 +160,7 @@ function Signup() {
                   value={values.confirmPassword}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isInvalid={(touched.confirmPassword && errors.confirmPassword) || errServValid}
+                  isInvalid={(touched.confirmPassword && t(errors.confirmPassword)) || errServValid}
                 />
 
                 <FormControl.Feedback type="invalid" tooltip>
@@ -166,6 +172,12 @@ function Signup() {
               </Button>
             </Form>
           </Card.Body>
+          <Card.Footer className="p-4">
+            <div className="text-center">
+              <span className="px-1">{t('singup.toPage')}</span>
+              <Anchor href="/login">{t('singup.login')}</Anchor>
+            </div>
+          </Card.Footer>
         </Card>
       </Col>
     </Row>
