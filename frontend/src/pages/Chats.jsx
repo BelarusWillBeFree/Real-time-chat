@@ -26,25 +26,26 @@ const Chats = () => {
         pages: { login },
       } = router;
       navigate(login);
+    } else {
+      const loginData = getLogin();
+      if (loginData) {
+        dispatch(setUsername(loginData.username));
+        dispatch(setToken(loginData.token));
+        auth.logIn();
+      }
+      getData(loginData.token)
+        .then((response) => {
+          if (!response) {
+            return;
+          }
+          const { data } = response;
+          dispatch(addChannels(data.channels));
+          dispatch(addMessages(data.messages));
+        })
+        .catch((err) => {
+          rollbar.error('get data from server', err);
+        });
     }
-    const loginData = getLogin();
-    if (loginData) {
-      dispatch(setUsername(loginData.username));
-      dispatch(setToken(loginData.token));
-      auth.logIn();
-    }
-    getData(loginData.token)
-      .then((response) => {
-        if (!response) {
-          return;
-        }
-        const { data } = response;
-        dispatch(addChannels(data.channels));
-        dispatch(addMessages(data.messages));
-      })
-      .catch((err) => {
-        rollbar.error('get data from server', err);
-      });
   }, []);
   
   return (

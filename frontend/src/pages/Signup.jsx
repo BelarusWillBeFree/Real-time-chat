@@ -79,7 +79,7 @@ const Signup = () => {
     password: yup
       .string()
       .required('validation.requiredPassword')
-      .min(5, 'validation.minSym5'),
+      .min(5, 'validation.minSym6'),
     confirmPassword: yup.string().when('password', {
       is: (val) => !!(val && val.length > 0),
       then: yup.string().oneOf([yup.ref('password')], 'validation.confirmPassword'),
@@ -124,11 +124,11 @@ const Signup = () => {
                   value={values.username}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isInvalid={(touched.username && t(errors.username)) || errServValid}
+                  isInvalid={(touched.username && errors.username) || errServValid}
                 />
 
                 <FormControl.Feedback type="invalid" tooltip>
-                  {errors.username}
+                  {t(errors.username)}
                 </FormControl.Feedback>
               </FloatingLabel>
               <FloatingLabel label={t('singup.password')} controlId="password" className="mb-3">
@@ -140,11 +140,11 @@ const Signup = () => {
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isInvalid={(touched.password && t(errors.password)) || errServValid}
+                  isInvalid={(touched.password && errors.password) || errServValid}
                 />
 
                 <FormControl.Feedback type="invalid" tooltip>
-                  {errors.password}
+                  {t(errors.password)}
                 </FormControl.Feedback>
               </FloatingLabel>
               <FloatingLabel
@@ -160,11 +160,11 @@ const Signup = () => {
                   value={values.confirmPassword}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isInvalid={(touched.confirmPassword && t(errors.confirmPassword)) || errServValid}
+                  isInvalid={(touched.confirmPassword && errors.confirmPassword) || errServValid}
                 />
 
                 <FormControl.Feedback type="invalid" tooltip>
-                  {errors.confirmPassword}
+                  {t(errors.confirmPassword)}
                 </FormControl.Feedback>
               </FloatingLabel>
               <Button variant="outline-primary w-100" type="submit">

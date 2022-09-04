@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Modal, FormControl, Form, Container,
@@ -9,19 +9,19 @@ import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
 import { setCurrentChannelId } from '../../slices/channelsSlice';
+import { setShowed } from '../../slices/modalsSlice';
 import { getChannelsNames } from '../../selectors.js'
+import { ApiContext } from '../../contexts/Context.jsx'
 
-const AddRename = (props) => {
+const Add = () => {
+  const { addNewChannel } = useContext(ApiContext);
+
   const { t } = useTranslation();
-  const { onHide } = props;
+
   const rollbar = useRollbar();
   const [disabledButton, setDisabledButton] = useState(false);
   const [errorsDesc, setErrorsDesc] = useState('');
-  //const channels = useSelector((state) => selectors.selectEntities(state));
-  //useSelector(selectorEntities);
-   
-  //const channels = allChannels;
-  //const namesChannels = Object.values(channels).map((channel) => channel.name);
+
   const namesChannels = useSelector(getChannelsNames);
   const dispatch = useDispatch();
 
@@ -44,19 +44,19 @@ const AddRename = (props) => {
       } = propsAddChannel;
       dispatch(setCurrentChannelId(id));
       notify();
-      onHide();
+      dispatch(setShowed(false));
     } else {
       rollbar.error('error creat new channel');
       notifyError();
       setDisabledButton(false);
     }
   };
-  const generateOnSubmit = ({ modalInfo, action }) => (values) => {
+  const generateOnSubmit = (values) => {
     setDisabledButton(true);
     validationSchema
       .validate(values)
       .then(() => {
-        action[modalInfo.type](values, resultAddChannel);
+        addNewChannel(values, resultAddChannel);
       })
       .catch((err) => {
         setErrorsDesc(t(err.message));
@@ -65,7 +65,7 @@ const AddRename = (props) => {
   };
 
   const formik = useFormik({
-    onSubmit: generateOnSubmit(props),
+    onSubmit: generateOnSubmit,
     initialValues: { name: '' },
   });
   const inputRef = useRef();
@@ -74,7 +74,7 @@ const AddRename = (props) => {
   }, []);
 
   const handleClose = () => {
-    onHide();
+    dispatch(setShowed(false));
   };
 
   const {
@@ -82,7 +82,7 @@ const AddRename = (props) => {
   } = formik;
   return (
     <Modal show centered>
-      <Modal.Header closeButton onHide={onHide}>
+      <Modal.Header closeButton onHide={ handleClose }>
         <Modal.Title>{t('modals.add.text')}</Modal.Title>
       </Modal.Header>
 
@@ -127,4 +127,4 @@ const AddRename = (props) => {
   );
 }
 
-export default AddRename;
+export default Add;

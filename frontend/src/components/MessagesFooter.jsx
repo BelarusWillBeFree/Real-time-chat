@@ -6,7 +6,7 @@ import React, { useContext, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
-
+import { getCurrentChannelId, getUserName } from '../selectors.js'
 import { ApiContext } from '../contexts/Context.jsx';
 
 const MessagesFooter = () => {
@@ -14,9 +14,12 @@ const MessagesFooter = () => {
   const [disabledButton, setDisabledButton] = useState(false);
   const notifyError = () => toast.error(t('errors.unknown'));
   const initialValues = { message: '' };
-  const currentChannelId = useSelector((store) => store.channels.currentChannelId);
+
+  const currentChannelId = useSelector(getCurrentChannelId);
+  const username = useSelector(getUserName); //(store) => store.login.username
+
   const { sendNewMessage } = useContext(ApiContext);
-  const username = useSelector((store) => store.login.username);
+
   const inputRef = useRef();
   if (inputRef.current) {
     inputRef.current.focus();

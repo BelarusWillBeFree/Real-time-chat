@@ -5,7 +5,7 @@ export const saveToken = async (data) => {
 
 export const getLogin = () => {
   const data = localStorage.getItem('login');
-  return !data ? null : JSON.parse(data);
+  return data === null ? null : JSON.parse(data);
 };
 
 export const removeItem = (nameItem) => {
