@@ -14,10 +14,9 @@ import singupImage from '../assets/img/signup.jpeg';
 
 import signupApi from '../api/signupApi.js';
 
-import { setUsername, setToken } from '../slices/loginSlice';
-
 import useAuth from '../hooks/useAuth.jsx';
 import { saveToken } from '../hooks/useLocalStor.js';
+import { setUsername, setToken } from '../slices/loginSlice';
 
 const submitForm = (props) => {
   const {
@@ -32,11 +31,12 @@ const submitForm = (props) => {
   } = router;
   signupApi(dataForSubmit)
     .then((response) => {
-      const { username, token } = response.data;
+
       setErrorServValid(false);
-      saveToken(response.data);
-      dispatch(setUsername(username));
-      dispatch(setToken(token));
+      saveToken(response);
+      const { username, token } = response.data;
+       dispatch(setUsername(username));
+       dispatch(setToken(token));
       auth.logIn();
       navigate(home);
     })

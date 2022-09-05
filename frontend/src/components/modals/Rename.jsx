@@ -1,6 +1,6 @@
 import { useFormik } from 'formik';
-import React, { useRef, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useRef, useEffect, useState, useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Modal, FormControl, Form, Container, FormLabel,
 } from 'react-bootstrap';
@@ -8,18 +8,24 @@ import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-import { getChannelById, getChannelsNames } from '../../selectors.js'
+import { ApiContext } from '../../contexts/Context.jsx';
 
-const AddRename = (props) => {
-  const { onHide, modalInfo } = props;
+import { getChannelById, getChannelsNames, getModalInfo } from '../../selectors.js'
+import { setShowed } from '../../slices/modalsSlice';
+
+const AddRename = () => {
+  const { sendRenameChannel } = useContext(ApiContext);
   const namesChannels = useSelector(getChannelsNames);
+  const modalInfo = useSelector(getModalInfo);
+  const [show, setShow] = useState(true);
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [errorsDesc, setErrorsDesc] = useState('');
   const [disabledButton, setDisabledButton] = useState(false);
   const notify = () => toast.success(t('channels.toast.rename'));
   const notifyError = () => toast.error(t('errors.unknown'));
 
-  const currentChannel = useSelector(getChannelById(modalInfo.id));
+  const currentChannel = useSelector(getChannelById(modalInfo.idChannel));
   const validationSchema = yup.object().shape({
     name: yup
       .string()
@@ -28,20 +34,21 @@ const AddRename = (props) => {
       .max(20, 'validation.sizeFrom3To20')
       .notOneOf(namesChannels, 'validation.unique'),
   });
-  const successSubmit = ({ status }) => {
+  const resultRenameSubmit = ({ status }) => {
     if (status === 'ok') {
       notify();
-      onHide();
+      dispatch(setShowed(false));
     } else {
       notifyError();
       setDisabledButton(false);
     }
   };
-  const generateOnSubmit = ({ action }) => (values) => {
+
+  const generateOnSubmit = (values) => {
     setDisabledButton(true);
     validationSchema
       .validate(values)
-      .then(() => action[modalInfo.type]({ name: values.name, id: modalInfo.id }, successSubmit))
+      .then(() => sendRenameChannel({ name: values.name, id: modalInfo.idChannel }, resultRenameSubmit))
       .catch((err) => {
         setErrorsDesc(t(err.message));
         setDisabledButton(false);
@@ -49,7 +56,7 @@ const AddRename = (props) => {
   };
 
   const formik = useFormik({
-    onSubmit: generateOnSubmit(props),
+    onSubmit: generateOnSubmit,
     initialValues: { name: currentChannel.name },
   });
   const inputRef = useRef();
@@ -58,15 +65,16 @@ const AddRename = (props) => {
   }, []);
 
   const handleClose = () => {
-    onHide();
+    dispatch(setShowed(false));
+    setShow(false);
   };
 
   const {
     handleSubmit, handleChange, handleBlur, values,
   } = formik;
   return (
-    <Modal show centered>
-      <Modal.Header closeButton onHide={onHide}>
+    <Modal show={show} onHide={handleClose} centered>
+      <Modal.Header closeButton onHide={handleClose}>
         <Modal.Title>{t('modals.rename.text')}</Modal.Title>
       </Modal.Header>
 

@@ -4,11 +4,9 @@ import { useSelector } from 'react-redux';
 
 import { SpinerContext } from '../contexts/Context.jsx';
 import Channel from './Channel.jsx';
-//import { selectors } from '../slices/channelsSlice';
 import { getChannels, getCurrentChannelId } from '../selectors.js';
 
-const ChannelsList = (props) => {
-  const { showModal } = props;
+const ChannelsList = () => {
   const channels = useSelector(getChannels);
 
   const currentChannelId = useSelector(getCurrentChannelId);
@@ -21,7 +19,6 @@ const ChannelsList = (props) => {
           key={channel.id}
           currentChannelId={currentChannelId}
           channelData={{ ...channel }}
-          showModal={showModal}
         />
       ))}
     </Nav>

@@ -10,18 +10,17 @@ import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
 import { setCurrentChannelId } from '../../slices/channelsSlice';
 import { setShowed } from '../../slices/modalsSlice';
-import { getChannelsNames } from '../../selectors.js'
-import { ApiContext } from '../../contexts/Context.jsx'
+import { getChannelsNames } from '../../selectors.js';
+import { ApiContext } from '../../contexts/Context.jsx';
 
 const Add = () => {
   const { addNewChannel } = useContext(ApiContext);
 
   const { t } = useTranslation();
-
   const rollbar = useRollbar();
   const [disabledButton, setDisabledButton] = useState(false);
   const [errorsDesc, setErrorsDesc] = useState('');
-
+  const [show, setShow] = useState(true);
   const namesChannels = useSelector(getChannelsNames);
   const dispatch = useDispatch();
 
@@ -75,13 +74,14 @@ const Add = () => {
 
   const handleClose = () => {
     dispatch(setShowed(false));
+    setShow(false);
   };
 
   const {
     handleSubmit, handleChange, handleBlur, values,
   } = formik;
   return (
-    <Modal show centered>
+    <Modal show={show} onHide={handleClose} centered>
       <Modal.Header closeButton onHide={ handleClose }>
         <Modal.Title>{t('modals.add.text')}</Modal.Title>
       </Modal.Header>

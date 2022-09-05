@@ -6,11 +6,19 @@ import {
 
 import { useTranslation } from 'react-i18next';
 import { setCurrentChannelId } from '../slices/channelsSlice';
+import { setModal } from '../slices/modalsSlice';
 
 const ButtonChannelRemovable = ({
-  onclick, variant, name, id, showModal,
+  onclick, variant, name, id
 }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const handleRemove = () => {
+    dispatch(setModal({type: 'removing', isShowed: true, idChannel: id}))
+  };
+  const handleRename = () => {
+    dispatch(setModal({type: 'renaming', isShowed: true, idChannel: id}))
+  };
   return (
     <Dropdown as={ButtonGroup} className="w-100">
       <Button
@@ -26,10 +34,10 @@ const ButtonChannelRemovable = ({
         <span className="visually-hidden">{t('channels.control')}</span>
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        <Dropdown.Item onClick={() => showModal('removing', id)}>
+        <Dropdown.Item onClick={handleRemove}>
           {t('buttons.delete')}
         </Dropdown.Item>
-        <Dropdown.Item onClick={() => showModal('renaming', id)}>
+        <Dropdown.Item onClick={handleRename}>
           {t('buttons.rename')}
         </Dropdown.Item>
       </Dropdown.Menu>
@@ -52,8 +60,9 @@ const ButtonChannel = ({
 }
 
 const Channel = (props) => {
-  const { channelData, currentChannelId, showModal } = props;
+  const { channelData, currentChannelId } = props;
   const dispatch = useDispatch();
+
   const { name, removable } = channelData;
   const variant = channelData.id === currentChannelId ? 'secondary' : 'light';
 
@@ -70,7 +79,6 @@ const Channel = (props) => {
           id={channelData.id}
           variant={variant}
           name={name}
-          showModal={showModal}
         />
       ) : (
         <ButtonChannel

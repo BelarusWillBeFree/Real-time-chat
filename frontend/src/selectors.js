@@ -1,6 +1,5 @@
 import { channelsSelector } from './slices/channelsSlice.js';
 import { messagesSelector } from './slices/messagesSlice.js';
-import { modalsSelector } from './slices/modalsSlice.js';
 
 export const getChannels = channelsSelector.selectAll;
 export const getMessages = messagesSelector.selectAll;

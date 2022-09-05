@@ -13,6 +13,7 @@ import Messages from '../components/Messages.jsx';
 import useAuth from '../hooks/useAuth.jsx';
 import router from '../routes';
 import { getLogin } from '../hooks/useLocalStor.js';
+import Modals from '../components/modals/Modals.jsx';
 
 const Chats = () => {
   const dispatch = useDispatch();
@@ -53,6 +54,7 @@ const Chats = () => {
       <Row className="h-100 bg-white flex-md-row">
         <Channels />
         <Messages />
+        <Modals />
       </Row>
     </Container>
   );
