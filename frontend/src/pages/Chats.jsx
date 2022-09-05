@@ -6,7 +6,7 @@ import { useRollbar } from '@rollbar/react';
 import { useNavigate } from 'react-router-dom';
 import { addChannels } from '../slices/channelsSlice';
 import { addMessages } from '../slices/messagesSlice';
-import { setUsername, setToken } from '../slices/loginSlice';
+//import { setUsername, setToken } from '../slices/loginSlice';
 import { getData } from '../api/dataExchange.js';
 import Channels from '../components/Channels.jsx';
 import Messages from '../components/Messages.jsx';
@@ -30,8 +30,8 @@ const Chats = () => {
     } else {
       const loginData = getLogin();
       if (loginData) {
-        dispatch(setUsername(loginData.username));
-        dispatch(setToken(loginData.token));
+        //dispatch(setUsername(loginData.username));
+        //dispatch(setToken(loginData.token));
         auth.logIn();
       }
       getData(loginData.token)

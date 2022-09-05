@@ -6,8 +6,9 @@ import React, { useContext, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
-import { getCurrentChannelId, getUserName } from '../selectors.js'
+import { getCurrentChannelId } from '../selectors.js'
 import { ApiContext } from '../contexts/Context.jsx';
+import { getLogin } from '../hooks/useLocalStor.js'
 
 const MessagesFooter = () => {
   const { t } = useTranslation();
@@ -16,8 +17,9 @@ const MessagesFooter = () => {
   const initialValues = { message: '' };
 
   const currentChannelId = useSelector(getCurrentChannelId);
-  const username = useSelector(getUserName); //(store) => store.login.username
-
+  //const username = useSelector(getUserName); //(store) => store.login.username
+  const tokenAndUserName = getLogin();
+  const username = tokenAndUserName?.username;
   const { sendNewMessage } = useContext(ApiContext);
 
   const inputRef = useRef();

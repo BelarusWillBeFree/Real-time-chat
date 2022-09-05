@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 
@@ -11,10 +10,9 @@ import { getToken } from '../api/dataExchange.js';
 import { saveToken } from '../hooks/useLocalStor.js';
 import useAuth from '../hooks/useAuth.jsx';
 import router from '../routes';
-import { setUsername, setToken } from '../slices/loginSlice';
 
 const FormAuth = () => {
-  const dispatch = useDispatch();
+
   const rollbar = useRollbar();
   const { t } = useTranslation();
   const initialValues = {
@@ -45,8 +43,8 @@ const FormAuth = () => {
         const data = await getToken(values);
         saveToken(data);
         //const { username, token } = await localStorSet(values);
-        dispatch(setUsername(data.username));
-        dispatch(setToken(data.token));
+        //dispatch(setUsername(data.username));
+        //dispatch(setToken(data.token));
         auth.logIn();
         navigate(home);
       } catch (error) {

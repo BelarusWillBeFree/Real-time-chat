@@ -16,7 +16,7 @@ import signupApi from '../api/signupApi.js';
 
 import useAuth from '../hooks/useAuth.jsx';
 import { saveToken } from '../hooks/useLocalStor.js';
-import { setUsername, setToken } from '../slices/loginSlice';
+//import { setUsername, setToken } from '../slices/loginSlice';
 
 const submitForm = (props) => {
   const {
@@ -33,10 +33,10 @@ const submitForm = (props) => {
     .then((response) => {
 
       setErrorServValid(false);
-      saveToken(response);
-      const { username, token } = response.data;
-       dispatch(setUsername(username));
-       dispatch(setToken(token));
+      saveToken(response.data);
+      // const { username, token } = response.data;
+      //  dispatch(setUsername(username));
+      //  dispatch(setToken(token));
       auth.logIn();
       navigate(home);
     })

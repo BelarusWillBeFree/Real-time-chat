@@ -9,7 +9,7 @@ const AuthProvider = ({ children }) => {
     setLoggedIn(true);
   };
   const logOut = () => {
-    removeItem('login');
+    removeItem();
     setLoggedIn(false);
   };
   return (

@@ -6,13 +6,24 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import useAuth from '../hooks/useAuth.jsx';
+import { useNavigate } from 'react-router-dom';
+import router from '../routes';
 
 const AuthButton = () => {
   const auth = useAuth();
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const {
+    pages: { login },
+  } = router;
+  const handleLogOut = () => {
+    auth.logOut();
+    navigate(login);
+  }
 
   return auth.loggedIn ? (
-    <Button onClick={auth.logOut}>{t('buttons.output')}</Button>
+    <Button onClick={handleLogOut}>{t('buttons.output')}</Button>
   ) : (
     <Button as={Link} to="/login">
       {t('buttons.input')}
