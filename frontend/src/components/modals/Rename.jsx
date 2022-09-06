@@ -1,6 +1,6 @@
 import { useFormik } from 'formik';
 import React, {
-  useRef, useEffect, useState, useContext
+  useRef, useEffect, useState, useContext,
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -51,7 +51,7 @@ const AddRename = () => {
     validationSchema
       .validate(values)
       .then(() => sendRenameChannel({
-        name: values.name, id: modalInfo.idChannel
+        name: values.name, id: modalInfo.idChannel,
       }, resultRenameSubmit))
       .catch((err) => {
         setErrorsDesc(t(err.message));

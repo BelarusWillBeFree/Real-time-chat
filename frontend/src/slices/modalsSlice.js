@@ -26,14 +26,14 @@ const modalsSlice = createSlice({
       state.type = payload.type;
       state.isShowed = payload.isShowed;
       state.idChannel = payload.idChannel;
-    }
+    },
   },
 });
 
 export const modalsSelector = modalsAdapter.getSelectors((state) => state.modal);
 
 export const {
-  setType, setShowed, setIdChannel, setModal, 
+  setType, setShowed, setIdChannel, setModal,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

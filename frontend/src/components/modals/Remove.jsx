@@ -1,6 +1,6 @@
 import { Modal, Container, Button } from 'react-bootstrap';
 import React, {
-  useState, useRef, useEffect, useContext
+  useState, useRef, useEffect, useContext,
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';

@@ -13,15 +13,17 @@ const Messages = () => {
     <Col className="h-100 p-0">
       <div className="d-flex flex-column h-100">
         <MessagesHeader />
-          {
-            showSpiner ? (
-              <div className="d-flex justify-content-center">
-                <Spinner animation="border" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </div> )
-             : null
-          }
+        {
+          showSpiner ? 
+          (
+            <div className="d-flex justify-content-center">
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            </div> 
+          )
+           : null
+        }
         <MessagesBody />
         <MessagesFooter />
       </div>

@@ -14,10 +14,10 @@ const ButtonChannelRemovable = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const handleRemove = () => {
-    dispatch(setModal({ type: 'removing', isShowed: true, idChannel: id }))
+    dispatch(setModal({ type: 'removing', isShowed: true, idChannel: id }));
   };
   const handleRename = () => {
-    dispatch(setModal({ type: 'renaming', isShowed: true, idChannel: id }))
+    dispatch(setModal({ type: 'renaming', isShowed: true, idChannel: id }));
   };
   return (
     <Dropdown as={ButtonGroup} className="w-100">
@@ -47,17 +47,15 @@ const ButtonChannelRemovable = ({
 
 const ButtonChannel = ({
   onclick, variant, name, id,
-}) => {
-  return (
-    <Button
-      variant={variant}
-      className="text-start w-100 text-truncate"
-      onClick={onclick(id)}
-    >
-      {`# ${name}`}
-    </Button>
-  );
-};
+}) => (
+  <Button
+    variant={variant}
+    className="text-start w-100 text-truncate"
+    onClick={onclick(id)}
+  >
+    {`# ${name}`}
+  </Button>
+);
 
 const Channel = (props) => {
   const { channelData, currentChannelId } = props;

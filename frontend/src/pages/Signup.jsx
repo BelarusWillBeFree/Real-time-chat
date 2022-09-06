@@ -1,5 +1,5 @@
 import {
-  Row, Form, FormControl, Col, Card, Image, Button, FloatingLabel, Anchor
+  Row, Form, FormControl, Col, Card, Image, Button, FloatingLabel, Anchor,
 } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
@@ -26,7 +26,6 @@ const submitForm = (props) => {
   } = router;
   signupApi(dataForSubmit)
     .then((response) => {
-
       setErrorServValid(false);
       saveToken(response.data);
       auth.logIn();

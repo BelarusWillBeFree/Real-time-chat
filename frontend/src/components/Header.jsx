@@ -3,9 +3,9 @@ import {
 } from 'react-bootstrap';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate, Link } from 'react-router-dom';
 
 import useAuth from '../hooks/useAuth.jsx';
-import { useNavigate, Link } from 'react-router-dom';
 import router from '../routes';
 
 const AuthButton = () => {
@@ -30,15 +30,13 @@ const AuthButton = () => {
   );
 };
 
-const Header = () => {
-  return (
-    <Navbar className="shadow-sm bg-white">
-      <Container>
-        <NavbarBrand href="/">Hexlet Chat</NavbarBrand>
-      </Container>
-      <AuthButton />
-    </Navbar>
-  );
-};
+const Header = () => (
+  <Navbar className="shadow-sm bg-white">
+    <Container>
+      <NavbarBrand href="/">Hexlet Chat</NavbarBrand>
+    </Container>
+    <AuthButton />
+  </Navbar>
+)
 
 export default Header;
