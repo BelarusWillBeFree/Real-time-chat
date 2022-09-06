@@ -9,7 +9,7 @@ export const getCurrentChannelId = (state) => state.channels.currentChannelId;
 
 export const getMessagesForCurrentChannel = (state) => {
   const { currentChannelId } = state.channels;
-  const messages  = messagesSelector.selectEntities(state);
+  const messages = messagesSelector.selectEntities(state);
   return Object.values(messages).filter((m) => m.channelId === currentChannelId);
 };
 
@@ -18,7 +18,8 @@ export const getChannelsNames = (state) => {
   return Object.values(channels).map(({ name }) => name);
 };
 
-export const getChannelById = (channelId) => (state) => channelsSelector.selectById(state, channelId);
+export const getChannelById = (channelId) => (state) => 
+  channelsSelector.selectById(state, channelId);
 
 export const getCurrentChannel = (state) => {
   const channels = channelsSelector.selectEntities(state);

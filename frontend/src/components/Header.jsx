@@ -37,6 +37,6 @@ const Header = () => (
     </Container>
     <AuthButton />
   </Navbar>
-)
+);
 
 export default Header;
