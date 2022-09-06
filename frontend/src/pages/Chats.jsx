@@ -45,6 +45,7 @@ const Chats = () => {
           rollbar.error('get data from server', err);
         });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

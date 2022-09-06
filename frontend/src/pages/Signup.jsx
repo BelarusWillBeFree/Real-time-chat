@@ -53,6 +53,7 @@ const Signup = () => {
     if (auth.loggedIn) {
       navigate(home);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const [errServValid, setErrorServValid] = useState(false);
   const initialValues = {

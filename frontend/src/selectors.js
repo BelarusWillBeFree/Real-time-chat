@@ -18,8 +18,7 @@ export const getChannelsNames = (state) => {
   return Object.values(channels).map(({ name }) => name);
 };
 
-export const getChannelById = (channelId) => (state) => 
-  channelsSelector.selectById(state, channelId);
+export const getChannelById = (id) => (state) => channelsSelector.selectById(state, id);
 
 export const getCurrentChannel = (state) => {
   const channels = channelsSelector.selectEntities(state);

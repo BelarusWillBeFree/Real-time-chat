@@ -15,16 +15,14 @@ const Messages = () => {
         <MessagesHeader />
         {
           showSpiner
-          ?
-            (
-              <div className="d-flex justify-content-center">
-                <Spinner animation="border" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </div> 
-            )
-          :
-          null
+            ? (
+                <div className="d-flex justify-content-center">
+                  <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                </div>
+              )
+            : null
         }
         <MessagesBody />
         <MessagesFooter />
