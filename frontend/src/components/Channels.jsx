@@ -12,9 +12,9 @@ const Channels = () => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(setShowed(true))
+    dispatch(setShowed(true));
     dispatch(setType('adding'));
-  }
+  };
 
   return (
     <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
@@ -29,9 +29,9 @@ const Channels = () => {
           <span className="visually-hidden">+</span>
         </Button>
       </div>
-      <ChannelsList /> 
+      <ChannelsList />
     </div>
   );
-}
+};
 
 export default Channels;

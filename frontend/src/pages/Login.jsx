@@ -6,11 +6,8 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import helloImage from '../assets/img/index.jpeg';
-
 import FormAuth from '../components/FormAuth.jsx';
-
 import router from '../routes';
-
 import useAuth from '../hooks/useAuth.jsx';
 
 const Login = () => {
@@ -48,6 +45,6 @@ const Login = () => {
       </Col>
     </Row>
   );
-}
+};
 
 export default Login;

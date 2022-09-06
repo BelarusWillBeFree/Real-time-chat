@@ -4,23 +4,18 @@ import {
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import React, { useRef, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import router from '../routes';
-
 import singupImage from '../assets/img/signup.jpeg';
-
 import signupApi from '../api/signupApi.js';
-
 import useAuth from '../hooks/useAuth.jsx';
 import { saveToken } from '../hooks/useLocalStor.js';
-//import { setUsername, setToken } from '../slices/loginSlice';
 
 const submitForm = (props) => {
   const {
-    valuesForSend, setErrorServValid, dispatch, navigate, errors, auth, t,
+    valuesForSend, setErrorServValid, navigate, errors, auth, t,
   } = props;
   const dataForSubmit = {
     username: valuesForSend.username,
@@ -34,9 +29,6 @@ const submitForm = (props) => {
 
       setErrorServValid(false);
       saveToken(response.data);
-      // const { username, token } = response.data;
-      //  dispatch(setUsername(username));
-      //  dispatch(setToken(token));
       auth.logIn();
       navigate(home);
     })
@@ -51,7 +43,6 @@ const submitForm = (props) => {
 const Signup = () => {
   const inputRef = useRef(null);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const auth = useAuth();
 
   const { t } = useTranslation();
@@ -95,7 +86,6 @@ const Signup = () => {
       const propsSubmit = {
         valuesForSend,
         setErrorServValid,
-        dispatch,
         navigate,
         errors,
         auth,
@@ -182,6 +172,6 @@ const Signup = () => {
       </Col>
     </Row>
   );
-}
+};
 
 export default Signup;

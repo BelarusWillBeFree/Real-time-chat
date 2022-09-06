@@ -3,8 +3,6 @@ import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 /* eslint  no-param-reassign: 0 */
 const modalsAdapter = createEntityAdapter();
 
-//const typeModals = [];
-
 const initialState = modalsAdapter.getInitialState({
   type: 'adding',
   isShowed: false,

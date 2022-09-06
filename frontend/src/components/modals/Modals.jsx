@@ -1,9 +1,10 @@
+import { useSelector } from 'react-redux';
+
 import Add from './Add.jsx';
 import Remove from './Remove.jsx';
 import Rename from './Rename.jsx';
-import { useSelector } from 'react-redux'
-import { getModalInfo } from '../../selectors.js';
 
+import { getModalInfo } from '../../selectors.js';
 
 const modals = {
   adding: Add,
@@ -22,7 +23,7 @@ const Modals = () => {
   const Component = typeModals(type);
   return (
     <Component />
-    );
-}
+  );
+};
 
 export default Modals;

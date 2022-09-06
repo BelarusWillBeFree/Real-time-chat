@@ -1,8 +1,11 @@
 import { Modal, Container, Button } from 'react-bootstrap';
-import React, { useState, useRef, useEffect, useContext } from 'react';
+import React, {
+  useState, useRef, useEffect, useContext
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { setShowed } from '../../slices/modalsSlice';
 import { ApiContext } from '../../contexts/Context.jsx';
 import { getModalInfo } from '../../selectors.js';
@@ -32,7 +35,7 @@ const Remove = () => {
   const handleDelete = (event) => {
     event.preventDefault();
     setDisabled(true);
-    dispatch(sendRemoveChannel( modalInfo.idChannel, resultDeleteChannel));
+    dispatch(sendRemoveChannel(modalInfo.idChannel, resultDeleteChannel));
   };
 
   const handleClose = () => {
@@ -70,6 +73,6 @@ const Remove = () => {
       </Modal.Body>
     </Modal>
   );
-}
+};
 
 export default Remove;

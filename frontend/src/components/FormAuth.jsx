@@ -12,7 +12,6 @@ import useAuth from '../hooks/useAuth.jsx';
 import router from '../routes';
 
 const FormAuth = () => {
-
   const rollbar = useRollbar();
   const { t } = useTranslation();
   const initialValues = {
@@ -42,9 +41,6 @@ const FormAuth = () => {
       try {
         const data = await getToken(values);
         saveToken(data);
-        //const { username, token } = await localStorSet(values);
-        //dispatch(setUsername(data.username));
-        //dispatch(setToken(data.token));
         auth.logIn();
         navigate(home);
       } catch (error) {
@@ -105,6 +101,6 @@ const FormAuth = () => {
       </Button>
     </Form>
   );
-}
+};
 
 export default FormAuth;

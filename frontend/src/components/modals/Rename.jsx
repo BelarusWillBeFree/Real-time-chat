@@ -1,5 +1,7 @@
 import { useFormik } from 'formik';
-import React, { useRef, useEffect, useState, useContext } from 'react';
+import React, {
+  useRef, useEffect, useState, useContext
+} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Modal, FormControl, Form, Container, FormLabel,
@@ -10,7 +12,7 @@ import { toast } from 'react-toastify';
 
 import { ApiContext } from '../../contexts/Context.jsx';
 
-import { getChannelById, getChannelsNames, getModalInfo } from '../../selectors.js'
+import { getChannelById, getChannelsNames, getModalInfo } from '../../selectors.js';
 import { setShowed } from '../../slices/modalsSlice';
 
 const AddRename = () => {
@@ -48,7 +50,9 @@ const AddRename = () => {
     setDisabledButton(true);
     validationSchema
       .validate(values)
-      .then(() => sendRenameChannel({ name: values.name, id: modalInfo.idChannel }, resultRenameSubmit))
+      .then(() => sendRenameChannel({
+        name: values.name, id: modalInfo.idChannel
+      }, resultRenameSubmit))
       .catch((err) => {
         setErrorsDesc(t(err.message));
         setDisabledButton(false);
@@ -115,6 +119,6 @@ const AddRename = () => {
       </Modal.Body>
     </Modal>
   );
-}
+};
 
 export default AddRename;

@@ -7,5 +7,5 @@ const ApiContext = createContext({});
 const SpinerContext = createContext({});
 
 export {
-  AuthContext, I18nContext, SocketContext, ApiContext, SpinerContext
+  AuthContext, I18nContext, SocketContext, ApiContext, SpinerContext,
 };

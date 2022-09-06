@@ -18,6 +18,6 @@ const MessagesHeader = () => {
       <span className="text-muted">{t('messages.message', { count })}</span>
     </div>
   );
-}
+};
 
 export default MessagesHeader;

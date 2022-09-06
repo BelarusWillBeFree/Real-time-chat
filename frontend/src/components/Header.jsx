@@ -1,12 +1,11 @@
 import {
   Navbar, Container, NavbarBrand, Button,
 } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import useAuth from '../hooks/useAuth.jsx';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import router from '../routes';
 
 const AuthButton = () => {
@@ -20,7 +19,7 @@ const AuthButton = () => {
   const handleLogOut = () => {
     auth.logOut();
     navigate(login);
-  }
+  };
 
   return auth.loggedIn ? (
     <Button onClick={handleLogOut}>{t('buttons.output')}</Button>
@@ -29,7 +28,7 @@ const AuthButton = () => {
       {t('buttons.input')}
     </Button>
   );
-}
+};
 
 const Header = () => {
   return (
@@ -40,6 +39,6 @@ const Header = () => {
       <AuthButton />
     </Navbar>
   );
-}
+};
 
 export default Header;

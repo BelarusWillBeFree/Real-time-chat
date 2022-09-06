@@ -10,8 +10,8 @@ const ChannelsList = () => {
   const channels = useSelector(getChannels);
 
   const currentChannelId = useSelector(getCurrentChannelId);
-  const {setShowSpiner} = useContext(SpinerContext);
-  setShowSpiner(channels.length===0);
+  const { setShowSpiner } = useContext(SpinerContext);
+  setShowSpiner(channels.length === 0);
   return (
     <Nav fill variant="pills" className="d-flex flex-column px-2" as="ul">
       {channels.map((channel) => (
@@ -23,6 +23,6 @@ const ChannelsList = () => {
       ))}
     </Nav>
   );
-}
+};
 
 export default ChannelsList;

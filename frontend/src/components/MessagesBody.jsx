@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import React, { useRef, useEffect } from 'react';
+
 import { getMessagesForCurrentChannel } from '../selectors.js';
 
 const Message = ({ username, body }) => {
@@ -10,13 +11,12 @@ const Message = ({ username, body }) => {
       {body}
     </div>
   );
-}
+};
 
 const MessagesBody = () => {
   const divRef = useRef();
 
   const messagesCurrentChannel = useSelector(getMessagesForCurrentChannel);
-
   useEffect(()=>{
     divRef.current.scrollTop = divRef.current.scrollHeight;
   }, [messagesCurrentChannel.length]);
@@ -28,6 +28,6 @@ const MessagesBody = () => {
         ))}
     </div>
   );
-}
+};
 
 export default MessagesBody;

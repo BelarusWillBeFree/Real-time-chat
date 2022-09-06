@@ -9,15 +9,15 @@ import { setCurrentChannelId } from '../slices/channelsSlice';
 import { setModal } from '../slices/modalsSlice';
 
 const ButtonChannelRemovable = ({
-  onclick, variant, name, id
+  onclick, variant, name, id,
 }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const handleRemove = () => {
-    dispatch(setModal({type: 'removing', isShowed: true, idChannel: id}))
+    dispatch(setModal({ type: 'removing', isShowed: true, idChannel: id }))
   };
   const handleRename = () => {
-    dispatch(setModal({type: 'renaming', isShowed: true, idChannel: id}))
+    dispatch(setModal({ type: 'renaming', isShowed: true, idChannel: id }))
   };
   return (
     <Dropdown as={ButtonGroup} className="w-100">
@@ -43,7 +43,7 @@ const ButtonChannelRemovable = ({
       </Dropdown.Menu>
     </Dropdown>
   );
-}
+};
 
 const ButtonChannel = ({
   onclick, variant, name, id,
@@ -57,7 +57,7 @@ const ButtonChannel = ({
       {`# ${name}`}
     </Button>
   );
-}
+};
 
 const Channel = (props) => {
   const { channelData, currentChannelId } = props;
@@ -91,6 +91,6 @@ const Channel = (props) => {
       )}
     </Nav.Item>
   );
-}
+};
 
 export default Channel;

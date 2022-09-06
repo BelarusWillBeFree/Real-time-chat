@@ -21,5 +21,4 @@ export const getToken = async (authParams) => {
   const response = await axios.post(path, authParams);
   const { data } = await response;
   return data;
-}
-//export default fetchData;
+};

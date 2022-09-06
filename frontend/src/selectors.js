@@ -16,8 +16,6 @@ export const getMessagesForCurrentChannel = (state) => {
   return channelMessages;
 };
 
-//export const getUserName = (state) => state.login.username;
-
 export const getChannelsNames = (state) => {
   const channels = channelsSelector.selectEntities(state);
   return Object.values(channels).map(({ name }) => name);

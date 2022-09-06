@@ -1,5 +1,7 @@
 import { useFormik } from 'formik';
-import React, { useRef, useEffect, useState, useContext } from 'react';
+import React, {
+  useRef, useEffect, useState, useContext
+} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Modal, FormControl, Form, Container,
@@ -82,7 +84,7 @@ const Add = () => {
   } = formik;
   return (
     <Modal show={show} onHide={handleClose} centered>
-      <Modal.Header closeButton onHide={ handleClose }>
+      <Modal.Header closeButton onHide={handleClose}>
         <Modal.Title>{t('modals.add.text')}</Modal.Title>
       </Modal.Header>
 
@@ -125,6 +127,6 @@ const Add = () => {
       </Modal.Body>
     </Modal>
   );
-}
+};
 
 export default Add;
