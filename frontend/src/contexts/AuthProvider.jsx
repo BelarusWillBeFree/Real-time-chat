@@ -16,7 +16,7 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem(NAME_KEY, JSON.stringify(data));
     setLoggedIn(true);
   };
-    
+  
   const logIn = () => {
     setLoggedIn(true);
   };
@@ -26,7 +26,10 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ loggedIn, logIn, logOut, saveToken, getLogin }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider
+      value={{ loggedIn, logIn, logOut, saveToken, getLogin }}>
+        {children}
+    </AuthContext.Provider>
   );
 };
 

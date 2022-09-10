@@ -1,4 +1,6 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import {
+  BrowserRouter as Router, Routes, Route, Navigate
+} from 'react-router-dom';
 import React from 'react';
 
 import { ToastContainer } from 'react-toastify';
@@ -14,7 +16,9 @@ import Header from './components/Header.jsx';
 import useAuth from './hooks/useAuth.jsx';
 
 const {
-  pages: { home, signup, login, notFound },
+  pages: {
+    home, signup, login, notFound
+  },
 } = router;
 
 const PrivateRoute = ({ children }) => {
@@ -24,33 +28,30 @@ const PrivateRoute = ({ children }) => {
   );
 };
 
-const App = () => {
-
-  return (
-    <AuthProvider>
-      <SpinerProvider>
-        <Router>
-          <div className="d-flex flex-column h-100">
-            <Header />
-            <Routes>
-              <Route path={login} element={<Login />} />
-              <Route path={signup} element={<Signup />} />
-              <Route path={notFound} element={<NotFound />} />
-              <Route
-                path={home}
-                element={(
-                  <PrivateRoute>
-                    <PrivatePage />
-                  </PrivateRoute>
-                )}
-              />
-            </Routes>
-          </div>
-          <ToastContainer />
-        </Router>
-      </SpinerProvider>
-    </AuthProvider>
-  );
-};
+const App = () => (
+  <AuthProvider>
+    <SpinerProvider>
+      <Router>
+        <div className="d-flex flex-column h-100">
+          <Header />
+          <Routes>
+            <Route path={login} element={<Login />} />
+            <Route path={signup} element={<Signup />} />
+            <Route path={notFound} element={<NotFound />} />
+            <Route
+              path={home}
+              element={(
+                <PrivateRoute>
+                  <PrivatePage />
+                </PrivateRoute>
+              )}
+            />
+          </Routes>
+        </div>
+        <ToastContainer />
+      </Router>
+    </SpinerProvider>
+  </AuthProvider>
+);
 
 export default App;

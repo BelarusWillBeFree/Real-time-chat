@@ -12,7 +12,7 @@ const Channels = () => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(showModal({type: 'adding'}));
+    dispatch(showModal({ type: 'adding' }));
   };
 
   return (

@@ -13,16 +13,16 @@ const modalsSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    showModal: (state, {payload}) => {
+    showModal: (state, { payload }) => {
       state.isShowed = true;
       state.type = payload.type;
-      if (payload.hasOwnProperty('idChannel')) {
+      if (Object.hasOwnProperty(payload, 'idChannel')) {
         state.idChannel = payload.idChannel;
       }
     },
     closeModal: (state) => {
       state.isShowed = false;
-    }
+    },
   },
 });
 
