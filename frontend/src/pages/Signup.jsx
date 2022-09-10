@@ -45,14 +45,8 @@ const Signup = () => {
   const auth = useAuth();
 
   const { t } = useTranslation();
-  const {
-    pages: { home },
-  } = router;
   useEffect(() => {
     inputRef.current.focus();
-    if (auth.loggedIn) {
-      navigate(home);
-    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const [errServValid, setErrorServValid] = useState(false);

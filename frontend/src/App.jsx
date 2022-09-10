@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import React from 'react';
 
 import { ToastContainer } from 'react-toastify';
@@ -11,7 +11,17 @@ import AuthProvider from './contexts/AuthProvider.jsx';
 import SpinerProvider from './contexts/SpinerProvider.jsx';
 import router from './routes';
 import Header from './components/Header.jsx';
+import useAuth from './hooks/useAuth.jsx';
 
+const PrivateRoute = ({ children }) => {
+  const auth = useAuth();
+  const {
+    pages: { login },
+  } = router;
+  return (
+    auth.loggedIn ? children : <Navigate to={login} />
+  );
+};
 
 const App = () => {
   const {
@@ -26,8 +36,16 @@ const App = () => {
             <Routes>
               <Route path={login} element={<Login />} />
               <Route path={signup} element={<Signup />} />
-              <Route path={home} element={<Chats />} />
+
               <Route path={notFound} element={<NotFound />} />
+              <Route
+                path={home}
+                element={(
+                  <PrivateRoute>
+                    <Chats />
+                  </PrivateRoute>
+                )}
+              />
             </Routes>
           </div>
           <ToastContainer />
@@ -36,5 +54,5 @@ const App = () => {
     </AuthProvider>
   );
 };
-
+//              <Route path={home} element={<Chats />} />
 export default App;
