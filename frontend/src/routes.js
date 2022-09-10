@@ -6,7 +6,9 @@ const path = {
   dataPath: () => [apiPath, 'data'].join('/'),
   pages: {
     login: '/login',
+    signup: '/signup',
     home: '/',
+    notFound: '*',
   },
 };
 

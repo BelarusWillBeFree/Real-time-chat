@@ -9,26 +9,32 @@ import Signup from './pages/Signup.jsx';
 
 import AuthProvider from './contexts/AuthProvider.jsx';
 import SpinerProvider from './contexts/SpinerProvider.jsx';
-
+import router from './routes';
 import Header from './components/Header.jsx';
 
-const App = () => (
-  <AuthProvider>
-    <SpinerProvider>
-      <Router>
-        <div className="d-flex flex-column h-100">
-          <Header />
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/" element={<Chats />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </div>
-        <ToastContainer />
-      </Router>
-    </SpinerProvider>
-  </AuthProvider>
-);
+
+const App = () => {
+  const {
+    pages: { home, signup, login, notFound },
+  } = router;
+  return (
+    <AuthProvider>
+      <SpinerProvider>
+        <Router>
+          <div className="d-flex flex-column h-100">
+            <Header />
+            <Routes>
+              <Route path={login} element={<Login />} />
+              <Route path={signup} element={<Signup />} />
+              <Route path={home} element={<Chats />} />
+              <Route path={notFound} element={<NotFound />} />
+            </Routes>
+          </div>
+          <ToastContainer />
+        </Router>
+      </SpinerProvider>
+    </AuthProvider>
+  );
+};
 
 export default App;
