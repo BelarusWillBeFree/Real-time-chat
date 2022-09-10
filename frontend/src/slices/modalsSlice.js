@@ -13,27 +13,23 @@ const modalsSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    setType: (state, { payload }) => {
-      state.type = payload;
-    },
-    setShowed: (state, { payload }) => {
-      state.isShowed = payload;
-    },
-    setIdChannel: (state, { payload }) => {
-      state.idChannel = payload;
-    },
-    setModal: (state, { payload }) => {
+    showModal: (state, {payload}) => {
+      state.isShowed = true;
       state.type = payload.type;
-      state.isShowed = payload.isShowed;
-      state.idChannel = payload.idChannel;
+      if (payload.hasOwnProperty('idChannel')) {
+        state.idChannel = payload.idChannel;
+      }
     },
+    closeModal: (state) => {
+      state.isShowed = false;
+    }
   },
 });
 
 export const modalsSelector = modalsAdapter.getSelectors((state) => state.modal);
 
 export const {
-  setType, setShowed, setIdChannel, setModal,
+  showModal, closeModal,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

@@ -6,7 +6,7 @@ import {
 
 import { useTranslation } from 'react-i18next';
 import { setCurrentChannelId } from '../slices/channelsSlice';
-import { setModal } from '../slices/modalsSlice';
+import { showModal } from '../slices/modalsSlice';
 
 const ButtonChannelRemovable = ({
   onclick, variant, name, id,
@@ -14,10 +14,10 @@ const ButtonChannelRemovable = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const handleRemove = () => {
-    dispatch(setModal({ type: 'removing', isShowed: true, idChannel: id }));
+    dispatch(showModal({ type: 'removing', idChannel: id }));
   };
   const handleRename = () => {
-    dispatch(setModal({ type: 'renaming', isShowed: true, idChannel: id }));
+    dispatch(showModal({ type: 'renaming', idChannel: id }));
   };
   return (
     <Dropdown as={ButtonGroup} className="w-100">

@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setShowed } from '../../slices/modalsSlice';
+import { closeModal } from '../../slices/modalsSlice';
 import { ApiContext } from '../../contexts/Context.jsx';
 import { getModalInfo } from '../../selectors.js';
 
@@ -23,7 +23,7 @@ const Remove = () => {
   const resultDeleteChannel = ({ status }) => {
     if (status === 'ok') {
       notify();
-      dispatch(setShowed(false));
+      dispatch(closeModal());
     } else {
       notifyError();
       setDisabled(false);
@@ -39,7 +39,7 @@ const Remove = () => {
   };
 
   const handleClose = () => {
-    dispatch(setShowed(false));
+    dispatch(closeModal());
     setShow(false);
   };
 

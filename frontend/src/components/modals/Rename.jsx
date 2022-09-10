@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 import { ApiContext } from '../../contexts/Context.jsx';
 
 import { getChannelById, getChannelsNames, getModalInfo } from '../../selectors.js';
-import { setShowed } from '../../slices/modalsSlice';
+import { closeModal } from '../../slices/modalsSlice';
 
 const AddRename = () => {
   const { sendRenameChannel } = useContext(ApiContext);
@@ -39,7 +39,7 @@ const AddRename = () => {
   const resultRenameSubmit = ({ status }) => {
     if (status === 'ok') {
       notify();
-      dispatch(setShowed(false));
+      dispatch(closeModal());
     } else {
       notifyError();
       setDisabledButton(false);
@@ -69,7 +69,7 @@ const AddRename = () => {
   }, []);
 
   const handleClose = () => {
-    dispatch(setShowed(false));
+    dispatch(closeModal());
     setShow(false);
   };
 

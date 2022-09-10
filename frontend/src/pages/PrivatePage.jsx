@@ -28,9 +28,6 @@ const PrivatePage = () => {
       navigate(login);
     } else {
       const loginData = auth.getLogin();
-      if (loginData) {
-        auth.logIn();
-      }
       getData(loginData.token)
         .then((response) => {
           if (!response) {

@@ -11,7 +11,7 @@ import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
 import { setCurrentChannelId } from '../../slices/channelsSlice';
-import { setShowed } from '../../slices/modalsSlice';
+import { closeModal } from '../../slices/modalsSlice';
 import { getChannelsNames } from '../../selectors.js';
 import { ApiContext } from '../../contexts/Context.jsx';
 
@@ -45,7 +45,7 @@ const Add = () => {
       } = propsAddChannel;
       dispatch(setCurrentChannelId(id));
       notify();
-      dispatch(setShowed(false));
+      dispatch(closeModal());
     } else {
       rollbar.error('error creat new channel');
       notifyError();
@@ -75,7 +75,7 @@ const Add = () => {
   }, []);
 
   const handleClose = () => {
-    dispatch(setShowed(false));
+    dispatch(closeModal());
     setShow(false);
   };
 

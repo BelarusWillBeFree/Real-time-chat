@@ -5,15 +5,14 @@ import { PlusSquare } from 'react-bootstrap-icons';
 import { useTranslation } from 'react-i18next';
 
 import ChannelsList from './ChannelsList.jsx';
-import { setShowed, setType } from '../slices/modalsSlice';
+import { showModal } from '../slices/modalsSlice';
 
 const Channels = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(setShowed(true));
-    dispatch(setType('adding'));
+    dispatch(showModal({type: 'adding'}));
   };
 
   return (
