@@ -4,27 +4,24 @@ import { AuthContext } from './Context.jsx';
 
 const AuthProvider = ({ children }) => {
   const NAME_KEY = 'login';
+
   const getLogin = () => {
     const data = localStorage.getItem(NAME_KEY);
-    return data === null ? null : JSON.parse(data);
+    return JSON.parse(data);
   };
 
-  const [loggedIn, setLoggedIn] = useState(getLogin() !== null);
+  const [loggedIn, setLoggedIn] = useState(getLogin());
 
   const saveToken = async (data) => {
     localStorage.setItem(NAME_KEY, JSON.stringify(data));
     setLoggedIn(true);
   };
     
-  const removeItem = () => {
-    localStorage.removeItem(NAME_KEY);
-  };
-
   const logIn = () => {
     setLoggedIn(true);
   };
   const logOut = () => {
-    removeItem();
+    localStorage.removeItem(NAME_KEY);
     setLoggedIn(false);
   };
 
