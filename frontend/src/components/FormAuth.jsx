@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 
 import { getToken } from '../api/dataExchange.js';
-import { saveToken } from '../hooks/useLocalStor.js';
 import useAuth from '../hooks/useAuth.jsx';
 import router from '../routes';
 
@@ -40,8 +39,7 @@ const FormAuth = () => {
     onSubmit: async (values) => {
       try {
         const data = await getToken(values);
-        saveToken(data);
-        auth.logIn();
+        auth.saveToken(data);
         navigate(home);
       } catch (error) {
         rollbar.error('error login', error);

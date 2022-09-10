@@ -9,16 +9,16 @@ import { toast } from 'react-toastify';
 
 import { getCurrentChannelId } from '../selectors.js';
 import { ApiContext } from '../contexts/Context.jsx';
-import { getLogin } from '../hooks/useLocalStor.js';
+import useAuth from '../hooks/useAuth.jsx';
 
 const MessagesFooter = () => {
   const { t } = useTranslation();
   const [disabledButton, setDisabledButton] = useState(false);
   const notifyError = () => toast.error(t('errors.unknown'));
   const initialValues = { message: '' };
-
+  const auth = useAuth();
   const currentChannelId = useSelector(getCurrentChannelId);
-  const tokenAndUserName = getLogin();
+  const tokenAndUserName = auth.getLogin();
   const username = tokenAndUserName?.username;
   const { sendNewMessage } = useContext(ApiContext);
 

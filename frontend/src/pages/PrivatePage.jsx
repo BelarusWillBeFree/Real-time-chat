@@ -12,10 +12,9 @@ import Channels from '../components/Channels.jsx';
 import Messages from '../components/Messages.jsx';
 import useAuth from '../hooks/useAuth.jsx';
 import router from '../routes';
-import { getLogin } from '../hooks/useLocalStor.js';
 import Modals from '../components/modals/Modals.jsx';
 
-const Chats = () => {
+const PrivatePage = () => {
   const dispatch = useDispatch();
   const auth = useAuth();
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ const Chats = () => {
       } = router;
       navigate(login);
     } else {
-      const loginData = getLogin();
+      const loginData = auth.getLogin();
       if (loginData) {
         auth.logIn();
       }
@@ -59,4 +58,4 @@ const Chats = () => {
   );
 };
 
-export default Chats;
+export default PrivatePage;

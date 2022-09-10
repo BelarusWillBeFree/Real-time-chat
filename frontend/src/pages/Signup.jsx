@@ -11,7 +11,6 @@ import router from '../routes';
 import singupImage from '../assets/img/signup.jpeg';
 import signupApi from '../api/signupApi.js';
 import useAuth from '../hooks/useAuth.jsx';
-import { saveToken } from '../hooks/useLocalStor.js';
 
 const submitForm = (props) => {
   const {
@@ -27,7 +26,7 @@ const submitForm = (props) => {
   signupApi(dataForSubmit)
     .then((response) => {
       setErrorServValid(false);
-      saveToken(response.data);
+      auth.saveToken(response.data);
       auth.logIn();
       navigate(home);
     })
