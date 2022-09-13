@@ -1,30 +1,14 @@
 import {
   Row, Col, Card, Image, Anchor,
 } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import helloImage from '../assets/img/index.jpeg';
 import FormAuth from '../components/FormAuth.jsx';
-import router from '../routes';
-import useAuth from '../hooks/useAuth.jsx';
 
 const Login = () => {
-  const auth = useAuth();
   const { t } = useTranslation();
-
-  const navigate = useNavigate();
-  const {
-    pages: { home },
-  } = router;
-
-  useEffect(() => {
-    if (auth.loggedIn) {
-      navigate(home);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <Row className="justify-content-center align-content-center h-100">

@@ -48,6 +48,7 @@ export default {
     },
     messages: {
       textInput: 'Введите сообщение...',
+      newMessage: 'Новое сообщение',
       message_one: '{{count}} сообщение',
       message_few: '{{count}} сообщения',
       message_many: '{{count}} сообщений',
