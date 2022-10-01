@@ -1,5 +1,5 @@
 ### Hexlet tests and linter status:
-[![Actions Status](https://github.com/BelarusWillBeFree/frontend-project-lvl4/workflows/hexlet-check/badge.svg)](https://github.com/BelarusWillBeFree/frontend-project-lvl4/actions)
+[![Actions Status](https://github.com/BelarusWillBeFree/Real-time-chat/workflows/hexlet-check/badge.svg)](https://github.com/BelarusWillBeFree/Real-time-chat/actions)
 ___
 
 ### Deployed on Heroku:
