@@ -32,6 +32,7 @@ ___
   #### start server and see the page
   `make start`
 Instead of registration you can use
+```
 Login: admin
 Password: admin
 ```
